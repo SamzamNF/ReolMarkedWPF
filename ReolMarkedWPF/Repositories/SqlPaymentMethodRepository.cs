@@ -1,5 +1,4 @@
-﻿using ReolMarkedWPF.Model;
-using ReolMarkedWPF.Models;
+﻿using ReolMarkedWPF.Models;
 using System.Collections.Generic;
 
 namespace ReolMarkedWPF.Repositories

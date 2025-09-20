@@ -25,7 +25,7 @@ namespace ReolMarkedWPF
 
             // 3. Opret ViewModel og injicer repository-interfacet
             var shelfVendorViewModel = new ShelfVendorViewModel(shelfVendorRepository);
-            var rentAgreementViewModel = new RentAgreementViewModel(); // Mangler repositories der skal sættes ind
+            var rentAgreementViewModel = new RentAgreementViewModel(rentRepository); // Mangler repositories der skal sættes ind
 
             // 4. Opret Views
             var mainWindow = new MainWindow();
