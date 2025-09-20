@@ -1,5 +1,8 @@
-﻿using ReolMarkedWPF.Repositories;
+﻿using ReolMarkedWPF.Models;
+using ReolMarkedWPF.Repositories;
 using ReolMarkedWPF.ViewModel;
+using ReolMarkedWPF.ViewModels;
+using ReolMarkedWPF.Views;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -17,19 +20,23 @@ namespace ReolMarkedWPF
 
             // 2. Opret instanser af konkrete repositories
             IShelfVendorRepository shelfVendorRepository = new SqlShelfVendorRepository(connectionString);
+            IRentRepository<Rent> rentRepository = new SqlRentRepository(connectionString);
             // Opret andre repositories her...
 
             // 3. Opret ViewModel og injicer repository-interfacet
             var shelfVendorViewModel = new ShelfVendorViewModel(shelfVendorRepository);
+            var rentAgreementViewModel = new RentAgreementViewModel(); // Mangler repositories der skal sættes ind
 
-            // 4. Opret MainWindow
+            // 4. Opret Views
             var mainWindow = new MainWindow();
+            RentAgreementView rentView = new RentAgreementView();
 
-            // 5. Sæt ViewModel som DataContext for MainWindow
+            // 5. Sæt ViewModel som DataContext for deres respektive View
             // View og ViewModel forbindes her
             mainWindow.DataContext = shelfVendorViewModel;
+            rentView.DataContext = rentAgreementViewModel;
 
-            // 6. Vis vinduet
+            // 6. Vis vinduet (Kun for mainwindow, da de andre vinduer er UserControl der findes i MainWindow)
             mainWindow.Show();
         }
     }
