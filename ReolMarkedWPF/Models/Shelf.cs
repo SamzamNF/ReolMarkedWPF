@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReolMarkedWPF.Repositories
+namespace ReolMarkedWPF.Models
 {
-    class Class1
+    internal class Shelf
     {
     }
 }
