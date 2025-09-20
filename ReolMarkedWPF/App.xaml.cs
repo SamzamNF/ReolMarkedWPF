@@ -29,7 +29,7 @@ namespace ReolMarkedWPF
 
             // 4. Opret Views
             var mainWindow = new MainWindow();
-            RentAgreementView rentView = new RentAgreementView();
+            RentAgreementControl rentView = new RentAgreementControl();
 
             // 5. Sæt ViewModel som DataContext for deres respektive View
             // View og ViewModel forbindes her

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ReolMarkedWPF.Views
 {
     /// <summary>
-    /// Interaction logic for RentAgreementView.xaml
+    /// Interaction logic for RentAgreementControl.xaml
     /// </summary>
-    public partial class RentAgreementView : UserControl
+    public partial class RentAgreementControl : UserControl
     {
-        public RentAgreementView()
+        public RentAgreementControl()
         {
             InitializeComponent();
         }
