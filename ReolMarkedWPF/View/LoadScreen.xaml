@@ -1,0 +1,33 @@
+﻿<Window x:Class="ReolMarkedWPF.View.LoadScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReolMarkedWPF.View"
+        mc:Ignorable="d"
+        Title="S.S.S: Super Shelf Scheduler" Height="360" Width="300" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Cursor="AppStarting" Foreground="White" WindowStyle="None">
+    <!-- Grid starter -->
+    <Grid>
+        <!-- Definitioner-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="37*" />
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="108*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <!-- "Indlæser" tekst 
+        -->
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Indlæser..." Foreground="Black" FontFamily="Calibri" FontSize="60" HorizontalAlignment="Left" Margin="24,10,0,65" Grid.ColumnSpan="3"/>
+
+        <!-- Progress bar -->
+
+        <ProgressBar Grid.Column="0" Height="20" Width="200" IsIndeterminate="True" Foreground="DarkGreen" Margin="50,153,50,171" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+
+        <Image Grid.Row="1" Grid.Column="0" Source="/Assets/Images/ssslogo.png" Stretch="Uniform" Margin="10,46,10,10" Grid.ColumnSpan="3"/>
+    </Grid>
+
+</Window>

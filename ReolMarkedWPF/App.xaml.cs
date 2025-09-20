@@ -9,6 +9,14 @@ namespace ReolMarkedWPF
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var loadScreen = new View.LoadScreen();
+            Application.Current.MainWindow = loadScreen; 
+            loadScreen.Show();
+        }
     }
 
 }
