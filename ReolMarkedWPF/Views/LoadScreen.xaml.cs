@@ -26,7 +26,7 @@ namespace ReolMarkedWPF.View
 
             // Start timer når vinduet loades - simulerer at programmet loader
 
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(); // Opretter et mainWindow objekt
             Application.Current.MainWindow = mainWindow; // FORTÆL APPEN AT DET NU ER MAINWINDOW
             Loaded += (s, e) =>
             {

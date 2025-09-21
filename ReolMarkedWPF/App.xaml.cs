@@ -37,8 +37,8 @@ namespace ReolMarkedWPF
             mainWindow.DataContext = mainWindowViewModel;
             rentView.DataContext = rentAgreementViewModel;
 
-            // 6. Vis vinduet (Kun for mainwindow, da de andre vinduer er UserControl der findes i MainWindow)
-
+            
+            // 6. Sætter programmet til at starte med at køre "loadScreen" vinduet
             var loadScreen = new View.LoadScreen();
             Application.Current.MainWindow = loadScreen; 
             loadScreen.Show();
