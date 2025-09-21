@@ -1,5 +1,4 @@
-﻿using ReolMarkedWPF.View;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace ReolMarkedWPF
+namespace ReolMarkedWPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for RentAgreementControl.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RentAgreementControl : UserControl
     {
-        public MainWindow()
+        public RentAgreementControl()
         {
-            //Ny instans af welcome siden
-
-            Welcome welcome = new Welcome();
-
             InitializeComponent();
-            MainFrame.Navigate(new Welcome()); // Navigér til startside
         }
     }
 }
