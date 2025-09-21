@@ -26,4 +26,8 @@
     <PackageReference Include="Csla.Data.SqlClient" Version="9.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DatabaseScripts\" />
+  </ItemGroup>
+
 </Project>
