@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="Csla.Data.SqlClient" Version="9.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>

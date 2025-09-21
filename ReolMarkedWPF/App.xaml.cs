@@ -14,8 +14,8 @@ namespace ReolMarkedWPF
         {
             base.OnStartup(e);
 
-            // 1. Definer connection string
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ReolmarkedDB.mdf;Integrated Security=True";
+            // 1. Kør vores DI-setup én gang ved opstart.
+            DIContainer.Setup();
 
             // 2. Opret instanser af konkrete repositories
             IShelfVendorRepository shelfVendorRepository = new SqlShelfVendorRepository(connectionString);
@@ -39,7 +39,7 @@ namespace ReolMarkedWPF
             
             // 6. Sætter programmet til at starte med at køre "loadScreen" vinduet
             var loadScreen = new View.LoadScreen();
-            Application.Current.MainWindow = loadScreen; 
+            Application.Current.MainWindow = loadScreen;
             loadScreen.Show();
         }
     }
