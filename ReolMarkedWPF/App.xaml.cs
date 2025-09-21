@@ -1,8 +1,5 @@
-﻿using ReolMarkedWPF.Models;
-using ReolMarkedWPF.Repositories;
-using ReolMarkedWPF.ViewModel;
-using ReolMarkedWPF.ViewModels;
-using ReolMarkedWPF.Views;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ReolMarkedWPF.Services;
 using System.Windows;
 
 namespace ReolMarkedWPF
@@ -13,32 +10,16 @@ namespace ReolMarkedWPF
         {
             base.OnStartup(e);
 
-            // 1. Definer connection string
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ReolmarkedDB.mdf;Integrated Security=True";
+            // 1. Kør vores DI-setup én gang ved opstart.
+            DIContainer.Setup();
 
-            // 2. Opret instanser af konkrete repositories
-            IShelfVendorRepository shelfVendorRepository = new SqlShelfVendorRepository(connectionString);
-            IRentRepository<Rent> rentRepository = new SqlRentRepository(connectionString);
-            // Opret andre repositories her...
+            // 2. Bed containeren om at bygge og levere et færdigt MainWindow.
+            // Containeren finder selv ud af at lave en MainViewModel og injicere den.
+            var mainWindow = DIContainer.ServiceProvider.GetRequiredService<MainWindow>();
 
-            // 3. Opret ViewModel og injicer repository-interfacet
-            var mainWindowViewModel = new MainViewModel();
-            var shelfVendorViewModel = new ShelfVendorViewModel(shelfVendorRepository);
-            var rentAgreementViewModel = new RentAgreementViewModel(rentRepository); // Mangler repositories der skal sættes ind
-
-            // 4. Opret Views
-            var mainWindow = new MainWindow();
-            RentAgreementControl rentView = new RentAgreementControl();
-
-            // 5. Sæt ViewModel som DataContext for deres respektive View
-            // View og ViewModel forbindes her
-            mainWindow.DataContext = mainWindowViewModel;
-            rentView.DataContext = rentAgreementViewModel;
-
-            
-            // 6. Sætter programmet til at starte med at køre "loadScreen" vinduet
+            // 3. Vis det load-screen, du allerede har lavet (logikken flyttes hertil).
             var loadScreen = new View.LoadScreen();
-            Application.Current.MainWindow = loadScreen; 
+            Application.Current.MainWindow = loadScreen;
             loadScreen.Show();
         }
     }
