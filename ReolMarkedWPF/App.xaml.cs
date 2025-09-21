@@ -3,8 +3,6 @@ using ReolMarkedWPF.Repositories;
 using ReolMarkedWPF.ViewModel;
 using ReolMarkedWPF.ViewModels;
 using ReolMarkedWPF.Views;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace ReolMarkedWPF
