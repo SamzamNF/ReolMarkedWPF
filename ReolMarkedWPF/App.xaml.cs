@@ -24,6 +24,7 @@ namespace ReolMarkedWPF
             // Opret andre repositories her...
 
             // 3. Opret ViewModel og injicer repository-interfacet
+            var mainWindowViewModel = new MainViewModel();
             var shelfVendorViewModel = new ShelfVendorViewModel(shelfVendorRepository);
             var rentAgreementViewModel = new RentAgreementViewModel(rentRepository); // Mangler repositories der skal sættes ind
 
@@ -33,7 +34,7 @@ namespace ReolMarkedWPF
 
             // 5. Sæt ViewModel som DataContext for deres respektive View
             // View og ViewModel forbindes her
-            mainWindow.DataContext = shelfVendorViewModel;
+            mainWindow.DataContext = mainWindowViewModel;
             rentView.DataContext = rentAgreementViewModel;
 
             // 6. Vis vinduet (Kun for mainwindow, da de andre vinduer er UserControl der findes i MainWindow)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
 
-namespace ReolMarkedWPF.Repositories
+/*namespace ReolMarkedWPF.Repositories
 {
     public class SqlRentRepository : IRentRepository<Rent>
     {
@@ -113,3 +113,4 @@ namespace ReolMarkedWPF.Repositories
         }
     }
 }
+*/
