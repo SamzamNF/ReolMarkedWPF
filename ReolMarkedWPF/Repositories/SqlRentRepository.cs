@@ -64,7 +64,7 @@ namespace ReolMarkedWPF.Repositories
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                SqlCommand command = new SqlCommand(query, connection);
+                /*SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -79,7 +79,7 @@ namespace ReolMarkedWPF.Repositories
                             ShelfVendorID = (int)reader["ShelfVendorID"]
                         });
                     }
-                }
+                }*/
             }
             return rents;
         }

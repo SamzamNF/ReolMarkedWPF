@@ -21,7 +21,7 @@ namespace ReolMarkedWPF.Repositories
             var vendors = new List<ShelfVendor>();
             string query = "SELECT * FROM SHELF_VENDOR";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            /*using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -40,14 +40,14 @@ namespace ReolMarkedWPF.Repositories
                         });
                     }
                 }
-            }
+            }*/
             return vendors;
         }
 
         // Tilføjer en ny sælger til databasen.
         public void AddShelfVendor(ShelfVendor shelfVendor)
         {
-            string query = "INSERT INTO SHELF_VENDOR (FirstName, LastName, PhoneNumber, Email) " +
+            /*string query = "INSERT INTO SHELF_VENDOR (FirstName, LastName, PhoneNumber, Email) " +
                            "VALUES (@FirstName, @LastName, @PhoneNumber, @Email)";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -60,28 +60,28 @@ namespace ReolMarkedWPF.Repositories
 
                 connection.Open();
                 command.ExecuteNonQuery();
-            }
+            }*/
         }
 
         // Opdaterer en eksisterende sælgers information i databasen.
         public void UpdateShelfVendor(ShelfVendor shelfVendor)
         {
-            string query = "UPDATE SHELF_VENDOR SET FirstName = @FirstName, LastName = @LastName, " +
-                           "PhoneNumber = @PhoneNumber, Email = @Email " +
-                           "WHERE ShelfVendorID = @ShelfVendorID";
+            /*  string query = "UPDATE SHELF_VENDOR SET FirstName = @FirstName, LastName = @LastName, " +
+                             "PhoneNumber = @PhoneNumber, Email = @Email " +
+                             "WHERE ShelfVendorID = @ShelfVendorID";
 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@FirstName", shelfVendor.FirstName);
-                command.Parameters.AddWithValue("@LastName", shelfVendor.LastName);
-                command.Parameters.AddWithValue("@PhoneNumber", shelfVendor.PhoneNumber);
-                command.Parameters.AddWithValue("@Email", shelfVendor.Email);
-                command.Parameters.AddWithValue("@ShelfVendorID", shelfVendor.ShelfVendorID);
+              using (SqlConnection connection = new SqlConnection(_connectionString))
+              {
+                  SqlCommand command = new SqlCommand(query, connection);
+                  command.Parameters.AddWithValue("@FirstName", shelfVendor.FirstName);
+                  command.Parameters.AddWithValue("@LastName", shelfVendor.LastName);
+                  command.Parameters.AddWithValue("@PhoneNumber", shelfVendor.PhoneNumber);
+                  command.Parameters.AddWithValue("@Email", shelfVendor.Email);
+                  command.Parameters.AddWithValue("@ShelfVendorID", shelfVendor.ShelfVendorID);
 
-                connection.Open();
-                command.ExecuteNonQuery();
-            }
+                  connection.Open();
+                  command.ExecuteNonQuery();
+              }/* Placeholder return until implementation is complete */
         }
 
         // Sletter en sælger fra databasen baseret på ShelfVendorID.

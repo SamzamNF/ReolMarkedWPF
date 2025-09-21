@@ -1,42 +1,30 @@
 ﻿using ReolMarkedWPF.Helpers;
+using ReolMarkedWPF.Models;
+using ReolMarkedWPF.View;
 using ReolMarkedWPF.Views;
 
 namespace ReolMarkedWPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        // Konstruktør som starter med et default view
-        public MainViewModel()
+        private readonly INavigationService _navigationService;
+
+        public MainViewModel(INavigationService navigationService)
         {
-            CurrentView = new ShelfVendorControl();
+            _navigationService = navigationService;
+
+            // Naviger til Welcome.xaml ved opstart
+            _navigationService.Navigate(new Welcome());
         }
 
-        private object _currentView;
+        // Kommandoer til venstre menu
+        public RelayCommand ShowRentCommand =>
+            new RelayCommand(_ => _navigationService.Navigate(new RentAgreementView()));
 
-        public object CurrentView
-        {
-            get { return _currentView; }
-            set 
-            {
-                _currentView = value;
-                OnPropertyChanged();
-            }
-        }
+        public RelayCommand ShowShelfVendorCommand =>
+            new RelayCommand(_ => _navigationService.Navigate(new ShelfVendorView()));
 
-        // Commands til at skifte view som bindes til knapper
-        public RelayCommand ShowRentViewCommand => new RelayCommand(execute => ShowRentAgreement());
-        public RelayCommand ShelfVendorViewCommand => new RelayCommand(execute => ShowShelfVendor());
-
-
-        // Metode til at skifte view
-        private void ShowRentAgreement()
-        {
-            CurrentView = new RentAgreementControl();
-        }
-
-        private void ShowShelfVendor()
-        {
-            CurrentView = new ShelfVendorControl();
-        }
+        public RelayCommand ShowSettingsCommand =>
+            new RelayCommand(_ => _navigationService.Navigate(new SettingsView()));
     }
 }

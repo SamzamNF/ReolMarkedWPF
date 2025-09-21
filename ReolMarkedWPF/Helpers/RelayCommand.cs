@@ -26,7 +26,7 @@ namespace ReolMarkedWPF.Helpers
         // Hvis _canExecute er null, returneres der true, hvilket betyder, at kommandoen altid kan udføres.
         public bool CanExecute(object? parameter)
         {
-            return _canExecute == null | _canExecute(parameter);
+            return _canExecute == null || _canExecute(parameter);
         }
 
         // Execute-metoden som der kalder den faktiske handling(AddCustomer fx), når kommandoen bliver udført.

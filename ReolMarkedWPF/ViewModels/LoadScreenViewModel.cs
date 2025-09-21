@@ -19,7 +19,9 @@ namespace ReolMarkedWPF.ViewModel
             mainWindow.Show();
         }
 
-
-
+        public void OpenRentAgreement()
+        {
         }
+
+    }
 }
