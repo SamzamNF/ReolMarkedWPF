@@ -1,4 +1,5 @@
 -- Sikrer, at de følgende kommandoer køres på den korrekte database
+-- Opret databasen i projektmappen, hvis den ikke allerede findes
 USE ReolmarkedDB;
 GO
 

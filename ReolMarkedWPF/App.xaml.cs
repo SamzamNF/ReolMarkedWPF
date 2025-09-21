@@ -16,7 +16,7 @@ namespace ReolMarkedWPF
             base.OnStartup(e);
 
             // 1. Definer connection string
-            string connectionString = "Database-Connection-String";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ReolmarkedDB.mdf;Integrated Security=True";
 
             // 2. Opret instanser af konkrete repositories
             IShelfVendorRepository shelfVendorRepository = new SqlShelfVendorRepository(connectionString);
