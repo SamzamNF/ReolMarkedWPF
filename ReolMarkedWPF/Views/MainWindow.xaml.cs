@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using ReolMarkedWPF.View;
+using System.Windows;
 
 namespace ReolMarkedWPF
 {
@@ -6,8 +7,9 @@ namespace ReolMarkedWPF
     {
         public MainWindow()
         {
+            Welcome welcome = new Welcome();
             InitializeComponent();
-            // DataContext is set in App.xaml.cs
+            MainFrame.Navigate(new Welcome()); // Navigér til velkomst-side
         }
     }
 }
