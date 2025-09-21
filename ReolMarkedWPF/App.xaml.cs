@@ -3,8 +3,6 @@ using ReolMarkedWPF.Repositories;
 using ReolMarkedWPF.ViewModel;
 using ReolMarkedWPF.ViewModels;
 using ReolMarkedWPF.Views;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace ReolMarkedWPF
@@ -16,7 +14,7 @@ namespace ReolMarkedWPF
             base.OnStartup(e);
 
             // 1. Definer connection string
-            string connectionString = "Database-Connection-String";
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ReolmarkedDB.mdf;Integrated Security=True";
 
             // 2. Opret instanser af konkrete repositories
             IShelfVendorRepository shelfVendorRepository = new SqlShelfVendorRepository(connectionString);
@@ -37,8 +35,8 @@ namespace ReolMarkedWPF
             mainWindow.DataContext = mainWindowViewModel;
             rentView.DataContext = rentAgreementViewModel;
 
-            // 6. Vis vinduet (Kun for mainwindow, da de andre vinduer er UserControl der findes i MainWindow)
-
+            
+            // 6. Sætter programmet til at starte med at køre "loadScreen" vinduet
             var loadScreen = new View.LoadScreen();
             Application.Current.MainWindow = loadScreen; 
             loadScreen.Show();

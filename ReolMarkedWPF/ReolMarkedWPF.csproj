@@ -26,4 +26,14 @@
     <PackageReference Include="Csla.Data.SqlClient" Version="9.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DatabaseScripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ReolmarkedDB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

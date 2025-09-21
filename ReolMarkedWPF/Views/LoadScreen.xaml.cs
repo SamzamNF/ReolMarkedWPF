@@ -1,16 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using System.Windows.Threading;
 
 namespace ReolMarkedWPF.View
@@ -26,7 +14,7 @@ namespace ReolMarkedWPF.View
 
             // Start timer når vinduet loades - simulerer at programmet loader
 
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(); // Opretter et mainWindow objekt
             Application.Current.MainWindow = mainWindow; // FORTÆL APPEN AT DET NU ER MAINWINDOW
             Loaded += (s, e) =>
             {

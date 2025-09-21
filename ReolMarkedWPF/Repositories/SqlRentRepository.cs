@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
 
 namespace ReolMarkedWPF.Repositories
@@ -60,10 +55,10 @@ namespace ReolMarkedWPF.Repositories
         // Henter en liste af alle de rent_agreements der findes i databasen, ved at oprette objekter ud fra dem og så returnere dem i en liste
         public List<Rent> GetAllRents()
         {
-            {
-                // ⚠️ midlertidig: spring DB over
-                return new List<Rent>();
-            }
+            //{
+            //    // ⚠️ midlertidig: spring DB over
+            //    return new List<Rent>();
+            //}
             var rents = new List<Rent>();
             string query = "SELECT * FROM RENT_AGREEMENT";
 
@@ -78,8 +73,8 @@ namespace ReolMarkedWPF.Repositories
                     {
                         rents.Add(new Rent
                         {
-                            StartDate = (DateOnly)reader["StartDate"],
-                            EndDate = (DateOnly)reader["EndDate"],
+                            StartDate = DateOnly.FromDateTime((DateTime)reader["StartDate"]),
+                            EndDate = DateOnly.FromDateTime((DateTime)reader["EndDate"]),
                             RentID = (int)reader["RentAgreementID"],
                             ShelfVendorID = (int)reader["ShelfVendorID"]
                         });

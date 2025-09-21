@@ -1,4 +1,6 @@
-﻿using ReolMarkedWPF.Models;
+﻿using Microsoft.Data.SqlClient;
+using ReolMarkedWPF.Models;
+using System;
 using System.Collections.Generic;
 
 namespace ReolMarkedWPF.Repositories
@@ -7,30 +9,94 @@ namespace ReolMarkedWPF.Repositories
     {
         private readonly string _connectionString;
 
+        // Konstruktør, der modtager connection string via dependency injection.
         public SqlShelfVendorRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
+        // Henter en liste over alle sælgere fra SHELF_VENDOR tabellen.
         public List<ShelfVendor> GetAllShelfVendors()
         {
-            // Implementeres senere
-            return new List<ShelfVendor>();
+            var vendors = new List<ShelfVendor>();
+            string query = "SELECT * FROM SHELF_VENDOR";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        vendors.Add(new ShelfVendor
+                        {
+                            ShelfVendorID = (int)reader["ShelfVendorID"],
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            PhoneNumber = reader["PhoneNumber"].ToString(),
+                            Email = reader["Email"].ToString()
+                        });
+                    }
+                }
+            }
+            return vendors;
         }
 
+        // Tilføjer en ny sælger til databasen.
         public void AddShelfVendor(ShelfVendor shelfVendor)
         {
-            // Implementeres senere
+            string query = "INSERT INTO SHELF_VENDOR (FirstName, LastName, PhoneNumber, Email) " +
+                           "VALUES (@FirstName, @LastName, @PhoneNumber, @Email)";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@FirstName", shelfVendor.FirstName);
+                command.Parameters.AddWithValue("@LastName", shelfVendor.LastName);
+                command.Parameters.AddWithValue("@PhoneNumber", shelfVendor.PhoneNumber);
+                command.Parameters.AddWithValue("@Email", shelfVendor.Email);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
-        public void DeleteShelfVendor(ShelfVendor shelfVendor)
-        {
-            // Implementeres senere
-        }
-
+        // Opdaterer en eksisterende sælgers information i databasen.
         public void UpdateShelfVendor(ShelfVendor shelfVendor)
         {
-            // Implementeres senere
+            string query = "UPDATE SHELF_VENDOR SET FirstName = @FirstName, LastName = @LastName, " +
+                           "PhoneNumber = @PhoneNumber, Email = @Email " +
+                           "WHERE ShelfVendorID = @ShelfVendorID";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@FirstName", shelfVendor.FirstName);
+                command.Parameters.AddWithValue("@LastName", shelfVendor.LastName);
+                command.Parameters.AddWithValue("@PhoneNumber", shelfVendor.PhoneNumber);
+                command.Parameters.AddWithValue("@Email", shelfVendor.Email);
+                command.Parameters.AddWithValue("@ShelfVendorID", shelfVendor.ShelfVendorID);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+        }
+
+        // Sletter en sælger fra databasen baseret på ShelfVendorID.
+        public void DeleteShelfVendor(ShelfVendor shelfVendor)
+        {
+            string query = "DELETE FROM SHELF_VENDOR WHERE ShelfVendorID = @ShelfVendorID";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@ShelfVendorID", shelfVendor.ShelfVendorID);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
     }
 }
