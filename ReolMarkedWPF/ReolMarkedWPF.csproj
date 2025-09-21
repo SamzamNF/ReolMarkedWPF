@@ -30,4 +30,10 @@
     <Folder Include="DatabaseScripts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ReolmarkedDB.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
