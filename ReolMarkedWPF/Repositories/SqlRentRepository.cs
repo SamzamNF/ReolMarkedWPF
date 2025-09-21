@@ -60,6 +60,10 @@ using ReolMarkedWPF.Models;
         // Henter en liste af alle de rent_agreements der findes i databasen, ved at oprette objekter ud fra dem og så returnere dem i en liste
         public List<Rent> GetAllRents()
         {
+            {
+                // ⚠️ midlertidig: spring DB over
+                return new List<Rent>();
+            }
             var rents = new List<Rent>();
             string query = "SELECT * FROM RENT_AGREEMENT";
 
