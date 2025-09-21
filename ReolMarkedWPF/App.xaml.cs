@@ -1,10 +1,9 @@
 ﻿using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
-using ReolMarkedWPF.ViewModel;
 using ReolMarkedWPF.ViewModels;
-using ReolMarkedWPF.Views;
 using ReolMarkedWPF.Helpers;
 using System.Windows;
+using ReolMarkedWPF.Services; // Tilføj denne for DIContainer
 
 namespace ReolMarkedWPF
 {
@@ -17,26 +16,33 @@ namespace ReolMarkedWPF
             // 1. Kør vores DI-setup én gang ved opstart.
             DIContainer.Setup();
 
+            // Definer connectionString
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ReolmarkedDB.mdf;Integrated Security=True";
+
+            // Opret MainWindow og FrameNavigationService
+            var mainWindow = new MainWindow();
+            var navigationService = new FrameNavigationService(mainWindow.MainFrame);
+
+
             // 2. Opret instanser af konkrete repositories
             IShelfVendorRepository shelfVendorRepository = new SqlShelfVendorRepository(connectionString);
             IRentRepository<Rent> rentRepository = new SqlRentRepository(connectionString);
             // Opret andre repositories her...
 
             // 3. Opret ViewModel og injicer repository-interfacet
-         //   var mainWindowViewModel = new MainViewModel(navigationService);
+            var mainViewModel = new MainViewModel(navigationService); // Fjern kommentar
             var shelfVendorViewModel = new ShelfVendorViewModel(shelfVendorRepository);
-            var rentAgreementViewModel = new RentAgreementViewModel(rentRepository); // Mangler repositories der skal sættes ind
+            var rentAgreementViewModel = new RentAgreementViewModel(rentRepository);
 
-            // 4. Opret Views
-            var mainWindow = new MainWindow();
-            //RentAgreementControl rentView = new RentAgreementControl();
+            // 4. Opret Views (mainWindow er allerede oprettet)
+
 
             // 5. Sæt ViewModel som DataContext for deres respektive View
             // View og ViewModel forbindes her
-         //   mainWindow.DataContext = mainWindowViewModel;
-            //rentView.DataContext = rentAgreementViewModel; 
+            mainWindow.DataContext = mainViewModel;
+            //rentView.DataContext = rentAgreementViewModel;
 
-            
+
             // 6. Sætter programmet til at starte med at køre "loadScreen" vinduet
             var loadScreen = new View.LoadScreen();
             Application.Current.MainWindow = loadScreen;
