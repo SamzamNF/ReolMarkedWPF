@@ -1,5 +1,6 @@
 ﻿using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Models;
+using ReolMarkedWPF.Repositories;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -10,12 +11,16 @@ namespace ReolMarkedWPF.ViewModel
         public ObservableCollection<ShelfVendor> ShelfVendors { get; set; }
         public ShelfVendor SelectedShelfVendor { get; set; }
 
+        private readonly IShelfVendorRepository _repository;
+
         public ICommand AddShelfVendorCommand { get; }
         public ICommand DeleteShelfVendorCommand { get; }
         public ICommand EditShelfVendorCommand { get; }
 
-        public ShelfVendorViewModel()
+        public ShelfVendorViewModel(IShelfVendorRepository repository)
         {
+            _repository = repository;
+
             AddShelfVendorCommand = new RelayCommand(AddShelfVendor);
             DeleteShelfVendorCommand = new RelayCommand(DeleteShelfVendor);
             EditShelfVendorCommand = new RelayCommand(EditShelfVendor);

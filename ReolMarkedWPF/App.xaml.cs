@@ -37,11 +37,6 @@ namespace ReolMarkedWPF
             rentView.DataContext = rentAgreementViewModel;
 
             // 6. Vis vinduet (Kun for mainwindow, da de andre vinduer er UserControl der findes i MainWindow)
-            mainWindow.Show();
-        }
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
 
             var loadScreen = new View.LoadScreen();
             Application.Current.MainWindow = loadScreen; 

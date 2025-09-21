@@ -15,7 +15,7 @@ namespace ReolMarkedWPF.Views
     /// <summary>
     /// Interaction logic for ShelfVendorControl.xaml
     /// </summary>
-    public partial class ShelfVendorControl : UserControl
+   /* public partial class ShelfVendorControl : UserControl
     {
         public ShelfVendorControl()
         {
@@ -25,6 +25,6 @@ namespace ReolMarkedWPF.Views
 
             InitializeComponent();
             MainFrame.Navigate(new Welcome()); // Navigér til startside
-        }
+        } */
     }
-}
+
