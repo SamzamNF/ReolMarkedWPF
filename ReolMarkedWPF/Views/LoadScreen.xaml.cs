@@ -3,19 +3,14 @@ using System.Windows.Threading;
 
 namespace ReolMarkedWPF.View
 {
-    /// <summary>
-    /// Interaction logic for LoadScreen.xaml
-    /// </summary>
     public partial class LoadScreen : Window
     {
-        public LoadScreen()
+        // Modtag MainWindow i konstruktøren i stedet for at oprette en ny
+        public LoadScreen(MainWindow mainWindow)
         {
             InitializeComponent();
 
-            // Start timer når vinduet loades - simulerer at programmet loader
-
-            MainWindow mainWindow = new MainWindow(); // Opretter et mainWindow objekt
-            Application.Current.MainWindow = mainWindow; // FORTÆL APPEN AT DET NU ER MAINWINDOW
+            Application.Current.MainWindow = mainWindow; // Sæt MainWindow
             Loaded += (s, e) =>
             {
                 var timer = new DispatcherTimer
@@ -25,14 +20,11 @@ namespace ReolMarkedWPF.View
                 timer.Tick += (sender, args) =>
                 {
                     timer.Stop();
-                    this.Hide(); //Gemmer loadskærmen
-                    mainWindow.Show(); //Åbner MainWindow
+                    this.Hide();
+                    mainWindow.Show(); // Vis den DI-oprettede instans
                 };
                 timer.Start();
-
-                // Lukker LoadScreen vinduet
             };
-
         }
     }
 }
