@@ -2,7 +2,8 @@
 {
     public enum AccountPaymentOption
     {
-        AccountNumber,
+        Kreditkort,
+        Bankoverførsel,
         MobilePay
     }
 }

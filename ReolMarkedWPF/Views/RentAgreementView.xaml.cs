@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReolMarkedWPF.ViewModels;
+using ReolMarkedWPF.Repositories;
+using ReolMarkedWPF.Models;
+using ReolMarkedWPF.Helpers;
 
 namespace ReolMarkedWPF.Views
 {
@@ -23,6 +27,13 @@ namespace ReolMarkedWPF.Views
         public RentAgreementView()
         {
             InitializeComponent();
+            // Get the same navigation service instance that MainViewModel uses
+            var navigationService = ((App)App.Current).NavigationService;
+            // Create repository instance
+            var rentRepository = new SqlRentRepository();
+            
+            DataContext = new RentAgreementViewModel(rentRepository, navigationService);
         }
+
     }
 }

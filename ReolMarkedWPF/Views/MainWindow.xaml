@@ -37,9 +37,9 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10">
             <Separator Background="DarkRed" Height="2" Margin="0,0,0,10"/>
-            <Button FontSize="20" FontWeight="Bold" Foreground="Black" Background="Orange" Content="Lejere" Width="180" Margin="0,5" Command="{Binding ShowRentCommand}"/>
-            <Button FontSize="20" FontWeight="Bold" Foreground="AntiqueWhite" Background="Maroon" Content="Reoler" Width="180" Margin="0,5" Command="{Binding ShowShelfVendorCommand}"/>
-            <Button FontSize="20" FontWeight="Bold" Foreground="AntiqueWhite" Background="DarkGreen" Content="Indstillinger" Width="180" Margin="0,5"/>
+            <Button FontSize="20" FontWeight="Bold" Foreground="Black" Background="Orange" Content="ShelfVendor(s)" Width="180" Height="30" Margin="0,5" Command="{Binding ShowShelfVendorCommand}"/>
+            <Button FontSize="20" FontWeight="Bold" Foreground="AntiqueWhite" Background="Maroon" Content="Lejeadministration" Width="180" Height="30" Margin="0,5" Command="{Binding ShowRentCommand }"/>
+            <Button FontSize="20" FontWeight="Bold" Foreground="AntiqueWhite" Background="DarkGreen" Content="Indstillinger" Width="180" Height="30" Margin="0,5" Command="{Binding ShowSettingsCommand}"/>
         </StackPanel>
 
         <!-- Anden kolonne -->

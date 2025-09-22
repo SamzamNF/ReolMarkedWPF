@@ -12,21 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ReolMarkedWPF.Helpers;
-using ReolMarkedWPF.Repositories;
 
 namespace ReolMarkedWPF.Views
 {
     /// <summary>
-    /// Interaction logic for ShelfVendorView.xaml
+    /// Interaction logic for RentAgreementChooseShelfView.xaml
     /// </summary>
-    public partial class ShelfVendorView : Page
+    public partial class RentAgreementChooseShelfView : Page
     {
-        public ShelfVendorView()
+        public RentAgreementChooseShelfView()
         {
             InitializeComponent();
-            // var repository = new Repositories.SqlShelfVendorRepository(); Da connectionstring mangler kan datacontext ikke sættes
-            //  DataContext = new ViewModels.ShelfVendorViewModel(repository);
+            DataContext=new ViewModels.RentAgreementChooseShelfViewModel();
         }
     }
 }

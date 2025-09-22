@@ -8,5 +8,6 @@ namespace ReolMarkedWPF.Repositories
         void AddShelfVendor(ShelfVendor shelfVendor);
         void DeleteShelfVendor(ShelfVendor shelfVendor);
         void UpdateShelfVendor(ShelfVendor shelfVendor);
+        void ShowShelfVendors();
     }
 }

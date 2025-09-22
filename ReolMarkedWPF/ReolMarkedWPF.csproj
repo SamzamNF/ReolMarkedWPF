@@ -9,12 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\RentAgreementChooseShelfViewModel.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Images\shelf.png" />
+    <None Remove="Assets\Images\shelfmarketfloor.png" />
     <None Remove="Assets\Images\ssslogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="ViewModels\RentAgreementChooseShelfViewModel.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Assets\Images\shelf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\shelfmarketfloor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\Images\ssslogo.png">
