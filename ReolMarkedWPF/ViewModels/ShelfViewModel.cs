@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows;
-using Csla;
+﻿using System.Collections.ObjectModel;
 using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
