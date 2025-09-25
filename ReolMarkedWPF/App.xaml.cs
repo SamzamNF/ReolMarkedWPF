@@ -14,12 +14,11 @@ namespace ReolMarkedWPF
 {
     public partial class App : Application
     {
-        public INavigationService NavigationService { get; private set; }
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            NavigationService = new NavigationService(); // Replace with your actual implementation
 
 
 

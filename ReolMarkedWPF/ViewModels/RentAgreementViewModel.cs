@@ -266,8 +266,6 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand AddRentCommand => new RelayCommand(execute => AddRent(), canExecute => CanAddRent());
         public RelayCommand EditRentCommand => new RelayCommand(execute => EditRent(), canExecute => CanEditRent());
         public RelayCommand DeleteRentCommand => new RelayCommand(execute =>  DeleteRent(), canExecute => CanDeleteRent());
-        public RelayCommand ShowShelfSelectionCommand =>
-            new RelayCommand(_ => _navigationService.Navigate(new RentAgreementChooseShelfView()));
 
         // Conditions
         private bool CanAddRent() => StartDate != default &&
