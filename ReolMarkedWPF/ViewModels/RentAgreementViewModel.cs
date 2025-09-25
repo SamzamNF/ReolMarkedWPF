@@ -8,8 +8,14 @@ namespace ReolMarkedWPF.ViewModels
 {
     public class RentAgreementViewModel : ViewModelBase
     {
+        // ViewModel
+        private readonly MainViewModel _mainViewModel;
+        // Giver adgang til MainViewModel navigation
+        public MainViewModel MainVM => _mainViewModel;
+
         // Repositories
         private readonly IRentRepository<Rent> _rentRepository;
+        private readonly IShelfRepository _shelfRepository;
 
         // Felter
         private int _shelfVendorID;
@@ -117,12 +123,25 @@ namespace ReolMarkedWPF.ViewModels
 
 
         // Konstruktør
-        // Mangler repository til at hente shelfvendor + shelves og så hente data i listerne
-        public RentAgreementViewModel(IRentRepository<Rent> repository)
+        // Mangler repository til at hente shelfvendor og så hente data i listerne
+        public RentAgreementViewModel(IRentRepository<Rent> rentRepository, IShelfRepository shelfRepository, 
+            IServiceProvider serviceProvider)
         {
-            this._rentRepository = repository;
+            this._rentRepository = rentRepository;
+            this._shelfRepository = shelfRepository;
 
             RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
+            Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
+
+            
+            // Henter den rigtige MainViewModel fra MainWindow, som er oprettet i App.xaml.cs, ved at hente fra den igangværende application
+            // ? - null-conditional operator, tjekker at MainWindow IKKE er null - hvis det er null, køres if statement ikke
+            // Hvis mainWindow ikke er null, henter den DataContext og tjekker om det er en MainViewModel instans
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow?.DataContext is MainViewModel mainViewModel)
+            {
+                this._mainViewModel = mainViewModel;
+            }
         }
 
         // Metoder
@@ -136,10 +155,33 @@ namespace ReolMarkedWPF.ViewModels
             };
 
             _rentRepository.AddRent(rent);
-            RentAgreements.Add(rent);
 
-            // Mangler at implementere så en shelf får sat RentAgreementID på sig
-            // Dvs mangler at kunne bruge update fra ShelfRepo
+
+            // Henter rentID fra databasen, ved at filtrere først efter ShelfVendor's ID
+            // Men da flere aftaler kan findes, så sortere den fra højeste ID først, og vælger så det højeste og (nyeste) ID
+            var newest = _rentRepository.GetAllRents()
+                            .Where(n => n.ShelfVendorID == rent.ShelfVendorID)
+                            .OrderByDescending(n => n.RentAgreementID)
+                            .FirstOrDefault();
+
+            
+            // Opdatere den valgte reol i lejekontraken, til at få RentID
+            if (newest != null)
+            {
+                RentAgreements.Add(newest);
+                
+                var existingShelf = Shelves
+                                    .FirstOrDefault(s => s.ShelfNumber == SelectedShelf.ShelfNumber);
+
+                if (existingShelf != null)
+                {
+                    existingShelf.RentAgreementID = newest.RentAgreementID;
+                    _shelfRepository.UpdateShelf(existingShelf);
+                }
+
+
+            }
+
 
             ShelfVendorID = default;
             StartDate = default;
@@ -153,42 +195,62 @@ namespace ReolMarkedWPF.ViewModels
          */
         private void DeleteRent()
         {
+            // Null-conditional operator sikrer at SelectedRentAgreement ikke er null, og hvis det er - returner den blot ingenting
+            // uden at crashe programmet
             var rentToDelete = RentAgreements
-                                .FirstOrDefault(r => r.RentID == SelectedRentAgreement?.RentID);
+                                .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement?.RentAgreementID);
 
-            if (rentToDelete != null)
+
+            if (MessageBox.Show($"Er du sikker på, at du vil slette aftalen med ID - DETTE ER PERMANENT: {SelectedRentAgreement.RentAgreementID}?",
+                "Bekræft sletning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                try
+                if (rentToDelete != null)
                 {
-                    _rentRepository.DeleteRent(rentToDelete);
-                    RentAgreements.Remove(rentToDelete);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                    try
+                    {
+                        _rentRepository.DeleteRent(rentToDelete);
+
+                        
+                        // Skal frigøre reolen fra sin aftale ved at finde den Reol der matcher med den valgte lejeaftale
+                        var shelfToRlease = Shelves
+                                            .FirstOrDefault(s => s.RentAgreementID == SelectedRentAgreement?.RentAgreementID);
+
+                        if (shelfToRlease != null)
+                        {
+                            shelfToRlease.RentAgreementID = 0;
+                            _shelfRepository.UpdateShelf(shelfToRlease);
+                        }
+
+                        RentAgreements.Remove(rentToDelete);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }
+                
 
         
         /* Opdatere en lejeaftale ved brug af SelectedRentAgreement, så vælges det objekt ved at matche med dens ID i listen.
-           Ved brug af SelectedRentAgreement property opdateres vores normale StartDate & EndDate felter til det valgte objekt
-           Det valgte objekt opdateres så med det man har indtastet i felterne når metoden køres
+           Ved brug af SelectedRentAgreement property opdateres vores normale StartDate & EndDate infelter til det valgte objekt
+           Det valgte objekt opdateres så med det man har indtastet i felterne når metoden køres, ved at sætte rentToUpdates felter = den indtastede data
          */
         private void EditRent()
         {
             var rentToUpdate = RentAgreements
-                                .FirstOrDefault(r => r.RentID == SelectedRentAgreement.RentID);
+                                .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement.RentAgreementID);
 
             if (rentToUpdate != null)
             {
                 rentToUpdate.StartDate = this.StartDate;
-                rentToUpdate.EndDate = this.EndDate;
+                rentToUpdate.EndDate = this.EndDate;               
 
                try
                 {
                     _rentRepository.UpdateRent(rentToUpdate);
-                    RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
+                    //RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
                 }
                 catch (Exception ex)
                 {

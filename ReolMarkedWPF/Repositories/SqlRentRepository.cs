@@ -40,14 +40,14 @@ namespace ReolMarkedWPF.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@RentAgreementID", rent.RentID);
+                command.Parameters.AddWithValue("@RentAgreementID", rent.RentAgreementID);
 
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
 
                 if (rowsAffected == 0)
                 {
-                    throw new Exception($"Ingen aftale med RentAgreementID = {rent.RentID} blev fundet");
+                    throw new Exception($"Ingen aftale med RentAgreementID = {rent.RentAgreementID} blev fundet");
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace ReolMarkedWPF.Repositories
 
                 command.Parameters.AddWithValue("@StartDate", rent.StartDate);
                 command.Parameters.AddWithValue("@EndDate", rent.EndDate);
-                command.Parameters.AddWithValue("@RentAgreementID", rent.RentID);
+                command.Parameters.AddWithValue("@RentAgreementID", rent.RentAgreementID);
 
                 connection.Open();
                 
@@ -106,7 +106,7 @@ namespace ReolMarkedWPF.Repositories
 
                 if (rowsAffected == 0)
                 {
-                    throw new Exception($"Ingen aftale med RentAgreementID = {rent.RentID} blev fundet");
+                    throw new Exception($"Ingen aftale med RentAgreementID = {rent.RentAgreementID} blev fundet");
                 }
             }
         }

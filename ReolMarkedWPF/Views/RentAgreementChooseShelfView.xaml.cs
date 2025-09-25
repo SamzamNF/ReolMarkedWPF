@@ -17,17 +17,15 @@ using ReolMarkedWPF.ViewModels;
 namespace ReolMarkedWPF.Views
 {
     /// <summary>
-    /// Interaction logic for RentAgreementView.xaml
+    /// Interaction logic for RentAgreementChooseShelfView.xaml
     /// </summary>
-    public partial class ShelfVendorView : Page
+    public partial class RentAgreementChooseShelfView : Page
     {
-        public ShelfVendorView(ShelfVendorViewModel viewModel)
+        public RentAgreementChooseShelfView(RentAgreementViewModel viewmodel)
         {
-            // Datacontext kommer fra DIcontainer.cs
-            // Det sendes med i parameter fra DIcontainer, da ShelfVendorViewModel er oprettet der samt view
-            // Så DIcontainer ved, at når der bliver spurgt om "ShelfVendorViewModel" her, så skal det sendes herover.
+            // ViewModel sendes fra DIcontainer.cs
             InitializeComponent();
-            DataContext = viewModel;
+            DataContext = viewmodel;
         }
     }
 }

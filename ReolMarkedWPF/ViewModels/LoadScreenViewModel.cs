@@ -1,27 +1,35 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows;
+using System.Windows.Threading;
 
-namespace ReolMarkedWPF.ViewModel
+namespace ReolMarkedWPF.ViewModels
 {
-    internal class LoadScreenViewModel
+    public class LoadScreenViewModel
     {
-        // Constructor
-        public LoadScreenViewModel()
-            {
-        }
-        public ICommand OpenUpCommand { get; set; }
+        /*private readonly Window _mainWindow;
 
-        //Launcher til MainVindow
-
-        public void OpenUp()
+        public LoadScreenViewModel(Window mainWindow)
         {
-            // Open MainWindow
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            _mainWindow = mainWindow;
+
+            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
 
-        public void OpenRentAgreement()
+        private void Timer_Tick(object? sender, EventArgs e)
         {
-        }
+            var timer = (DispatcherTimer)sender!;
+            timer.Stop();
 
+            // Show the real main window and close the splash (current MainWindow)
+            _mainWindow.Show();
+
+            // Close the splash (current MainWindow) safely
+            Application.Current.MainWindow?.Close();
+
+            // Promote the real main window
+            Application.Current.MainWindow = _mainWindow;
+        }*/
     }
 }

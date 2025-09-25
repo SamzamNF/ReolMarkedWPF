@@ -1,30 +1,54 @@
-﻿using ReolMarkedWPF.Helpers;
-using ReolMarkedWPF.Models;
-using ReolMarkedWPF.View;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Views;
 
 namespace ReolMarkedWPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly INavigationService _navigationService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MainViewModel(INavigationService navigationService)
+
+        // ServiceProvider bliver sendt fra DIcontainer, og det kommer fra at der bliver spurgt om et MainViewModel i app.xaml.cs
+        // DI-Container ser så der er en konstruktør og ved at den skal sende sig selv afsted.
+        // Dette virker, fordi MainViewModel er oprettet i DIcontainer.cs
+        // Det gør, at MainViewModel kan hente andre services og views fra containeren efter behov.
+        public MainViewModel(IServiceProvider serviceProvider)
         {
-            _navigationService = navigationService;
+            _serviceProvider = serviceProvider;
 
-            // Naviger til Welcome.xaml ved opstart
-            _navigationService.Navigate(new Welcome());
+            // Start på Welcome-siden
+            CurrentView = _serviceProvider.GetRequiredService<Welcome>();
         }
 
-        // Kommandoer til venstre menu
-        public RelayCommand ShowRentCommand =>
-            new RelayCommand(_ => _navigationService.Navigate(new RentAgreementView()));
+        private object _currentView;
+        public object CurrentView
+        {
+            get => _currentView;
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public RelayCommand ShowShelfVendorCommand =>
-            new RelayCommand(_ => _navigationService.Navigate(new ShelfVendorView()));
+        public RelayCommand ShowRentViewCommand => new RelayCommand(_ => ShowRentAgreement());
+        public RelayCommand ShowShelfVendorViewCommand => new RelayCommand(_ => ShowShelfVendor());
+        public RelayCommand ShowCreateRentViewCommand => new RelayCommand(_ => ShowChooseShelfForRent());
 
-        public RelayCommand ShowSettingsCommand =>
-            new RelayCommand(_ => _navigationService.Navigate(new SettingsView()));
+        
+        private void ShowChooseShelfForRent()
+        {
+            CurrentView = _serviceProvider.GetRequiredService<RentAgreementChooseShelfView>();
+        }
+
+        private void ShowShelfVendor()
+        {
+            CurrentView = _serviceProvider.GetRequiredService<ShelfVendorView>();
+        }
+        private void ShowRentAgreement()
+        {
+            CurrentView = _serviceProvider.GetRequiredService<RentAgreementView>();
+        }
     }
 }

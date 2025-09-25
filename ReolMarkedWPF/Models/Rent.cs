@@ -4,7 +4,7 @@
     {
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
-        public int RentID { get; set; }
+        public int RentAgreementID { get; set; }
         public int ShelfVendorID { get; set; }
     }
 }

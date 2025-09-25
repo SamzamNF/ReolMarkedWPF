@@ -9,11 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\middelbylogo.jfif" />
     <None Remove="Assets\Images\shelf.png" />
+    <None Remove="Assets\Images\shelfmarketfloor.png" />
     <None Remove="Assets\Images\ssslogo.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\Images\middelbylogo.jfif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Images\shelf.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -24,14 +29,20 @@
 
   <ItemGroup>
     <PackageReference Include="Csla.Data.SqlClient" Version="9.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DatabaseScripts\" />
+    <Resource Include="Assets\Images\shelfmarketfloor.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="ReolmarkedDB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

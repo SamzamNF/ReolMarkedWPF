@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReolMarkedWPF"
         mc:Ignorable="d"
-        Title="S.S.S: Super Shelf Scheduler" MinHeight="450" MinWidth="800" Foreground="Black" WindowStartupLocation="CenterScreen" WindowState="Maximized" Cursor="Arrow">
+        Title="ReolMarked MiddelBy" 
+        MinHeight="450" 
+        MinWidth="800" Foreground="Black" 
+        WindowStartupLocation="CenterScreen" 
+        WindowState="Maximized" 
+        Cursor="Arrow">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Green" Offset="1"/>
@@ -33,13 +38,37 @@
 
         <!-- Første kolonne -->
 
-        <Image Source="/Assets/Images/ssslogo.png" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Stretch="Uniform" Margin="10" Height="80"/>
+
+        <Image Source="/Assets/Images/middelbylogo.jfif"
+               Grid.Row="0"
+               Grid.Column="0"
+               HorizontalAlignment="Left"
+               Stretch="Uniform"
+               Margin="10"
+               Height="150"/>
 
         <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10">
             <Separator Background="DarkRed" Height="2" Margin="0,0,0,10"/>
-            <Button FontSize="20" FontWeight="Bold" Foreground="Black" Background="Orange" Content="Lejere" Width="180" Margin="0,5" Command="{Binding ShowRentCommand}"/>
-            <Button FontSize="20" FontWeight="Bold" Foreground="AntiqueWhite" Background="Maroon" Content="Reoler" Width="180" Margin="0,5" Command="{Binding ShowShelfVendorCommand}"/>
-            <Button FontSize="20" FontWeight="Bold" Foreground="AntiqueWhite" Background="DarkGreen" Content="Indstillinger" Width="180" Margin="0,5"/>
+            
+            
+            <Button FontSize="20"  FontWeight="Bold" 
+                    Foreground="Black" Background="Orange" 
+                    Content="Lejere" Width="180" Margin="0,5" 
+                    Command="{Binding ShowShelfVendorViewCommand}"/>
+            
+            
+            <Button FontSize="20" FontWeight="Bold" 
+                    Foreground="AntiqueWhite" Background="Maroon" 
+                    Content="Reoler" Width="180" Margin="0,5" 
+                    Command="{Binding ShowShelfViewCommand}"/>
+            
+            
+            <Button FontSize="20" FontWeight="Bold" 
+                    Foreground="AntiqueWhite" Background="DarkGreen" 
+                    Content="Adm. LejeAftaler" Width="180" Margin="0,5" 
+                    Command="{Binding ShowRentViewCommand}"/>
+
+
         </StackPanel>
 
         <!-- Anden kolonne -->
@@ -53,6 +82,7 @@
                NavigationUIVisibility="Hidden"
                Margin="10"
                Height="Auto"
-               Width="Auto"/>
+               Width="Auto"
+               Content="{Binding CurrentView}" />
     </Grid>
 </Window>

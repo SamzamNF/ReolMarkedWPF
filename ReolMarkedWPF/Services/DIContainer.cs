@@ -1,43 +1,50 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
+using ReolMarkedWPF.ViewModel;
 using ReolMarkedWPF.ViewModels;
+using ReolMarkedWPF.Views;
 
 namespace ReolMarkedWPF.Services
 {
     public static class DIContainer
     {
-        // En statisk property til at holde vores Service Provider, så den er tilgængelig i hele appen.
         public static IServiceProvider ServiceProvider { get; private set; }
 
         public static void Setup()
         {
             var services = new ServiceCollection();
 
-            // -- REGISTRER SERVICES HER --
 
-            // 1. Singleton: Connection String (der findes kun én instans af denne i hele appen)
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\ReolmarkedDB.mdf;Integrated Security=True";
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string? connectionString = config.GetConnectionString("DefaultConnection");
+
+            // Connection string
             services.AddSingleton(connectionString);
 
-            // 2. Repositories (Transient: En ny instans oprettes hver gang, der anmodes om en)
-            // "Når nogen beder om IShelfVendorRepository, så giv dem en ny SqlShelfVendorRepository."
+            // Repositories
             services.AddTransient<IShelfVendorRepository, SqlShelfVendorRepository>();
             services.AddTransient<IRentRepository<Rent>, SqlRentRepository>();
             services.AddTransient<IPaymentMethodRepository, SqlPaymentMethodRepository>();
-            // Tilføj fremtidige repositories her...
+            services.AddTransient<IShelfRepository, SqlShelfRepository>();
 
-            // 3. ViewModels (Transient)
+            // ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<ShelfVendorViewModel>();
             services.AddTransient<RentAgreementViewModel>();
-            // Tilføj fremtidige ViewModels her...
+            services.AddTransient<ShelfViewModel>();
 
-            // 4. Views (Transient)
-            // Registrerer MainWindow, så containeren kan bygge den.
+            // Views
             services.AddTransient<MainWindow>();
+            services.AddTransient<Welcome>();
+            services.AddTransient<ShelfVendorView>();
+            services.AddTransient<RentAgreementView>();
+            services.AddTransient<RentAgreementChooseShelfView>();
 
-            // Byg containeren
             ServiceProvider = services.BuildServiceProvider();
         }
     }

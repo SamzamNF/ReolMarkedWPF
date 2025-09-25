@@ -2,7 +2,7 @@
 
 namespace ReolMarkedWPF.Repositories
 {
-    internal interface IShelfRepository
+    public interface IShelfRepository
     {
         List<Shelf> GetAllShelves();
         void AddShelf(Shelf shelf);
