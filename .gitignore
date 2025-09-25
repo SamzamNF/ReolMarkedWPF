@@ -362,5 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Prevents appsettingsfrom being pushed
+# Configuration files with sensitive data
 appsettings.json
+/ReolMarkedWPF/appsettings.json
