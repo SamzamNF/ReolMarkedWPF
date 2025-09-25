@@ -364,3 +364,4 @@ FodyWeavers.xsd
 
 # Prevents appsettingsfrom being pushed
 appsettings.json
+/ReolMarkedWPF/appsettings.json
