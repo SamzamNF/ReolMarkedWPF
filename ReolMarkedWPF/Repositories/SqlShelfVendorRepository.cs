@@ -98,5 +98,10 @@ namespace ReolMarkedWPF.Repositories
                 command.ExecuteNonQuery();
             }
         }
+
+        public void ShowShelfVendors()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

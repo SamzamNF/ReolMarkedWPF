@@ -20,6 +20,14 @@ namespace ReolMarkedWPF.ViewModels
         private string _phoneNumber;
         private string _email;
 
+        //Felter til at hente betlingsoplysninger i Combobox i UI (fra Models)
+
+        public ObservableCollection<AccountPaymentOption> StatusOptions { get; }
+          = new ObservableCollection<AccountPaymentOption>(Enum.GetValues(typeof(AccountPaymentOption)).Cast<AccountPaymentOption>());
+
+        private AccountPaymentOption _selectedStatus;
+
+
         // Den offentlige liste af sælgere, som UI'en (f.eks. en ListBox) binder til.
         public ObservableCollection<ShelfVendor> ShelfVendors { get; set; }
 
@@ -48,6 +56,20 @@ namespace ReolMarkedWPF.ViewModels
         public string PhoneNumber { get => _phoneNumber; set { _phoneNumber = value; OnPropertyChanged(); } }
         public string Email { get => _email; set { _email = value; OnPropertyChanged(); } }
 
+        //Properties til Combobox for betalingsoplysninger
+
+        public AccountPaymentOption SelectedStatus
+
+            {
+            get => _selectedStatus;
+            set
+                
+            {
+                _selectedStatus = value;
+                OnPropertyChanged(nameof(SelectedStatus));
+            }
+        }
+
 
         // Kommandoer, som knapper i UI'en binder til.
         public RelayCommand AddShelfVendorCommand { get; }
@@ -67,6 +89,12 @@ namespace ReolMarkedWPF.ViewModels
             EditShelfVendorCommand = new RelayCommand(execute => EditShelfVendor(), canExecute => CanEditOrDelete());
             DeleteShelfVendorCommand = new RelayCommand(execute => DeleteShelfVendor(), canExecute => CanEditOrDelete());
         }
+
+        //Metoder, til brug for Combobox betalingsoplysninger
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         // Metode til at tilføje en ny sælger.
         private void AddShelfVendor()
@@ -134,3 +162,8 @@ namespace ReolMarkedWPF.ViewModels
         private bool CanEditOrDelete() => SelectedShelfVendor != null;
     }
 }
+
+
+
+
+

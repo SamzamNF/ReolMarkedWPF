@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using ReolMarkedWPF.Models;
+using ReolMarkedWPF.Repositories;
+using ReolMarkedWPF.ViewModels;
+using ReolMarkedWPF.Helpers;
+using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using ReolMarkedWPF.Services;
 using ReolMarkedWPF.Views;
@@ -10,9 +14,12 @@ namespace ReolMarkedWPF
 {
     public partial class App : Application
     {
+        public INavigationService NavigationService { get; private set; }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            NavigationService = new NavigationService(); // Replace with your actual implementation
 
 
 

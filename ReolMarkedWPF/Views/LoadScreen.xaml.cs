@@ -3,12 +3,10 @@ using System.Windows.Threading;
 
 namespace ReolMarkedWPF.View
 {
-    /// <summary>
-    /// Interaction logic for LoadScreen.xaml
-    /// </summary>
     public partial class LoadScreen : Window
     {
-        public LoadScreen()
+        // Modtag MainWindow i konstruktøren i stedet for at oprette en ny
+        public LoadScreen(MainWindow mainWindow)
         {
             InitializeComponent();
         }
