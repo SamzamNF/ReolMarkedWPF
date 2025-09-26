@@ -3,7 +3,7 @@ using ReolMarkedWPF.Models;
 
 namespace ReolMarkedWPF.Repositories
 {
-    public class SqlRentRepository : IRentRepository<Rent>
+    internal class SqlRentRepository : IRentRepository<Rent>
     {
         private readonly string _connectionString;
 
