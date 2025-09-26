@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Definerer en stil til RadioButton, som bygger på den eksisterende ToggleButton-stil. x:key bruges til at navngive ressource, så den senere kan bruges med StaticResource fx -->
+    <Style BasedOn="{StaticResource {x:Type ToggleButton}}"
+           TargetType="{x:Type RadioButton}"
+           x:Key="MenuButtonTheme">
+
+        <!-- Temaets indhold her -->
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="{TemplateBinding Background}">
+
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Margin="0"/>
+
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <!-- Default baggrund -->
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style.Setters>
+
+        <!-- Baggrund når knap er toggled -->
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="true">
+                <Setter Property="Background" Value="#662DA82D"/>
+            </Trigger>
+
+            <!-- Mouseover -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#552BCB2B"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+
+</ResourceDictionary>
