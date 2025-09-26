@@ -13,7 +13,7 @@ namespace ReolMarkedWPF.ViewModel
         private readonly IShelfRepository _shelfRepository;
 
         private int _shelfNumber;
-        private int _rentAgreementID;
+        private int? _rentAgreementID;
         private string _shelfType;
         private decimal _price;
         private ObservableCollection<Shelf> _shelves;
@@ -29,7 +29,7 @@ namespace ReolMarkedWPF.ViewModel
             }
         }
 
-        public int RentAgreementID
+        public int? RentAgreementID
         {
             get => _rentAgreementID;
             set
@@ -96,7 +96,7 @@ namespace ReolMarkedWPF.ViewModel
                 ShelfNumber = this.ShelfNumber,
                 ShelfType = this.ShelfType,
                 Price = this.Price,
-                RentAgreementID = this.RentAgreementID
+                RentAgreementID = null
             };
 
             _shelfRepository.AddShelf(shelf);

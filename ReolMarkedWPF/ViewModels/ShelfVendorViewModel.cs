@@ -12,6 +12,7 @@ namespace ReolMarkedWPF.ViewModels
     {
         // Reference til repository-laget for at hente/gemme data.
         private readonly IShelfVendorRepository _repository;
+        private readonly IPaymentMethodRepository _methodRepository;
 
         // Private felter til at holde styr på UI-input.
         private ShelfVendor _selectedShelfVendor;
@@ -19,13 +20,11 @@ namespace ReolMarkedWPF.ViewModels
         private string _lastName;
         private string _phoneNumber;
         private string _email;
+        private string _paymentInfo;
+        private string _selectedPaymentOption;
 
-        //Felter til at hente betlingsoplysninger i Combobox i UI (fra Models)
-
-        public ObservableCollection<AccountPaymentOption> StatusOptions { get; }
-          = new ObservableCollection<AccountPaymentOption>(Enum.GetValues(typeof(AccountPaymentOption)).Cast<AccountPaymentOption>());
-
-        private AccountPaymentOption _selectedStatus;
+        // Liste til at hente betlingsoplysninger i Combobox i UI (fra Models)
+        public List<string> PaymentOptions { get; } = new List<string> { "MobilePay", "Bankoverførsel" };
 
 
         // Den offentlige liste af sælgere, som UI'en (f.eks. en ListBox) binder til.
@@ -46,6 +45,7 @@ namespace ReolMarkedWPF.ViewModels
                     LastName = value.LastName;
                     PhoneNumber = value.PhoneNumber;
                     Email = value.Email;
+
                 }
             }
         }
@@ -55,20 +55,9 @@ namespace ReolMarkedWPF.ViewModels
         public string LastName { get => _lastName; set { _lastName = value; OnPropertyChanged(); } }
         public string PhoneNumber { get => _phoneNumber; set { _phoneNumber = value; OnPropertyChanged(); } }
         public string Email { get => _email; set { _email = value; OnPropertyChanged(); } }
+        public string PaymentInfo { get => _paymentInfo; set { _paymentInfo = value; OnPropertyChanged(); } }
+        public string SelectedPaymentOption { get => _selectedPaymentOption; set { _selectedPaymentOption = value; OnPropertyChanged(); } }
 
-        //Properties til Combobox for betalingsoplysninger
-
-        public AccountPaymentOption SelectedStatus
-
-            {
-            get => _selectedStatus;
-            set
-                
-            {
-                _selectedStatus = value;
-                OnPropertyChanged(nameof(SelectedStatus));
-            }
-        }
 
 
         // Kommandoer, som knapper i UI'en binder til.
@@ -77,9 +66,10 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand DeleteShelfVendorCommand { get; }
 
         // Konstruktør: Initialiserer ViewModel'en.
-        public ShelfVendorViewModel(IShelfVendorRepository repository)
+        public ShelfVendorViewModel(IShelfVendorRepository repository, IPaymentMethodRepository methodRepository)
         {
             _repository = repository;
+            _methodRepository = methodRepository;
 
             // Henter alle sælgere fra databasen, når view-modellen oprettes.
             ShelfVendors = new ObservableCollection<ShelfVendor>(_repository.GetAllShelfVendors());
@@ -88,6 +78,7 @@ namespace ReolMarkedWPF.ViewModels
             AddShelfVendorCommand = new RelayCommand(execute => AddShelfVendor(), canExecute => CanAdd());
             EditShelfVendorCommand = new RelayCommand(execute => EditShelfVendor(), canExecute => CanEditOrDelete());
             DeleteShelfVendorCommand = new RelayCommand(execute => DeleteShelfVendor(), canExecute => CanEditOrDelete());
+            _methodRepository = methodRepository;
         }
 
         //Metoder, til brug for Combobox betalingsoplysninger
@@ -107,8 +98,20 @@ namespace ReolMarkedWPF.ViewModels
                 Email = this.Email
             };
 
-            _repository.AddShelfVendor(newVendor); // Gemmer i DB.
+            // Henter ID direkte fra DB efter det oprettes
+            int newId = _repository.AddShelfVendor(newVendor); // Gemmer i DB.
             ShelfVendors.Add(newVendor); // Opdaterer listen i UI.
+
+            var paymentMethod = new PaymentMethod
+            {
+                ShelfVendorID = newId,
+                //SelectedPaymentOption kommer fra ComboBox i view, som sender det til property her
+                PaymentOption = this.SelectedPaymentOption,
+                PaymentInfo = this.PaymentInfo
+            };
+
+            _methodRepository.AddPaymentMethod(paymentMethod);
+
             ClearFields(); // Nulstiller input-felter.
         }
 
@@ -155,10 +158,12 @@ namespace ReolMarkedWPF.ViewModels
             PhoneNumber = string.Empty;
             Email = string.Empty;
             SelectedShelfVendor = null;
+            PaymentInfo = string.Empty;
         }
 
         // Betingelser, der afgør, om knapperne skal være aktive.
-        private bool CanAdd() => !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(Email);
+        private bool CanAdd() => !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(Email)
+                                   && !string.IsNullOrEmpty(PaymentInfo) && !string.IsNullOrEmpty(SelectedPaymentOption);
         private bool CanEditOrDelete() => SelectedShelfVendor != null;
     }
 }

@@ -14,10 +14,12 @@ namespace ReolMarkedWPF.Repositories
         
         // Sætter data ind til en RENT_AGREEMENT der bliver oprettet. 
         // Der indsættes ikke et RentAgreementID - Da oprettes med IDENTITY automatisk
-        public void AddRent(Rent rent)
+        public int AddRent(Rent rent)
         {
-            string query = "INSERT INTO RENT_AGREEMENT (StartDate, EndDate, ShelfVendorID) VALUES (@StartDate, @EndDate, @ShelfVendorID)";
-            
+            string query = "INSERT INTO RENT_AGREEMENT (StartDate, EndDate, ShelfVendorID) " +
+                           "OUTPUT inserted.RentAgreementID" +
+                           "VALUES (@StartDate, @EndDate, @ShelfVendorID)";
+
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -27,7 +29,9 @@ namespace ReolMarkedWPF.Repositories
                 command.Parameters.AddWithValue("@ShelfVendorID", rent.ShelfVendorID);
 
                 connection.Open();
-                command.ExecuteNonQuery();
+                int newId = (int)command.ExecuteScalar(); // Henter ID direkte fra databasen
+
+                return newId;
 
             }
         }
@@ -55,16 +59,12 @@ namespace ReolMarkedWPF.Repositories
         // Henter en liste af alle de rent_agreements der findes i databasen, ved at oprette objekter ud fra dem og så returnere dem i en liste
         public List<Rent> GetAllRents()
         {
-            //{
-            //    // ⚠️ midlertidig: spring DB over
-            //    return new List<Rent>();
-            //}
             var rents = new List<Rent>();
             string query = "SELECT * FROM RENT_AGREEMENT";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                /*SqlCommand command = new SqlCommand(query, connection);
+                SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -75,11 +75,11 @@ namespace ReolMarkedWPF.Repositories
                         {
                             StartDate = DateOnly.FromDateTime((DateTime)reader["StartDate"]),
                             EndDate = DateOnly.FromDateTime((DateTime)reader["EndDate"]),
-                            RentID = (int)reader["RentAgreementID"],
+                            RentAgreementID = (int)reader["RentAgreementID"],
                             ShelfVendorID = (int)reader["ShelfVendorID"]
                         });
                     }
-                }*/
+                }
             }
             return rents;
         }

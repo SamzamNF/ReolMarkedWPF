@@ -45,9 +45,10 @@ namespace ReolMarkedWPF.Repositories
         }
 
         // Tilføjer en ny sælger til databasen.
-        public void AddShelfVendor(ShelfVendor shelfVendor)
+        public int AddShelfVendor(ShelfVendor shelfVendor)
         {
-            /*string query = "INSERT INTO SHELF_VENDOR (FirstName, LastName, PhoneNumber, Email) " +
+            string query = "INSERT INTO SHELF_VENDOR (FirstName, LastName, PhoneNumber, Email) " +
+                           "OUTPUT inserted.ShelfVendorID " +
                            "VALUES (@FirstName, @LastName, @PhoneNumber, @Email)";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -59,8 +60,10 @@ namespace ReolMarkedWPF.Repositories
                 command.Parameters.AddWithValue("@Email", shelfVendor.Email);
 
                 connection.Open();
-                command.ExecuteNonQuery();
-            }*/
+                int newId = (int)command.ExecuteScalar();
+
+                return newId;
+            }
         }
 
         // Opdaterer en eksisterende sælgers information i databasen.

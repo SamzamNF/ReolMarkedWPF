@@ -1,258 +1,108 @@
-﻿<Page x:Class="ReolMarkedWPF.Views.ShelfVendorView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ReolMarkedWPF.Views"
-      xmlns:models="clr-namespace:ReolMarkedWPF.Models"
-      mc:Ignorable="d" 
-      d:DesignHeight="1080" d:DesignWidth="1920"
-      Title="ShelfVendorView">
+﻿<Page
+    x:Class="ReolMarkedWPF.Views.ShelfVendorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ReolMarkedWPF.Views"
+    mc:Ignorable="d"
+    d:DesignHeight="1080"
+    d:DesignWidth="1920"
+    Title="ShelfVendorView">
+
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <!-- Titel -->
-        <Border BorderBrush="DarkOrange" BorderThickness="1" HorizontalAlignment="Stretch">
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Lejere" FontSize="30" FontWeight="Bold" Margin="5,5,5,5" HorizontalAlignment="Stretch"></TextBlock>
+        <Border BorderBrush="DarkOrange" BorderThickness="1" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="0">
+            <TextBlock Text="Lejere" FontSize="30" FontWeight="Bold" Margin="5" HorizontalAlignment="Stretch"/>
         </Border>
-        <!-- Tabel med liste over lejeaftaler -->
 
-        <ListView Grid.Row="1" Grid.Column="0" Margin="5,5,5,5"           
-              ScrollViewer.VerticalScrollBarVisibility="Auto"
-          ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <!-- Bind fra SQL servere de gældende lejeaftaler her - nedenstående er pladsholdere! -->
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="ID" Width="Auto" DisplayMemberBinding="{Binding ShelfVendorID}" />
-                        <GridViewColumn Header="Fornavn" Width="Auto" DisplayMemberBinding="{Binding FirstName}" />
-                        <GridViewColumn Header="Efternavn" Width="Auto" DisplayMemberBinding="{Binding LastName}" />
-                        <GridViewColumn Header="Telefon" Width="Auto" DisplayMemberBinding="{Binding PhoneNumber}" />
-                        <GridViewColumn Header="E-mail" Width="Auto" DisplayMemberBinding="{Binding Email}" />
-                    </GridView>
-                </ListView.View>
+        <!-- DataGrid til liste over lejeaftaler -->
+        <DataGrid
+            Grid.Row="1" Grid.Column="0"
+            Margin="5"
+            ItemsSource="{Binding ShelfVendors}"
+            SelectedItem="{Binding SelectedShelfVendor, Mode=TwoWay}"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            SelectionMode="Single"
+            CanUserAddRows="False"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto">
 
-                <!-- OBS OBS OBS Pladsholder data, skal bare slettes ved DB implementering! -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ShelfVendorID}" Width="Auto" />
+                <DataGridTextColumn Header="Fornavn" Binding="{Binding FirstName}" Width="*" />
+                <DataGridTextColumn Header="Efternavn" Binding="{Binding LastName}" Width="*" />
+                <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" Width="*" />
+                <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" Width="2*" />
+            </DataGrid.Columns>
+        </DataGrid>
 
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="1" FirstName="Test1" LastName="User1" PhoneNumber="11111111" Email="user1@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="2" FirstName="Test2" LastName="User2" PhoneNumber="22222222" Email="user2@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="3" FirstName="Test3" LastName="User3" PhoneNumber="33333333" Email="user3@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="4" FirstName="Test4" LastName="User4" PhoneNumber="44444444" Email="user4@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="5" FirstName="Test5" LastName="User5" PhoneNumber="55555555" Email="user5@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="11" FirstName="Test11" LastName="User11" PhoneNumber="11111110" Email="user11@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="12" FirstName="Test12" LastName="User12" PhoneNumber="12121212" Email="user12@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="13" FirstName="Test13" LastName="User13" PhoneNumber="13131313" Email="user13@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="14" FirstName="Test14" LastName="User14" PhoneNumber="14141414" Email="user14@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="15" FirstName="Test15" LastName="User15" PhoneNumber="15151515" Email="user15@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="16" FirstName="Test16" LastName="User16" PhoneNumber="16161616" Email="user16@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="17" FirstName="Test17" LastName="User17" PhoneNumber="17171717" Email="user17@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="18" FirstName="Test18" LastName="User18" PhoneNumber="18181818" Email="user18@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="19" FirstName="Test19" LastName="User19" PhoneNumber="19191919" Email="user19@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="20" FirstName="Test20" LastName="User20" PhoneNumber="20202020" Email="user20@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="21" FirstName="Test21" LastName="User21" PhoneNumber="21212121" Email="user21@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="22" FirstName="Test22" LastName="User22" PhoneNumber="22222221" Email="user22@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="23" FirstName="Test23" LastName="User23" PhoneNumber="23232323" Email="user23@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="24" FirstName="Test24" LastName="User24" PhoneNumber="24242424" Email="user24@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="25" FirstName="Test25" LastName="User25" PhoneNumber="25252525" Email="user25@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="26" FirstName="Test26" LastName="User26" PhoneNumber="26262626" Email="user26@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="27" FirstName="Test27" LastName="User27" PhoneNumber="27272727" Email="user27@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="28" FirstName="Test28" LastName="User28" PhoneNumber="28282828" Email="user28@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="29" FirstName="Test29" LastName="User29" PhoneNumber="29292929" Email="user29@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="30" FirstName="Test30" LastName="User30" PhoneNumber="30303030" Email="user30@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="31" FirstName="Test31" LastName="User31" PhoneNumber="31313131" Email="user31@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="32" FirstName="Test32" LastName="User32" PhoneNumber="32323232" Email="user32@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="33" FirstName="Test33" LastName="User33" PhoneNumber="33333332" Email="user33@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="34" FirstName="Test34" LastName="User34" PhoneNumber="34343434" Email="user34@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="35" FirstName="Test35" LastName="User35" PhoneNumber="35353535" Email="user35@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="36" FirstName="Test36" LastName="User36" PhoneNumber="36363636" Email="user36@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="37" FirstName="Test37" LastName="User37" PhoneNumber="37373737" Email="user37@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="38" FirstName="Test38" LastName="User38" PhoneNumber="38383838" Email="user38@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="39" FirstName="Test39" LastName="User39" PhoneNumber="39393939" Email="user39@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="40" FirstName="Test40" LastName="User40" PhoneNumber="40404040" Email="user40@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="41" FirstName="Test41" LastName="User41" PhoneNumber="41414141" Email="user41@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="42" FirstName="Test42" LastName="User42" PhoneNumber="42424242" Email="user42@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <ListViewItem>
-                    <ListViewItem.Content>
-                        <models:ShelfVendor ShelfVendorID="43" FirstName="Test43" LastName="User43" PhoneNumber="43434343" Email="user43@example.com"/>
-                    </ListViewItem.Content>
-                </ListViewItem>
-                <!-- OBS OBS OBS Pladsholder data, skal bare slettes ved DB implementering! -->
+        <!-- Højre side kontroller -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" Width="300">
+            
+            <TextBlock Text="Fornavn:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="30" Margin="0,0,0,10"
+                     FontSize="20"/>
 
-            </ListView>
+            <TextBlock Text="Efternavn:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="30" Margin="0,0,0,10"
+                     FontSize="20"/>
 
-            <!-- Højre side kontroller -->
-       
-     <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,5,5,5" VerticalAlignment="Top" HorizontalAlignment="Center">
-            <TextBlock Text="Fornavn:" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBox Width="Auto" Height="30" Margin="0,0,0,10"/>
-            <TextBlock Text="Efternavn:" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBox Width="Auto" Height="30" Margin="0,0,0,10"/>
-            <TextBlock Text="E-mail:" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBox Width="Auto" Height="30" Margin="0,0,0,10"/>
-            <TextBlock Text="E-mail:" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBox Width="Auto" Height="30" Margin="0,0,0,10"/>
-            <TextBlock Text="Betalingsmetode" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
-            <ComboBox Width="Auto" Height="30" Margin="0,0,0,10">
-                <ComboBoxItem Content="MobilePay"></ComboBoxItem>
-                <ComboBoxItem Content="Bankoverførsel"></ComboBoxItem>
-            </ComboBox>
-            <Button Content="Tilføj ny lejeaftale" Width="150" Height="40" Margin="0,0,0,10" Background="DarkGreen" Foreground="White" FontWeight="Bold"/>
-            <Button Content="Rediger lejeaftale" Width="150" Height="40" Margin="0,0,0,10" Background="DarkOrange" Foreground="White" FontWeight="Bold"/>
-            <Button Content="Slet lejeaftale" Width="150" Height="40" Margin="0,0,0,10" Background="DarkRed" Foreground="White" FontWeight="Bold"/>
+            <TextBlock Text="Telefon:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
+                     Height="30" Margin="0,0,0,10"
+                     FontSize="20"/>
+
+            <TextBlock Text="E-mail:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="30" Margin="0,0,0,10"
+                     FontSize="20"/>
+
+            <TextBlock Text="Betalingsmetode:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <ComboBox
+                ItemsSource="{Binding PaymentOptions}"
+                SelectedItem="{Binding SelectedPaymentOption, Mode=TwoWay}"
+                Height="30" Margin="0,0,0,10" />
+
+            <TextBlock Text="Betalingsinformation:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBox Text="{Binding PaymentInfo, UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="0,0,0,10"/>
+
+            <Button
+                Content="Tilføj ny kunde"
+                Command="{Binding AddShelfVendorCommand}"
+                Width="150" Height="40" Margin="0,0,0,10"
+                Background="DarkGreen"
+                Foreground="White"
+                FontWeight="Bold" />
+
+            <Button
+                Content="Rediger kunde"
+                Command="{Binding EditShelfVendorCommand}"
+                Width="150" Height="40" Margin="0,0,0,10"
+                Background="DarkOrange"
+                Foreground="White"
+                FontWeight="Bold" />
+
+            <Button
+                Content="Slet kunde"
+                Command="{Binding DeleteShelfVendorCommand}"
+                Width="150" Height="40" Margin="0,0,0,10"
+                Background="DarkRed"
+                Foreground="White"
+                FontWeight="Bold" />
         </StackPanel>
     </Grid>
 </Page>

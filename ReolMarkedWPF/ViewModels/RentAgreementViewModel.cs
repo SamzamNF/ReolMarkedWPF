@@ -18,11 +18,13 @@ namespace ReolMarkedWPF.ViewModels
         // Repositories
         private readonly IRentRepository<Rent> _rentRepository;
         private readonly IShelfRepository _shelfRepository;
+        private readonly IShelfVendorRepository _shelfVendorRepository;
 
         // Felter
         private int _shelfVendorID;
         private DateOnly _startDate;
         private DateOnly _endDate;
+        private int _rentAgreementID;
         private ObservableCollection<Shelf> _shelves;
         private ObservableCollection<ShelfVendor> _shelfVendor;
         private ObservableCollection<Rent> _rentAgreements;
@@ -32,6 +34,15 @@ namespace ReolMarkedWPF.ViewModels
         private Rent _selectedRentAgreement;
 
         // Properties
+        public int RentAgreementID
+        {
+            get => _rentAgreementID;
+            set
+            {
+                _rentAgreementID = value;
+                OnPropertyChanged();
+            }
+        }
         public int ShelfVendorID
         {
             get => _shelfVendorID;
@@ -127,13 +138,15 @@ namespace ReolMarkedWPF.ViewModels
         // Konstruktør
         // Mangler repository til at hente shelfvendor og så hente data i listerne
         public RentAgreementViewModel(IRentRepository<Rent> rentRepository, IShelfRepository shelfRepository, 
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider, IShelfVendorRepository shelfVendorRepository)
         {
             this._rentRepository = rentRepository;
             this._shelfRepository = shelfRepository;
+            this._shelfVendorRepository = shelfVendorRepository;
 
             RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
             Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
+            ShelfVendors = new ObservableCollection<ShelfVendor>(_shelfVendorRepository.GetAllShelfVendors());
 
             
             // Henter den rigtige MainViewModel fra MainWindow, som er oprettet i App.xaml.cs, ved at hente fra den igangværende application
@@ -156,33 +169,25 @@ namespace ReolMarkedWPF.ViewModels
                 ShelfVendorID = SelectedShelfVendor.ShelfVendorID,
             };
 
-            _rentRepository.AddRent(rent);
+            // Henter det oprettede unikke ID fra db efter det er oprettet
+            int newRentID = _rentRepository.AddRent(rent);
 
+            // Sætter det midlertidige objekts attribut til det returnede ID fra db
+            rent.RentAgreementID = newRentID;
 
-            // Henter rentID fra databasen, ved at filtrere først efter ShelfVendor's ID
-            // Men da flere aftaler kan findes, så sortere den fra højeste ID først, og vælger så det højeste og (nyeste) ID
-            var newest = _rentRepository.GetAllRents()
-                            .Where(n => n.ShelfVendorID == rent.ShelfVendorID)
-                            .OrderByDescending(n => n.RentAgreementID)
-                            .FirstOrDefault();
+            // Tilføjer den til listen
+            RentAgreements.Add(rent);
 
-            
-            // Opdatere den valgte reol i lejekontraken, til at få RentID
-            if (newest != null)
+            // Finder den valgte reol og sætter dens id til den oprettede aftales ID
+            // Bruger null conditonal operator, og returner null hvis den ikke finder en SelectedShelf
+            var existingShelf = Shelves
+                                    .FirstOrDefault(s => s.ShelfNumber == SelectedShelf?.ShelfNumber);
+            if (existingShelf != null)
             {
-                RentAgreements.Add(newest);
-                
-                var existingShelf = Shelves
-                                    .FirstOrDefault(s => s.ShelfNumber == SelectedShelf.ShelfNumber);
-
-                if (existingShelf != null)
-                {
-                    existingShelf.RentAgreementID = newest.RentAgreementID;
-                    _shelfRepository.UpdateShelf(existingShelf);
-                }
-
-
+                existingShelf.RentAgreementID = newRentID;
+                _shelfRepository.UpdateShelf(existingShelf);
             }
+            
 
 
             ShelfVendorID = default;
@@ -197,16 +202,16 @@ namespace ReolMarkedWPF.ViewModels
          */
         private void DeleteRent()
         {
-            // Null-conditional operator sikrer at SelectedRentAgreement ikke er null, og hvis det er - returner den blot ingenting
-            // uden at crashe programmet
+            // Null-conditional operator (?.) sikrer at Hvis SelectedRentAgreement ikke er null, så prøv at hente RentAgreementID
+            // Hvis den er null (SelectedRentAgreement) - så returnes null i stedet for at kaste en NullReferenceException
             var rentToDelete = RentAgreements
                                 .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement?.RentAgreementID);
 
 
-            if (MessageBox.Show($"Er du sikker på, at du vil slette aftalen med ID - DETTE ER PERMANENT: {SelectedRentAgreement.RentAgreementID}?",
-                "Bekræft sletning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (rentToDelete != null)
             {
-                if (rentToDelete != null)
+                if (MessageBox.Show($"Er du sikker på, at du vil slette aftalen med ID - DETTE ER PERMANENT: {SelectedRentAgreement.RentAgreementID}?",
+                "Bekræft sletning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 {
                     try
                     {
@@ -219,7 +224,7 @@ namespace ReolMarkedWPF.ViewModels
 
                         if (shelfToRlease != null)
                         {
-                            shelfToRlease.RentAgreementID = 0;
+                            shelfToRlease.RentAgreementID = null;
                             _shelfRepository.UpdateShelf(shelfToRlease);
                         }
 
@@ -236,13 +241,13 @@ namespace ReolMarkedWPF.ViewModels
 
         
         /* Opdatere en lejeaftale ved brug af SelectedRentAgreement, så vælges det objekt ved at matche med dens ID i listen.
-           Ved brug af SelectedRentAgreement property opdateres vores normale StartDate & EndDate infelter til det valgte objekt
+           Ved brug af SelectedRentAgreement property opdateres vores normale StartDate & EndDate inputfelter til det valgte objekt
            Det valgte objekt opdateres så med det man har indtastet i felterne når metoden køres, ved at sætte rentToUpdates felter = den indtastede data
          */
         private void EditRent()
         {
             var rentToUpdate = RentAgreements
-                                .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement.RentAgreementID);
+                                .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement?.RentAgreementID);
 
             if (rentToUpdate != null)
             {
@@ -259,6 +264,35 @@ namespace ReolMarkedWPF.ViewModels
                     MessageBox.Show(ex.Message, "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
+            }
+        }
+
+        // Metode til at automatisk frigive reoler hvis lejeaftale er udløbet
+        private void ReleaseExpiredRentAgreement()
+        {
+            // Henter systemets nuværende dato
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+            foreach (var shelf in Shelves)
+            {
+                // Skip hvis reol ikke har en aktiv aftale
+                if (shelf.RentAgreementID == null)
+                    continue;
+
+                // Finder Aftale som passer til reol
+                var rent = RentAgreements
+                            .FirstOrDefault(r => r.RentAgreementID == shelf.RentAgreementID);
+
+                // Ekstra sikring hvis en aftale ikke findes, pga database fejl
+                if (rent == null)
+                    continue;
+
+                // Hvis today er størrere end EndDate, så nulstilles reolen
+                if (rent.EndDate < today)
+                {
+                    shelf.RentAgreementID = null;
+                    _shelfRepository.UpdateShelf(shelf);
+                }
             }
         }
 

@@ -44,7 +44,7 @@
                   IsReadOnly="True"
                   Background="Transparent">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Aftale ID" Binding="{Binding RentID}" Width="*" />
+                <DataGridTextColumn Header="Aftale ID" Binding="{Binding RentAgreementID}" Width="*" />
                 <DataGridTextColumn Header="Startdato" Binding="{Binding StartDate}" Width="*" />
                 <DataGridTextColumn Header="Slutdato" Binding="{Binding EndDate}" Width="*" />
                 <DataGridTextColumn Header="Shelfvendor" Binding="{Binding ShelfVendorID}" Width="*" />

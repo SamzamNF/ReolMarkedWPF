@@ -31,10 +31,8 @@ namespace ReolMarkedWPF.Repositories
                     {
                         methods.Add(new PaymentMethod
                         {
-                            PaymentMethodID = (int)reader["PaymentMethodID"],
                             ShelfVendorID = (int)reader["ShelfVendorID"],
-                            // Konverterer string fra DB til AccountPaymentOption enum.
-                            PaymentOption = (AccountPaymentOption)Enum.Parse(typeof(AccountPaymentOption), reader["PaymentOption"].ToString()),
+                            PaymentOption = reader["PaymentOption"].ToString(),
                             PaymentInfo = reader["PaymentInfo"].ToString()
                         });
                     }
@@ -53,7 +51,7 @@ namespace ReolMarkedWPF.Repositories
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@ShelfVendorID", paymentMethod.ShelfVendorID);
-                command.Parameters.AddWithValue("@PaymentOption", paymentMethod.PaymentOption.ToString());
+                command.Parameters.AddWithValue("@PaymentOption", paymentMethod.PaymentOption);
                 command.Parameters.AddWithValue("@PaymentInfo", paymentMethod.PaymentInfo);
 
                 connection.Open();
@@ -66,15 +64,14 @@ namespace ReolMarkedWPF.Repositories
         {
             string query = "UPDATE PAYMENT_METHOD SET ShelfVendorID = @ShelfVendorID, " +
                            "PaymentOption = @PaymentOption, PaymentInfo = @PaymentInfo " +
-                           "WHERE PaymentMethodID = @PaymentMethodID";
+                           "WHERE ShelfVendorID = @ShelfVendorID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@ShelfVendorID", paymentMethod.ShelfVendorID);
-                command.Parameters.AddWithValue("@PaymentOption", paymentMethod.PaymentOption.ToString());
+                command.Parameters.AddWithValue("@PaymentOption", paymentMethod.PaymentOption);
                 command.Parameters.AddWithValue("@PaymentInfo", paymentMethod.PaymentInfo);
-                command.Parameters.AddWithValue("@PaymentMethodID", paymentMethod.PaymentMethodID);
 
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -84,12 +81,12 @@ namespace ReolMarkedWPF.Repositories
         // Sletter en betalingsmetode baseret på dens unikke ID.
         public void DeletePaymentMethod(PaymentMethod paymentMethod)
         {
-            string query = "DELETE FROM PAYMENT_METHOD WHERE PaymentMethodID = @PaymentMethodID";
+            string query = "DELETE FROM PAYMENT_METHOD WHERE ShelfVendorID = @ShelfVendorID";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@PaymentMethodID", paymentMethod.PaymentMethodID);
+                command.Parameters.AddWithValue("@ShelfVendorID", paymentMethod.ShelfVendorID);
 
                 connection.Open();
                 command.ExecuteNonQuery();

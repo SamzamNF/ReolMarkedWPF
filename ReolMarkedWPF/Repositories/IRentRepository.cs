@@ -5,7 +5,7 @@
     public interface IRentRepository<T> where T : class
     {
         List<T> GetAllRents();
-        void AddRent(T rent);
+        int AddRent(T rent);
         void DeleteRent(T rent);
         void UpdateRent(T rent);
     }
