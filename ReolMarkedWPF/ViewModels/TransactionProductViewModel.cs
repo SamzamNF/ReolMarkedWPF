@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReolMarkedWPF.ViewModels
 {
-    internal class TransactionProductViewModel
+    public class TransactionProductViewModel
     {
     }
 }
