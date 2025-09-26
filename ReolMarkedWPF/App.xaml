@@ -4,6 +4,16 @@
              xmlns:local="clr-namespace:ReolMarkedWPF"
              ShutdownMode="OnMainWindowClose">
 
+    <Application.Resources>
+        <ResourceDictionary>
 
-        
+            <!-- Template til at skifte Radio Buttons med -->
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Theme/MenuButtonTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

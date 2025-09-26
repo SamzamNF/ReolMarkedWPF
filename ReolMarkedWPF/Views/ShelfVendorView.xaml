@@ -75,10 +75,13 @@
             <ComboBox
                 ItemsSource="{Binding PaymentOptions}"
                 SelectedItem="{Binding SelectedPaymentOption, Mode=TwoWay}"
-                Height="30" Margin="0,0,0,10" />
+                Height="30" Margin="0,0,0,10" 
+                FontSize="20"/>
 
             <TextBlock Text="Betalingsinformation:" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
-            <TextBox Text="{Binding PaymentInfo, UpdateSourceTrigger=PropertyChanged}" Height="30" Margin="0,0,0,10"/>
+            <TextBox Text="{Binding PaymentInfo, UpdateSourceTrigger=PropertyChanged}" 
+                     Height="30" Margin="0,0,0,10"
+                     FontSize="20"/>
 
             <Button
                 Content="Tilføj ny kunde"
