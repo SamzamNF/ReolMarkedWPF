@@ -59,7 +59,7 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ShowShelfVendorViewCommand}"/>
             
-            <RadioButton Content="Trip Database"
+            <RadioButton Content="Reoler"
                              Height="50"
                              Foreground="Black"
                              FontSize="18"
