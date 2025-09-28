@@ -5,45 +5,39 @@ using ReolMarkedWPF.Models;
 
 namespace ReolMarkedWPF.Repositories
 {
-    internal class SqlProductRepository : IProductRepository
+    public class SqlProductRepository : IProductRepository
     {
         private readonly string _connectionString;
         public SqlProductRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
+
         public List<Product> GetAllProducts()
         {
             var products = new List<Product>();
-
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string sql = @"
-                    SELECT ProductID, ShelfNumber, ProductName, UnitPrice, Amount
-                    FROM Product";
-
+                string sql = "SELECT ProductID, ShelfNumber, ProductName, UnitPrice, Amount FROM Product";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            var product = new Product
+                            products.Add(new Product
                             {
                                 ProductID = reader.GetInt32("ProductID"),
                                 ShelfNumber = reader.GetInt32("ShelfNumber"),
                                 ProductName = reader.GetString("ProductName"),
                                 UnitPrice = reader.GetDecimal("UnitPrice"),
                                 Amount = reader.GetInt32("Amount")
-                            };
-
-                            products.Add(product);
+                            });
                         }
                     }
                 }
             }
-
             return products;
         }
         public void AddProduct(Product product)

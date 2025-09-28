@@ -1,5 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace ReolMarkedWPF.Repositories
 {
@@ -11,16 +14,15 @@ namespace ReolMarkedWPF.Repositories
         {
             _connectionString = connectionString;
         }
+
         public List<Shelf> GetAllShelves()
         {
             var shelves = new List<Shelf>();
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                /*connection.Open();
-                string sql = @"
-                    SELECT ShelfNumber, ShelfType, Price, RentAgreementID 
-                    FROM Shelf";
+                connection.Open();
+                string sql = "SELECT ShelfNumber, ShelfType, Price, RentAgreementID FROM Shelf";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -33,37 +35,33 @@ namespace ReolMarkedWPF.Repositories
                                 ShelfNumber = reader.GetInt32("ShelfNumber"),
                                 ShelfType = reader.GetString("ShelfType"),
                                 Price = reader.GetDecimal("Price"),
-                                RentAgreementID = reader.GetInt32("RentAgreementID"),
+                                // Håndterer DBNull for nullable int
+                                RentAgreementID = reader.IsDBNull(reader.GetOrdinal("RentAgreementID")) ? (int?)null : reader.GetInt32("RentAgreementID")
                             };
-
                             shelves.Add(shelf);
                         }
                     }
-                }*/
+                }
             }
-
             return shelves;
         }
 
         public void AddShelf(Shelf shelf)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString)) // Der bruges using så connection automatisk lukker
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-
-                // @ er for læsbarheden
-                string sql = @"
-                    INSERT INTO Shelf (ShelfNumber, ShelfType, Price, RentAgreementID) 
-                    VALUES (@ShelfNumber, @ShelfType, @Price, @RentAgreementID)";
+                string sql = "INSERT INTO Shelf (ShelfNumber, ShelfType, Price, RentAgreementID) VALUES (@ShelfNumber, @ShelfType, @Price, @RentAgreementID)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@ShelfNumber", shelf.ShelfNumber);
                     command.Parameters.AddWithValue("@ShelfType", shelf.ShelfType);
                     command.Parameters.AddWithValue("@Price", shelf.Price);
-                    command.Parameters.AddWithValue("@RentAgreementID", shelf.RentAgreementID);
+                    // Håndterer nullable int
+                    command.Parameters.AddWithValue("@RentAgreementID", (object)shelf.RentAgreementID ?? DBNull.Value);
 
-                    command.ExecuteNonQuery();  // Returnerer et antal på hvor mange rækker der blev påvirket
+                    command.ExecuteNonQuery();
                 }
             }
         }
@@ -73,14 +71,11 @@ namespace ReolMarkedWPF.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string sql = @"
-                    DELETE FROM Shelf 
-                    WHERE ShelfNumber = @ShelfNumber";
+                string sql = "DELETE FROM Shelf WHERE ShelfNumber = @ShelfNumber";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@ShelfNumber", shelf.ShelfNumber);
-
                     command.ExecuteNonQuery();
                 }
             }
@@ -91,20 +86,14 @@ namespace ReolMarkedWPF.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string sql = @"
-                    UPDATE Shelf 
-                    SET ShelfType = @ShelfType, 
-                        Price = @Price, 
-                        RentAgreementID = @RentAgreementID 
-                    WHERE ShelfNumber = @ShelfNumber";
+                string sql = "UPDATE Shelf SET ShelfType = @ShelfType, Price = @Price, RentAgreementID = @RentAgreementID WHERE ShelfNumber = @ShelfNumber";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.Parameters.AddWithValue("@ShelfNumber", shelf.ShelfNumber);
                     command.Parameters.AddWithValue("@ShelfType", shelf.ShelfType);
                     command.Parameters.AddWithValue("@Price", shelf.Price);
-                    command.Parameters.AddWithValue("@RentAgreementID", shelf.RentAgreementID);
-
+                    command.Parameters.AddWithValue("@RentAgreementID", (object)shelf.RentAgreementID ?? DBNull.Value);
                     command.ExecuteNonQuery();
                 }
             }

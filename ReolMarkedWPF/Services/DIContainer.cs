@@ -16,14 +16,12 @@ namespace ReolMarkedWPF.Services
         {
             var services = new ServiceCollection();
 
-
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
             string? connectionString = config.GetConnectionString("DefaultConnection");
 
-            // Connection string
             services.AddSingleton(connectionString);
 
             // Repositories
