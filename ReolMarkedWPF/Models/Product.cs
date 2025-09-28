@@ -1,6 +1,6 @@
 ﻿namespace ReolMarkedWPF.Models
 {
-    internal class Product
+    public class Product
     {
         public int ProductID { get; set; }          // PK
         public int ShelfNumber {  get; set; }       // FK

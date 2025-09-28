@@ -6,28 +6,43 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using ReolMarkedWPF.Repositories;
+using ReolMarkedWPF.Helpers;
 
 namespace ReolMarkedWPF.ViewModels
 {
     //Viewmodel til TransactionProduct
 
-    public class TransactionProductViewModel
+    public class TransactionProductViewModel : ViewModelBase
     {
-        private ObservableCollection<TransactionProduct> orderDetails;
+        private ObservableCollection<TransactionProduct> _orderDetails;
+        private ObservableCollection<TransactionProduct> _allOrderDetails;
+
+
+        // Denne liste bruges til at holde på "indkøbskurven" i TransactionViewModel
         public ObservableCollection<TransactionProduct> OrderDetails
         {
-            get { return orderDetails; }
-            set { orderDetails = value; }
+            get => _orderDetails;
+            set
+            {
+                _orderDetails = value;
+                OnPropertyChanged();
+            }
+
         }
-        private ObservableCollection<ITransactionProductRepository> _rentViewModel;
-        public ObservableCollection<ITransactionProductRepository> RentViewModel
+        // Denne liste holder på ALLE TranskationProdukter, som kan bruges til det samlede datagrid i view
+        public ObservableCollection<TransactionProduct> AllOrderDetails
         {
-            get { return _rentViewModel; }
-            set { _rentViewModel = value; }
+            get => _allOrderDetails;
+            set
+            {
+                _allOrderDetails = value;
+                OnPropertyChanged();
+            }
+
         }
+        private readonly ITransactionProductRepository _transactionProductRepository;
 
         //Til brug i viewet
-
         private TransactionProduct _selectedOrderDetail;
         public TransactionProduct SelectedOrderDetail
         {
@@ -35,7 +50,7 @@ namespace ReolMarkedWPF.ViewModels
             set
             {
                 _selectedOrderDetail = value;
-                //NotifyPropertyChanged(nameof(SelectedOrderDetail)); (bind til XAML senere)
+                OnPropertyChanged();
             }
         }
 
@@ -43,8 +58,8 @@ namespace ReolMarkedWPF.ViewModels
 
         public TransactionProductViewModel(ITransactionProductRepository repository)
         {
-            OrderDetails = new ObservableCollection<TransactionProduct>();
-            RentViewModel = new ObservableCollection<ITransactionProductRepository>();
+            this._transactionProductRepository = repository;
+            AllOrderDetails = new ObservableCollection<TransactionProduct>(_transactionProductRepository.GetAllTransactionProducts());
             SelectedOrderDetail = null;
         }
     }

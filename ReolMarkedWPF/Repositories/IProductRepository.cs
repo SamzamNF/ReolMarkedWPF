@@ -2,7 +2,7 @@
 
 namespace ReolMarkedWPF.Repositories
 {
-    internal interface IProductRepository
+    public interface IProductRepository
     {
         public List<Product> GetAllProducts();
         public void AddProduct(Product product);

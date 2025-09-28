@@ -81,11 +81,6 @@ namespace ReolMarkedWPF.ViewModels
             _methodRepository = methodRepository;
         }
 
-        //Metoder, til brug for Combobox betalingsoplysninger
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
         // Metode til at tilføje en ny sælger.
         private void AddShelfVendor()

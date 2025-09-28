@@ -5,7 +5,7 @@ using ReolMarkedWPF.Models;
 
 namespace ReolMarkedWPF.Repositories
 {
-    internal class SqlProductRepository
+    internal class SqlProductRepository : IProductRepository
     {
         private readonly string _connectionString;
         public SqlProductRepository(string connectionString)
