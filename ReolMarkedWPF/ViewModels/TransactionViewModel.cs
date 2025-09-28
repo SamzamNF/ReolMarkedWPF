@@ -166,7 +166,7 @@ namespace ReolMarkedWPF.ViewModels
             // Tilføjer transkationen til listen
             Transactions.Add(transaction);
 
-            // Bruger nu listen "OrderDetails" for at sætte ID på alle tingene der er sat ind i indkøbslisten
+            // Bruger nu listen "OrderDetails" (Som holder alle TransaktionProdukter) for at sætte ID på alle tingene der er sat ind i indkøbslisten
             foreach (var product in TpVm.OrderDetails)
             {
                 product.TransactionID = newId;
