@@ -33,6 +33,8 @@ namespace ReolMarkedWPF.ViewModels
         private Shelf _selectedShelf;
         private Product _selectedProduct;
 
+        // Liste, der holder på detaljerne for en enkelt, valgt transaktion.
+        public ObservableCollection<TransactionDetailItem> SelectedTransactionDetails { get; set; }
 
 
         // Properties 
@@ -53,8 +55,38 @@ namespace ReolMarkedWPF.ViewModels
             {
                 _selectedtransaction = value;
                 OnPropertyChanged();
-                // Sætter tekstbokse til at automatisk være det, som SelectedTransaction objektet er
-                this.TransactionDate = value.TransactionDate;
+
+                // Når en transaktion vælges, udføres dette automatisk:
+                if (value != null)
+                {
+                    // Sætter tekstbokse til at automatisk være det, som SelectedTransaction objektet er
+                    this.TransactionDate = value.TransactionDate;
+
+                    // Rydder den gamle liste for at vise nye detaljer
+                    SelectedTransactionDetails.Clear();
+
+                    // Finder alle varelinjer der matcher den valgte transaktions ID
+                    var transactionProducts = TpVm.AllOrderDetails
+                                                  .Where(tp => tp.TransactionID == value.TransactionID);
+
+                    foreach (var tp in transactionProducts)
+                    {
+                        // Finder det tilhørende produktnavn
+                        var product = Products.FirstOrDefault(p => p.ProductID == tp.ProductID);
+                        var detailItem = new TransactionDetailItem
+                        {
+                            ProductName = product?.ProductName ?? "Produkt ikke fundet",
+                            Amount = tp.Amount,
+                            UnitPrice = tp.UnitPrice
+                        };
+                        SelectedTransactionDetails.Add(detailItem);
+                    }
+                }
+                else
+                {
+                    // Hvis ingen transaktion er valgt (f.eks. ved sletning), ryddes detalje-listen.
+                    SelectedTransactionDetails.Clear();
+                }
             }
         }
         // Vælger en Reol (Til en combobox evt) - Opdatere automatisk listen med ShelfProducts til at kun have produkter,
@@ -69,7 +101,7 @@ namespace ReolMarkedWPF.ViewModels
                 UpdateProductShelfList();
             }
         }
-        
+
         // Vælger produkt som så kan tilføjes til indkøbskurven
         public Product SelectedProduct
         {
@@ -83,7 +115,7 @@ namespace ReolMarkedWPF.ViewModels
 
 
         // Lister
-        
+
         // Holder listen over transaktioner
         public ObservableCollection<Transaction> Transactions
         {
@@ -130,7 +162,7 @@ namespace ReolMarkedWPF.ViewModels
         // Konstruktør
         public TransactionViewModel(ITransactionRepository<Transaction> tRepository, IShelfRepository sRepository,
                                     IProductRepository pRepository,
-                                    ITransactionProductRepository tPrepository, 
+                                    ITransactionProductRepository tPrepository,
                                     TransactionProductViewModel transactionProductViewModel)
         {
             this._transactionRepository = tRepository;
@@ -140,11 +172,13 @@ namespace ReolMarkedWPF.ViewModels
 
             this._transactionProductViewModel = transactionProductViewModel;
 
-            Transactions = new ObservableCollection<Transaction>(_transactionRepository.GetAllTransactions());         
+            Transactions = new ObservableCollection<Transaction>(_transactionRepository.GetAllTransactions());
             Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
             Products = new ObservableCollection<Product>(_productRepository.GetAllProducts());
             ShelfProducts = new ObservableCollection<Product>();
 
+            // Opretter listen til at holde varelinjerne for en valgt transaktion.
+            SelectedTransactionDetails = new ObservableCollection<TransactionDetailItem>();
         }
 
         // Metoder
@@ -159,10 +193,10 @@ namespace ReolMarkedWPF.ViewModels
 
             // Transaktionen tilføjes til DB og returnere et ID
             int newId = _transactionRepository.AddTransaction(transaction);
-            
+
             // Det oprettede ID fra DB sættes på objektet
             transaction.TransactionID = newId;
-            
+
             // Tilføjer transkationen til listen
             Transactions.Add(transaction);
 
@@ -176,10 +210,8 @@ namespace ReolMarkedWPF.ViewModels
             TpVm.OrderDetails.Clear();
 
             TransactionDate = default;
-
         }
 
-        
         // Metode som sletter transaktion fra DB & memory ---- BRUGER CASCADE PÅ TRANSAKTIONPRODUCT OG SLETTER ALT FORBUNDET
         private void DeleteTransaction()
         {
@@ -227,7 +259,6 @@ namespace ReolMarkedWPF.ViewModels
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
-
                 }
             }
         }
@@ -303,7 +334,7 @@ namespace ReolMarkedWPF.ViewModels
 
                 // Clear den nuværende liste af ShelfProdukter
                 ShelfProducts.Clear();
-                
+
                 // Tilføjer alle produkterne til listen
                 foreach (var product in filteredProducts)
                 {
@@ -324,7 +355,7 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand AddTransactionCommand => new RelayCommand(execute => AddTransaction(), canExecute => CanAddTransaction());
         public RelayCommand DeleteTransactionCommand => new RelayCommand(execute => DeleteTransaction(), canExecute => CanDeleteTransaction());
         public RelayCommand EditTrasnactionCommand => new RelayCommand(exeute => EditTransaction(), canExecute => CanEditTransaction());
-        
+
         // Knap til at tilføje ting til "orderdetails" (indkøbskurven)
         public RelayCommand AddToOrderDetailsCommand => new RelayCommand(execute => AddProductToTransaction(), canExecute => CanAddToOrderDetails());
         // Knap til at fjerne ting fra "orderdetails" (indkøbskurven)
@@ -334,7 +365,7 @@ namespace ReolMarkedWPF.ViewModels
 
         private bool CanAddTransaction() => TpVm.OrderDetails.Count > 0;
         private bool CanDeleteTransaction() => SelectedTransaction != null;
-        private bool CanEditTransaction() => SelectedTransaction != null && 
+        private bool CanEditTransaction() => SelectedTransaction != null &&
                                              TransactionDate != default;
         private bool CanAddToOrderDetails() => SelectedProduct != null;
         private bool CanRemoveFromOrderDetails() => TpVm.SelectedOrderDetail != null;

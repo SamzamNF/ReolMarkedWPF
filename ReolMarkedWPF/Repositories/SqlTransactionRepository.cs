@@ -1,6 +1,4 @@
-﻿using System.Data;
-using System.Text;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
 
 namespace ReolMarkedWPF.Repositories

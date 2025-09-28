@@ -1,8 +1,4 @@
-﻿using ReolMarkedWPF.Helpers;
-using ReolMarkedWPF.View;
-using ReolMarkedWPF.ViewModels;
-using System.Windows;
-using System.Windows.Navigation;
+﻿using System.Windows;
 
 namespace ReolMarkedWPF
 {

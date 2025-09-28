@@ -1,9 +1,4 @@
 ﻿using ReolMarkedWPF.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using ReolMarkedWPF.Repositories;
 using ReolMarkedWPF.Helpers;
@@ -60,6 +55,8 @@ namespace ReolMarkedWPF.ViewModels
         {
             this._transactionProductRepository = repository;
             AllOrderDetails = new ObservableCollection<TransactionProduct>(_transactionProductRepository.GetAllTransactionProducts());
+            // Tilføjelse: Oprettelse af tom liste
+            OrderDetails = new ObservableCollection<TransactionProduct>();
             SelectedOrderDetail = null;
         }
     }
