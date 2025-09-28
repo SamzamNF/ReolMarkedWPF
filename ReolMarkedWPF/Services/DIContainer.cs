@@ -29,8 +29,9 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<IRentRepository<Rent>, SqlRentRepository>();
             services.AddTransient<IPaymentMethodRepository, SqlPaymentMethodRepository>();
             services.AddTransient<IShelfRepository, SqlShelfRepository>();
-            services.AddTransient<ITransactionRepository<Transaction>, SqlTransactionRepository>();
             services.AddTransient<IProductRepository, SqlProductRepository>();
+            services.AddTransient<ITransactionRepository<Transaction>, SqlTransactionRepository>();
+            services.AddTransient<ITransactionProductRepository, SqlTransactionProductRepository>();
 
             // ViewModels
             services.AddTransient<MainViewModel>();

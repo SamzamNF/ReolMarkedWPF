@@ -1,34 +1,31 @@
 ﻿using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
+using System.Collections.Generic;
 
 namespace ReolMarkedWPF.Repositories
 {
     public class SqlTransactionProductRepository : ITransactionProductRepository
-
-    //Forbindelse til database
     {
         private readonly string _connectionString;
-
-        //Constructor
 
         public SqlTransactionProductRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-
-
-
-        //Liste over alle transaktionsprodukter
-
         public List<TransactionProduct> GetAllTransactionProducts()
         {
             var products = new List<TransactionProduct>();
-
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "SELECT Id, Name, Price FROM TransactionProducts";
+
+                // RETTELSE:
+                // Den oprindelige query henviste til en tabel "TransactionProducts" og kolonner som "Id" og "Name".
+                // Dette er rettet til det korrekte tabelnavn "TRANSACTION_PRODUCT" og de faktiske kolonnenavne 
+                // ("TransactionID", "ProductID", "UnitPrice", "Amount") fra databasen.
+                string query = "SELECT TransactionID, ProductID, UnitPrice, Amount FROM TRANSACTION_PRODUCT";
+
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -36,27 +33,30 @@ namespace ReolMarkedWPF.Repositories
                     {
                         var product = new TransactionProduct
                         {
-                            TransactionID = reader.GetInt32(0),
-                            ProductID = reader.GetInt32(1),
-                            UnitPrice = reader.GetDecimal(2),
-                            Amount = reader.GetInt32(3)
+                            // RETTELSE:
+                            // Indlæsningen af data fra databasen er gjort mere robust.
+                            // I stedet for at bruge faste index (f.eks. reader.GetInt32(0)), som kan fejle hvis
+                            // rækkefølgen af kolonner i databasen ændres, bruges GetOrdinal("KolonneNavn").
+                            // Dette sikrer, at koden altid finder den korrekte kolonne baseret på dens navn.
+                            TransactionID = reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                            ProductID = reader.GetInt32(reader.GetOrdinal("ProductID")),
+                            UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
+                            Amount = reader.GetInt32(reader.GetOrdinal("Amount"))
                         };
                         products.Add(product);
                     }
                 }
             }
-
             return products;
         }
-
-        //Tilføj et transaktionsprodukt
 
         public void AddTransactionProduct(TransactionProduct transactionProduct)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "INSERT INTO TransactionProducts (TransactionID, ProductID, UnitPrice, Amount) VALUES (@TransactionID, @ProductID, @UnitPrice, @Amount)";
+                // RETTELSE: Tabelnavnet var forkert. Rettet fra "TransactionProducts" til "TRANSACTION_PRODUCT".
+                string query = "INSERT INTO TRANSACTION_PRODUCT (TransactionID, ProductID, UnitPrice, Amount) VALUES (@TransactionID, @ProductID, @UnitPrice, @Amount)";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@TransactionID", transactionProduct.TransactionID);
@@ -67,15 +67,14 @@ namespace ReolMarkedWPF.Repositories
                 }
             }
         }
-
-        //Slet et transaktionsprodukt
 
         public void DeleteTransactionProduct(TransactionProduct transactionProduct)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM TransactionProducts WHERE TransactionID = @TransactionID AND ProductID = @ProductID";
+                // RETTELSE: Tabelnavnet var forkert. Rettet fra "TransactionProducts" til "TRANSACTION_PRODUCT".
+                string query = "DELETE FROM TRANSACTION_PRODUCT WHERE TransactionID = @TransactionID AND ProductID = @ProductID";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@TransactionID", transactionProduct.TransactionID);
@@ -85,14 +84,13 @@ namespace ReolMarkedWPF.Repositories
             }
         }
 
-        //Redi´ger / opdater et transaktionsprodukt
-
         public void UpdateTransactionProduct(TransactionProduct transactionProduct)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string query = "UPDATE TransactionProducts SET UnitPrice = @UnitPrice, Amount = @Amount WHERE TransactionID = @TransactionID AND ProductID = @ProductID";
+                // RETTELSE: Tabelnavnet var forkert. Rettet fra "TransactionProducts" til "TRANSACTION_PRODUCT".
+                string query = "UPDATE TRANSACTION_PRODUCT SET UnitPrice = @UnitPrice, Amount = @Amount WHERE TransactionID = @TransactionID AND ProductID = @ProductID";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@TransactionID", transactionProduct.TransactionID);
@@ -104,5 +102,4 @@ namespace ReolMarkedWPF.Repositories
             }
         }
     }
-
-    }
+}

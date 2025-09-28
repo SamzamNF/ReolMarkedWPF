@@ -47,12 +47,12 @@ namespace ReolMarkedWPF.Repositories
                 connection.Open();
 
                 string sql = @"
-                    INSERT INTO Product (ProductID, ShelfNumber, ProductName, UnitPrice, Amount) 
+                    INSERT INTO Product (ShelfNumber, ProductName, UnitPrice, Amount) 
                     VALUES (@ProductID, @ShelfNumber, @ProductName, @UnitPrice, @Amount)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@ProductID", product.ProductID);
+                    // command.Parameters.AddWithValue("@ProductID", product.ProductID); // Fjernet da SQL selv opretter IDENTITY-værdier
                     command.Parameters.AddWithValue("@ShelfNumber", product.ShelfNumber);
                     command.Parameters.AddWithValue("@ProductName", product.ProductName);
                     command.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);

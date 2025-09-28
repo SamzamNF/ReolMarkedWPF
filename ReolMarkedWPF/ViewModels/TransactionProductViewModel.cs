@@ -55,6 +55,8 @@ namespace ReolMarkedWPF.ViewModels
         {
             this._transactionProductRepository = repository;
             AllOrderDetails = new ObservableCollection<TransactionProduct>(_transactionProductRepository.GetAllTransactionProducts());
+            // Tilføjelse: Oprettelse af tom liste
+            OrderDetails = new ObservableCollection<TransactionProduct>();
             SelectedOrderDetail = null;
         }
     }
