@@ -67,7 +67,7 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ShowShelfViewCommand}"/>
             
-            <RadioButton Content="Adm. Lejeaftaler"
+            <RadioButton Content="Lejeaftaler"
                              Height="50"
                              Foreground="Black"
                              FontSize="18"
@@ -75,9 +75,13 @@
                              Style="{StaticResource MenuButtonTheme}"
                              Command="{Binding ShowRentViewCommand}"/>
 
-
-
-
+            <RadioButton Content="Salg"
+                             Height="50"
+                             Foreground="Black"
+                             FontSize="18"
+                             FontWeight="Bold"
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding ShowTransactionViewCommand}"/>
 
 
 

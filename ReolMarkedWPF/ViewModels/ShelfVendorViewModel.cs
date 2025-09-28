@@ -2,8 +2,6 @@
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 
 namespace ReolMarkedWPF.ViewModels

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
-using System;
-using System.Collections.Generic;
 using System.Data;
 
 namespace ReolMarkedWPF.Repositories

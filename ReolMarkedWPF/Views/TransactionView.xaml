@@ -1,0 +1,116 @@
+﻿<Page x:Class="ReolMarkedWPF.Views.TransactionView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ReolMarkedWPF.Views"
+      xmlns:viewmodels="clr-namespace:ReolMarkedWPF.ViewModels" 
+      d:DataContext="{d:DesignInstance Type=viewmodels:TransactionViewModel}"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="TransactionView">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="DarkOrange" BorderThickness="1">
+            <TextBlock Text="Salg og Transaktioner" FontSize="30" FontWeight="Bold" Margin="5"/>
+        </Border>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Nyt Salg">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10">
+                        <TextBlock Text="Vælg Reol:" FontSize="18" FontWeight="SemiBold" Margin="0,10,0,5"/>
+                        <ComboBox ItemsSource="{Binding Shelves}"
+                                  SelectedItem="{Binding SelectedShelf, Mode=TwoWay}"
+                                  DisplayMemberPath="ShelfNumber"
+                                  Height="35" FontSize="16"/>
+
+                        <TextBlock Text="Vælg Produkt:" FontSize="18" FontWeight="SemiBold" Margin="0,20,0,5"/>
+                        <ComboBox ItemsSource="{Binding ShelfProducts}"
+                                  SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
+                                  DisplayMemberPath="ProductName"
+                                  Height="35" FontSize="16"/>
+
+                        <Button Content="Tilføj til Kurv" 
+                                Command="{Binding AddToOrderDetailsCommand}"
+                                Width="180" Height="45" Margin="0,30,0,10"
+                                Background="DarkGreen" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+
+                    <Grid Grid.Column="1" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Indkøbskurv" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                        <DataGrid Grid.Row="1" 
+                                  ItemsSource="{Binding TpVm.OrderDetails}"
+                                  SelectedItem="{Binding TpVm.SelectedOrderDetail, Mode=TwoWay}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="*"/>
+                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice}" Width="*"/>
+                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                            <Button Content="Fjern Valgte" 
+                                    Command="{Binding RemoveFromOrderDetailsCommand}"
+                                    Width="160" Height="45" Margin="5"
+                                    Background="DarkOrange" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                            <Button Content="Gennemfør Salg" 
+                                    Command="{Binding AddTransactionCommand}"
+                                    Width="180" Height="45" Margin="5"
+                                    Background="DarkBlue" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Transaktionsoversigt">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" 
+                              Margin="10"
+                              ItemsSource="{Binding Transactions}"
+                              SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
+                              AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Transaktion ID" Binding="{Binding TransactionID}" Width="*"/>
+                            <DataGridTextColumn Header="Dato" Binding="{Binding TransactionDate, StringFormat='dd-MM-yyyy'}" Width="2*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                        <Button Content="Rediger Dato" 
+                                Command="{Binding EditTrasnactionCommand}"
+                                Width="150" Height="45" Margin="5"
+                                Background="DarkOrange" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                        <Button Content="Slet Transaktion" 
+                                Command="{Binding DeleteTransactionCommand}"
+                                Width="180" Height="45" Margin="5"
+                                Background="DarkRed" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

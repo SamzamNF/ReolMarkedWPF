@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Models;

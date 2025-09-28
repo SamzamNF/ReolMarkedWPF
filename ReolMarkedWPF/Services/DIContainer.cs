@@ -47,6 +47,7 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<ShelfVendorView>();
             services.AddTransient<RentAgreementView>();
             services.AddTransient<RentAgreementChooseShelfView>();
+            services.AddTransient<TransactionView>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

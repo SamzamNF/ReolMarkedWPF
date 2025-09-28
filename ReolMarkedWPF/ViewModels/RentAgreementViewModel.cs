@@ -1,10 +1,8 @@
 ﻿using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
-using ReolMarkedWPF.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Navigation;
 
 namespace ReolMarkedWPF.ViewModels
 {

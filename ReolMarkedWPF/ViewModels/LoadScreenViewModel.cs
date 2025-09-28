@@ -1,8 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Threading;
-
-namespace ReolMarkedWPF.ViewModels
+﻿namespace ReolMarkedWPF.ViewModels
 {
     public class LoadScreenViewModel
     {

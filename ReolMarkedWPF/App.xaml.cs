@@ -1,13 +1,7 @@
-﻿using ReolMarkedWPF.Models;
-using ReolMarkedWPF.Repositories;
-using ReolMarkedWPF.ViewModels;
-using ReolMarkedWPF.Helpers;
+﻿using ReolMarkedWPF.ViewModels;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using ReolMarkedWPF.Services;
-using ReolMarkedWPF.Views;
-using ReolMarkedWPF.ViewModels;
-using Microsoft.Extensions.Configuration;
 
 
 namespace ReolMarkedWPF

@@ -35,8 +35,9 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand ShowRentViewCommand => new RelayCommand(_ => ShowRentAgreement());
         public RelayCommand ShowShelfVendorViewCommand => new RelayCommand(_ => ShowShelfVendor());
         public RelayCommand ShowCreateRentViewCommand => new RelayCommand(_ => ShowChooseShelfForRent());
+        public RelayCommand ShowTransactionViewCommand => new RelayCommand(_ => ShowTransactionView());
 
-        
+
         private void ShowChooseShelfForRent()
         {
             CurrentView = _serviceProvider.GetRequiredService<RentAgreementChooseShelfView>();
@@ -49,6 +50,10 @@ namespace ReolMarkedWPF.ViewModels
         private void ShowRentAgreement()
         {
             CurrentView = _serviceProvider.GetRequiredService<RentAgreementView>();
+        }
+        private void ShowTransactionView()
+        {
+            CurrentView = _serviceProvider.GetRequiredService<TransactionView>();
         }
     }
 }
