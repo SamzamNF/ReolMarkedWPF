@@ -16,14 +16,12 @@ namespace ReolMarkedWPF.Services
         {
             var services = new ServiceCollection();
 
-
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
             string? connectionString = config.GetConnectionString("DefaultConnection");
 
-            // Connection string
             services.AddSingleton(connectionString);
 
             // Repositories
@@ -31,12 +29,16 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<IRentRepository<Rent>, SqlRentRepository>();
             services.AddTransient<IPaymentMethodRepository, SqlPaymentMethodRepository>();
             services.AddTransient<IShelfRepository, SqlShelfRepository>();
+            services.AddTransient<IProductRepository, SqlProductRepository>();
+
 
             // ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<ShelfVendorViewModel>();
             services.AddTransient<RentAgreementViewModel>();
             services.AddTransient<ShelfViewModel>();
+            services.AddTransient<ProductViewModel>();
+
 
             // Views
             services.AddTransient<MainWindow>();

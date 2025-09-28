@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using ReolMarkedWPF.Models;
-using System;
 using System.Collections.Generic;
 
 namespace ReolMarkedWPF.Repositories
@@ -9,19 +8,17 @@ namespace ReolMarkedWPF.Repositories
     {
         private readonly string _connectionString;
 
-        // Konstruktør, der modtager connection string via dependency injection.
         public SqlShelfVendorRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        // Henter en liste over alle sælgere fra SHELF_VENDOR tabellen.
         public List<ShelfVendor> GetAllShelfVendors()
         {
             var vendors = new List<ShelfVendor>();
             string query = "SELECT * FROM SHELF_VENDOR";
 
-            /*using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -40,11 +37,10 @@ namespace ReolMarkedWPF.Repositories
                         });
                     }
                 }
-            }*/
+            }
             return vendors;
         }
 
-        // Tilføjer en ny sælger til databasen.
         public int AddShelfVendor(ShelfVendor shelfVendor)
         {
             string query = "INSERT INTO SHELF_VENDOR (FirstName, LastName, PhoneNumber, Email) " +
@@ -66,28 +62,26 @@ namespace ReolMarkedWPF.Repositories
             }
         }
 
-        // Opdaterer en eksisterende sælgers information i databasen.
         public void UpdateShelfVendor(ShelfVendor shelfVendor)
         {
-            /*  string query = "UPDATE SHELF_VENDOR SET FirstName = @FirstName, LastName = @LastName, " +
-                             "PhoneNumber = @PhoneNumber, Email = @Email " +
-                             "WHERE ShelfVendorID = @ShelfVendorID";
+            string query = "UPDATE SHELF_VENDOR SET FirstName = @FirstName, LastName = @LastName, " +
+                           "PhoneNumber = @PhoneNumber, Email = @Email " +
+                           "WHERE ShelfVendorID = @ShelfVendorID";
 
-              using (SqlConnection connection = new SqlConnection(_connectionString))
-              {
-                  SqlCommand command = new SqlCommand(query, connection);
-                  command.Parameters.AddWithValue("@FirstName", shelfVendor.FirstName);
-                  command.Parameters.AddWithValue("@LastName", shelfVendor.LastName);
-                  command.Parameters.AddWithValue("@PhoneNumber", shelfVendor.PhoneNumber);
-                  command.Parameters.AddWithValue("@Email", shelfVendor.Email);
-                  command.Parameters.AddWithValue("@ShelfVendorID", shelfVendor.ShelfVendorID);
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@FirstName", shelfVendor.FirstName);
+                command.Parameters.AddWithValue("@LastName", shelfVendor.LastName);
+                command.Parameters.AddWithValue("@PhoneNumber", shelfVendor.PhoneNumber);
+                command.Parameters.AddWithValue("@Email", shelfVendor.Email);
+                command.Parameters.AddWithValue("@ShelfVendorID", shelfVendor.ShelfVendorID);
 
-                  connection.Open();
-                  command.ExecuteNonQuery();
-              }/* Placeholder return until implementation is complete */
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
         }
 
-        // Sletter en sælger fra databasen baseret på ShelfVendorID.
         public void DeleteShelfVendor(ShelfVendor shelfVendor)
         {
             string query = "DELETE FROM SHELF_VENDOR WHERE ShelfVendorID = @ShelfVendorID";
@@ -104,7 +98,7 @@ namespace ReolMarkedWPF.Repositories
 
         public void ShowShelfVendors()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
     }
 }
