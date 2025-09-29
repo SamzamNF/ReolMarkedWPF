@@ -31,7 +31,8 @@
                       IsReadOnly="True" 
                       SelectionMode="Single"
                       GridLinesVisibility="Horizontal"
-                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}">
+                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
                 <!-- DataGrid opbygning med brug af Assets/Theme -->
                 <DataGrid.Columns>

@@ -175,12 +175,13 @@ namespace ReolMarkedWPF.ViewModels
             {
                 product.TransactionID = newId;
                 _transactionProductRepository.AddTransactionProduct(product);
+                
                 // Solgte vare tilføjes til den samlede liste i TransactionProductViewModel
                 TpVm.AllOrderDetails.Add(product);
 
                 // Finder det oprindelige produkt i listen med alle produkter for at kunne opdatere det efter et køb
                 var productToUpdate = Products
-                                           .FirstOrDefault(p => p.ProductID == product.ProductID);
+                                         .FirstOrDefault(p => p.ProductID == product.ProductID);
                 if (productToUpdate != null)
                 {
                     _productRepository.UpdateProduct(productToUpdate);
@@ -267,7 +268,7 @@ namespace ReolMarkedWPF.ViewModels
                 // Tvinger knappen til at tjekke om den kan bruges
                 AddToOrderDetailsCommand.RaiseCanExecuteChanged();
 
-                // Hvis Amount nu er 0, kaldes metoden, der genindlæser produktlisten og fjerner produktet
+                // Hvis Amount nu er 0, kaldes metoden, der genindlæser produktlisten og fjerner produktet fra memorylisten
                 if (productToAdd.Amount == 0)
                 {
                     UpdateProductShelfList();
@@ -279,7 +280,7 @@ namespace ReolMarkedWPF.ViewModels
 
                 if (existingItem != null)
                 {
-                    // Sætter antallet på produktet i kurven til +1
+                    // Sætter antallet på produktet i kurven til +1, hvis det er i kurven allerede
                     existingItem.Amount++;
                 }
                 else
@@ -332,9 +333,10 @@ namespace ReolMarkedWPF.ViewModels
         {
             if (SelectedShelf != null)
             {
+                // Henter alle produkter der passer til den valgte Reol og hvor der er mere end 0 i stock
                 var filteredProducts = Products
                                            .Where(p => p.ShelfNumber == SelectedShelf.ShelfNumber && p.Amount > 0)
-                                          .ToList();
+                                           .ToList();
 
                 // Clear den nuværende liste af ShelfProdukter
                 ShelfProducts.Clear();

@@ -25,13 +25,54 @@
             <DataGrid Grid.Row="1"
                       ItemsSource="{Binding ShelfVendors}"
                       SelectedItem="{Binding SelectedShelfVendor, Mode=TwoWay}"
-                      AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      SelectionMode="Single"
+                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                      GridLinesVisibility="Horizontal"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ShelfVendorID}" Width="Auto" />
-                    <DataGridTextColumn Header="Fornavn" Binding="{Binding FirstName}" Width="*" />
-                    <DataGridTextColumn Header="Efternavn" Binding="{Binding LastName}" Width="*" />
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" Width="*" />
-                    <DataGridTextColumn Header="E-mail" Binding="{Binding Email}" Width="2*" />
+                    <DataGridTextColumn Header="ID" 
+                                        Binding="{Binding ShelfVendorID}" 
+                                        Width="Auto" >
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn Header="Fornavn" 
+                                        Binding="{Binding FirstName}" 
+                                        Width="*" >
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn Header="Efternavn" 
+                                        Binding="{Binding LastName}" 
+                                        Width="*" >
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn 
+                        Header="Telefon" 
+                        Binding="{Binding PhoneNumber}" 
+                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn 
+                        Header="E-mail" Binding="{Binding Email}" 
+                        Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
