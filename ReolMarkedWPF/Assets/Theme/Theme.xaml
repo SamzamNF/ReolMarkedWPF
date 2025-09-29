@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    
+    <!-- Farvepaletter -->
     <SolidColorBrush x:Key="BackgroundColor">#F5F5F5</SolidColorBrush>
     <SolidColorBrush x:Key="ForegroundColor">#212121</SolidColorBrush>
     <SolidColorBrush x:Key="MutedForegroundColor">#757575</SolidColorBrush>
@@ -22,12 +24,14 @@
     <sys:Double x:Key="HeaderFontSize">24</sys:Double>
 
 
+    <!-- Standard TextBlock-stil -->
     <Style TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource BaseFont}" />
         <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundColor}" />
     </Style>
 
+    <!-- Standard TextBox-stil -->
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="8" />
         <Setter Property="BorderBrush" Value="{StaticResource BorderColor}" />
@@ -36,6 +40,7 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
+    <!-- Standard Button-stil med skygge og hover-effekt -->
     <Style TargetType="Button">
         <Setter Property="Background" Value="#E0E0E0" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundColor}" />
@@ -56,6 +61,7 @@
 
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
+                    <!-- Hover effekt -->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource DefaultButtonHover}"/>
@@ -72,12 +78,14 @@
     </Style>
 
 
+    <!-- Overskrift til sider -->
     <Style x:Key="PageHeader" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontSize" Value="{StaticResource HeaderFontSize}" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Margin" Value="0,0,0,15" />
     </Style>
 
+    <!-- Primær CTA-knap (Call-To-Action) -->
     <Style x:Key="CtaButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="{StaticResource AccentColorPrimary}" />
         <Setter Property="Foreground" Value="{StaticResource LightForegroundColor}" />
@@ -88,6 +96,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Rediger-knap -->
     <Style x:Key="EditButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="{StaticResource AccentColorSecondary}" />
         <Setter Property="Foreground" Value="{StaticResource LightForegroundColor}" />
@@ -98,6 +107,7 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Slet-knap -->
     <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
         <Setter Property="Background" Value="{StaticResource DangerColor}" />
         <Setter Property="Foreground" Value="{StaticResource LightForegroundColor}" />
@@ -106,6 +116,21 @@
                 <Setter Property="Background" Value="{StaticResource DangerColorHover}"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <!-- DataGrid ColumnHeader Stil -->
+    <Style x:Key="DataGridHeaderStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!-- DataGrid Cell Text Stil -->
+    <Style x:Key="DataGridStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5" />
     </Style>
 
 </ResourceDictionary>

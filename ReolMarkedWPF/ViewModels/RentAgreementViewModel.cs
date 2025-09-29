@@ -106,6 +106,7 @@ namespace ReolMarkedWPF.ViewModels
 
         private void EditRent()
         {
+
             var rentToUpdate = RentAgreements
                                 .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement?.RentAgreementID);
 
@@ -127,6 +128,7 @@ namespace ReolMarkedWPF.ViewModels
 
         private void DeleteRent()
         {
+
             var rentToDelete = RentAgreements
                                 .FirstOrDefault(r => r.RentAgreementID == SelectedRentAgreement?.RentAgreementID);
 

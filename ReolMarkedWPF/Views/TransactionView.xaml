@@ -25,13 +25,23 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                        <TextBlock Text="Vælg reol:" FontWeight="SemiBold" Margin="0,10,0,5"/>
-                        <ComboBox ItemsSource="{Binding Shelves}" SelectedItem="{Binding SelectedShelf, Mode=TwoWay}" DisplayMemberPath="ShelfNumber"/>
+                        <TextBlock Text="Vælg reol:" 
+                                   FontWeight="SemiBold" 
+                                   Margin="0,10,0,5"/>
+                        
+                        <ComboBox ItemsSource="{Binding Shelves}" 
+                                  SelectedItem="{Binding SelectedShelf, Mode=TwoWay}" 
+                                  DisplayMemberPath="ShelfNumber"/>
 
                         <TextBlock Text="Vælg produkt:" FontWeight="SemiBold" Margin="0,20,0,5"/>
-                        <ComboBox ItemsSource="{Binding ShelfProducts}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" DisplayMemberPath="ProductName"/>
+                        <ComboBox ItemsSource="{Binding ShelfProducts}" 
+                                  SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" 
+                                  DisplayMemberPath="ProductName"/>
 
-                        <Button Content="Tilføj til kurv" Command="{Binding AddToOrderDetailsCommand}" Style="{StaticResource CtaButton}" Margin="0,30,0,10"/>
+                        <Button Content="Tilføj til kurv" 
+                                Command="{Binding AddToOrderDetailsCommand}" 
+                                Style="{StaticResource CtaButton}"
+                                Margin="0,30,0,10"/>
                     </StackPanel>
 
                     <Grid Grid.Column="1">
@@ -42,17 +52,50 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Indkøbskurv" FontWeight="Bold" FontSize="18" Margin="0,0,0,10"/>
-                        <DataGrid Grid.Row="1" ItemsSource="{Binding TpVm.OrderDetails}" SelectedItem="{Binding TpVm.SelectedOrderDetail, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                        <DataGrid Grid.Row="1" 
+                                  ItemsSource="{Binding TpVm.OrderDetails}" 
+                                  SelectedItem="{Binding TpVm.SelectedOrderDetail, Mode=TwoWay}" 
+                                  AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  CanUserAddRows="False"
+                                  ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                                  GridLinesVisibility="None">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="*" />
-                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice}" Width="*" />
-                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*" />
+                                
+                                <DataGridTextColumn Header="Produkt ID"
+                                                    Binding="{Binding ProductID}" 
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTextColumn Header="Pris pr. stk." 
+                                                    Binding="{Binding UnitPrice}"
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTextColumn Header="Antal" 
+                                                    Binding="{Binding Amount}" 
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                            <Button Content="Fjern valgte" Command="{Binding RemoveFromOrderDetailsCommand}" Style="{StaticResource EditButton}" Margin="0,0,10,0"/>
-                            <Button Content="Gennemfør salg" Command="{Binding AddTransactionCommand}" Style="{StaticResource CtaButton}"/>
+                            
+                            <Button Content="Fjern valgte" 
+                                    Command="{Binding RemoveFromOrderDetailsCommand}" Style="{StaticResource EditButton}" Margin="0,0,10,0"/>
+                            
+                            <Button Content="Gennemfør salg" 
+                                    Command="{Binding AddTransactionCommand}" 
+                                    Style="{StaticResource CtaButton}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -76,6 +119,7 @@
                                   ItemsSource="{Binding Transactions}"
                                   SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
                                   AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                            
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Transaktion ID" Binding="{Binding TransactionID}" Width="*" />
                                 <DataGridTextColumn Header="Dato" Binding="{Binding TransactionDate, StringFormat='dd-MM-yyyy'}" Width="2*" />
@@ -83,8 +127,15 @@
                         </DataGrid>
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Content="Rediger dato" Command="{Binding EditTrasnactionCommand}" Style="{StaticResource EditButton}" Margin="0,0,10,0"/>
-                            <Button Content="Slet transaktion" Command="{Binding DeleteTransactionCommand}" Style="{StaticResource DeleteButton}"/>
+                            
+                            <Button Content="Rediger dato" 
+                                    Command="{Binding EditTrasnactionCommand}" 
+                                    Style="{StaticResource EditButton}" 
+                                    Margin="0,0,10,0"/>
+                            
+                            <Button Content="Slet transaktion" 
+                                    Command="{Binding DeleteTransactionCommand}" 
+                                    Style="{StaticResource DeleteButton}"/>
                         </StackPanel>
                     </Grid>
 
@@ -95,15 +146,45 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="Varer i valgt transaktion" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+                        
+                        <TextBlock Text="Varer i valgt transaktion" 
+                                   FontSize="18" 
+                                   FontWeight="Bold" 
+                                   Margin="0,0,0,10"/>
 
                         <DataGrid Grid.Row="1" 
                                   ItemsSource="{Binding SelectedTransactionDetails}"
-                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                                  AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  CanUserAddRows="False"
+                                  ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                                  GridLinesVisibility="None">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Produktnavn" Binding="{Binding ProductName}" Width="2*"/>
-                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*"/>
-                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice, StringFormat='N2'}" Width="*"/>
+
+                                <DataGridTextColumn Header="Produktnavn" 
+                                                    Binding="{Binding ProductName}" 
+                                                    Width="2*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Antal" 
+                                                    Binding="{Binding Amount}" 
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Pris pr. stk." 
+                                                    Binding="{Binding UnitPrice, StringFormat='N2'}" 
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle" />
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

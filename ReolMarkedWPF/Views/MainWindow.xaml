@@ -48,10 +48,23 @@
             <StackPanel Margin="10">
                 <Image Source="/Assets/Images/middelbylogo.jfif" Stretch="Uniform" Margin="10,10,10,20" Height="100"/>
 
-                <RadioButton Content="Lejere" IsChecked="True" Style="{StaticResource MenuButton}" Command="{Binding ShowShelfVendorViewCommand}"/>
-                <RadioButton Content="Reoler" Style="{StaticResource MenuButton}" Command="{Binding ShowShelfViewCommand}"/>
-                <RadioButton Content="Lejeaftaler" Style="{StaticResource MenuButton}" Command="{Binding ShowRentViewCommand}"/>
-                <RadioButton Content="Salg" Style="{StaticResource MenuButton}" Command="{Binding ShowTransactionViewCommand}"/>
+                <RadioButton Content="Lejere" 
+                             IsChecked="True" 
+                             Style="{StaticResource MenuButton}" 
+                             Command="{Binding ShowShelfVendorViewCommand}"/>
+                
+                <RadioButton Content="Reoler" 
+                             Style="{StaticResource MenuButton}"
+                             Command="{Binding ShowShelfViewCommand}"/>
+                
+                <RadioButton Content="Lejeaftaler" 
+                             Style="{StaticResource MenuButton}" 
+                             Command="{Binding ShowRentViewCommand}"/>
+                
+                <RadioButton Content="Salg" 
+                             Style="{StaticResource MenuButton}" 
+                             Command="{Binding ShowTransactionViewCommand}"/>
+                
             </StackPanel>
         </Border>
 
