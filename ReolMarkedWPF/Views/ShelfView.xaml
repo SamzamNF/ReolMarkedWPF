@@ -5,10 +5,106 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ReolMarkedWPF.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ShelfView">
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="ShelfView"
+      Background="{StaticResource BackgroundColor}">
 
-    <Grid>
-        
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Reoler" Grid.Row="0" Style="{StaticResource PageHeader}"/>
+
+            <!-- Venstre side af vinduets opbygning -->
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding Shelves}"
+                      SelectedItem="{Binding SelectedShelf, Mode=TwoWay}"
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      SelectionMode="Single"
+                      GridLinesVisibility="Horizontal"
+                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}">
+
+                <!-- DataGrid opbygning med brug af Assets/Theme -->
+                <DataGrid.Columns>
+                    <DataGridTextColumn 
+                        Header="ReolNummer" Binding="{Binding ShelfNumber}" Width="0.4*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn 
+                        Header="ReolType" Binding="{Binding ShelfType}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn 
+                        Header="Pris" Binding="{Binding Price}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn
+                        Header="Aftale ID" Binding="{Binding RentAgreementID}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+
+        <!-- Højre side af vinduets opbygning -->
+        <Border Grid.Column="1" 
+                Background="#FFFFFF" 
+                CornerRadius="5" 
+                Padding="15,0,0,0"
+                Margin="0,40,0,0">
+
+            <StackPanel VerticalAlignment="Top" Margin="0,5,0,0">
+
+                <TextBlock Text="Pris" 
+                            FontWeight="Bold" 
+                            Margin="0,0,0,5"/>
+                <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,0,0,10"/>
+
+                <TextBlock Text="ReolType" 
+                            FontWeight="Bold" 
+                            Margin="0,0,0,5"/>
+                <TextBox Text="{Binding ShelfType, UpdateSourceTrigger=PropertyChanged}"
+                           Margin="0,0,0,10"/>
+
+                <!-- Knapper -->
+                <Button Content="Tilføj Reol" 
+                        Command="{Binding AddShelfCommand}"
+                        Style="{StaticResource CtaButton}"
+                        Margin="0,1000,0,10"/>
+
+                <Button Content="Rediger Reol"
+                        Command="{Binding EditShelfCommand}"
+                        Style="{StaticResource EditButton}"
+                        Margin="0,0,0,10"/>
+
+                <Button Content="Slet Reol"
+                        Command="{Binding DeleteShelfCommand}"
+                        Style="{StaticResource DeleteButton}"/>
+            </StackPanel>
+        </Border>
+
     </Grid>
 </Page>

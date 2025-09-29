@@ -16,6 +16,7 @@
 
         <TextBlock Text="Salg og transaktioner" Style="{StaticResource PageHeader}" Grid.Row="0"/>
 
+        <!-- Venstre side af vinduets opbygning -->
         <TabControl Grid.Row="1">
             <TabItem Header="Nyt salg">
                 <Grid Margin="10">
@@ -44,6 +45,7 @@
                                 Margin="0,30,0,10"/>
                     </StackPanel>
 
+                    <!-- Højre side af vinduets opbygning -->
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -51,6 +53,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
+                        <!--  Indkøbskurv DataGrid  -->
                         <TextBlock Text="Indkøbskurv" FontWeight="Bold" FontSize="18" Margin="0,0,0,10"/>
                         <DataGrid Grid.Row="1" 
                                   ItemsSource="{Binding TpVm.OrderDetails}" 
@@ -60,8 +63,8 @@
                                   CanUserAddRows="False"
                                   ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
                                   GridLinesVisibility="None">
+                            
                             <DataGrid.Columns>
-                                
                                 <DataGridTextColumn Header="Produkt ID"
                                                     Binding="{Binding ProductID}" 
                                                     Width="*">
@@ -88,6 +91,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
+                        <!--  Knapper til Salg  -->
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
                             
                             <Button Content="Fjern valgte" 
@@ -101,6 +105,7 @@
                 </Grid>
             </TabItem>
 
+            <!-- Venstre side af vinduets opbygning -->
             <TabItem Header="Transaktionsoversigt">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -109,6 +114,7 @@
                         <ColumnDefinition Width="*" MinWidth="250" />
                     </Grid.ColumnDefinitions>
 
+                    <!--  Grid over alle Transaktioner  -->
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -126,6 +132,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
 
+                        <!-- Knapper til transaktioner -->
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
                             
                             <Button Content="Rediger dato" 
@@ -141,6 +148,7 @@
 
                     <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="LightGray"/>
 
+                    <!-- Højre side af vinduets opbygning -->
                     <Grid Grid.Column="2" Margin="10,0,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -152,6 +160,7 @@
                                    FontWeight="Bold" 
                                    Margin="0,0,0,10"/>
 
+                        <!-- DataGrid over hvad der var i den valgte transaktion -->
                         <DataGrid Grid.Row="1" 
                                   ItemsSource="{Binding SelectedTransactionDetails}"
                                   AutoGenerateColumns="False" 

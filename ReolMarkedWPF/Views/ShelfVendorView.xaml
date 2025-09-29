@@ -38,7 +38,9 @@
 
         <Border Grid.Column="1" Background="#FFFFFF" CornerRadius="5" Padding="15">
             <StackPanel VerticalAlignment="Top">
-                <TextBlock Text="Fornavn:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBlock Text="Fornavn:" 
+                           FontWeight="Bold" 
+                           Margin="0,0,0,5"/>
                 <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" 
                          Margin="0,0,0,10"/>
 
@@ -75,9 +77,10 @@
                 <TextBox Text="{Binding PaymentInfo, UpdateSourceTrigger=PropertyChanged}" 
                          Margin="0,0,0,20"/>
 
+                <!-- Knapper -->
                 <Button Content="Tilføj ny lejer" Command="{Binding AddShelfVendorCommand}" 
                         Style="{StaticResource CtaButton}" 
-                        Margin="0,0,0,10"/>
+                        Margin="0,730,0,10"/>
                 
                 <Button Content="Rediger lejer" 
                         Command="{Binding EditShelfVendorCommand}" 

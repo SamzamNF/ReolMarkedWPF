@@ -22,8 +22,9 @@
     <SolidColorBrush x:Key="DisabledForegroundColor">#BDBDBD</SolidColorBrush>
 
 
+    <!-- Sætter default værdier til font og skriftstørrelser -->
     <FontFamily x:Key="BaseFont">Segoe UI</FontFamily>
-    <sys:Double x:Key="BaseFontSize">14</sys:Double>
+    <sys:Double x:Key="BaseFontSize">16</sys:Double>
     <sys:Double x:Key="HeaderFontSize">24</sys:Double>
 
 
@@ -73,6 +74,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        <!-- Hvis knappen ikke er aktiv -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource DisabledBackgroundColor}" />
                             <Setter Property="Foreground" Value="{StaticResource DisabledForegroundColor}" />

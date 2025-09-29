@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReolMarkedWPF.ViewModel;
 
 namespace ReolMarkedWPF.Views
 {
@@ -20,9 +21,13 @@ namespace ReolMarkedWPF.Views
     /// </summary>
     public partial class ShelfView : Page
     {
-        public ShelfView()
+        public ShelfView(ShelfViewModel viewmodel)
         {
+            // Datacontext kommer fra DIcontainer.cs
+            // Det sendes med i parameter fra DIcontainer, da ShelfViewModel er oprettet der samt view
+            // Så DIcontainer ved, at når der bliver spurgt om "ShelfViewModel" her, så skal det sendes herover.
             InitializeComponent();
+            DataContext = viewmodel;
         }
     }
 }

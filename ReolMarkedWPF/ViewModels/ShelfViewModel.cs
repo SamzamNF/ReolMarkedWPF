@@ -73,10 +73,17 @@ namespace ReolMarkedWPF.ViewModel
             {
                 _selectedShelf = value;
                 OnPropertyChanged();
-
-                // Refresh commands når selection ændres
-                OnPropertyChanged(nameof(EditShelfCommand));
-                OnPropertyChanged(nameof(DeleteShelfCommand));
+                
+                if (value != null)
+                {
+                    Price = value.Price;
+                    ShelfType = value.ShelfType;
+                }
+                else
+                {
+                    Price = 0;
+                    ShelfType = string.Empty;
+                }
             }
         }
 
@@ -142,12 +149,12 @@ namespace ReolMarkedWPF.ViewModel
 
 
         private bool CanAddShelf() =>
-            !string.IsNullOrWhiteSpace(ShelfType) && Price > 0 && ShelfNumber > 0;
+            !string.IsNullOrWhiteSpace(ShelfType) && Price > 0;
 
         private bool CanDeleteShelf() =>
             SelectedShelf != null;
 
         private bool CanEditShelf() =>
-            SelectedShelf != null && !string.IsNullOrWhiteSpace(ShelfType) && Price > 0 && ShelfNumber > 0;
+            SelectedShelf != null && !string.IsNullOrWhiteSpace(ShelfType) && Price > 0;
     }
 }
