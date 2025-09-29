@@ -212,6 +212,7 @@ namespace ReolMarkedWPF.ViewModels
         {
             // Null-conditional operator (?.) sikrer at Hvis SelectedTransaction ikke er null, så prøv at hente TransactionID
             // Hvis den er null (SelectedTransaction) - så returnes null i stedet for at kaste en NullReferenceException
+            
             var transactionToEdit = Transactions
                                            .FirstOrDefault(t => t.TransactionID == SelectedTransaction?.TransactionID);
 
@@ -266,6 +267,10 @@ namespace ReolMarkedWPF.ViewModels
                     TpVm.OrderDetails.Add(tP);
                 }
             }
+            else
+            {
+                return;
+            }
         }
         // Denne metode fjerner et produkt fra listen (indkøbskurven)
         private void RemoveProductFromList()
@@ -283,11 +288,15 @@ namespace ReolMarkedWPF.ViewModels
                     matchingProduct.Amount += TpVm.SelectedOrderDetail.Amount;
                 }
 
-                // Fjerner det fra listen
+                // Fjerner det fra listen af kurven
                 TpVm.OrderDetails.Remove(TpVm.SelectedOrderDetail);
 
                 // Sætter SelecetedOrderDetail til at være null, indtil et nyt produkt vælges
                 TpVm.SelectedOrderDetail = null;
+            }
+            else
+            {
+                return;
             }
         }
 
@@ -297,8 +306,8 @@ namespace ReolMarkedWPF.ViewModels
             if (SelectedShelf != null)
             {
                 var filteredProducts = Products
-                                           .Where(p => p.ShelfNumber == SelectedShelf.ShelfNumber)
-                                           .ToList();
+                                          .Where(p => p.ShelfNumber == SelectedShelf.ShelfNumber)
+                                          .ToList();
 
                 // Clear den nuværende liste af ShelfProdukter
                 ShelfProducts.Clear();
