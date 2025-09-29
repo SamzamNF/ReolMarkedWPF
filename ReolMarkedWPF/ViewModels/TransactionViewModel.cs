@@ -32,7 +32,7 @@ namespace ReolMarkedWPF.ViewModels
         private Shelf _selectedShelf;
         private Product _selectedProduct;
 
-        // Liste, der holder på detaljerne for en enkelt, valgt transaktion.
+        // Liste, der holder på detaljerne for en enkelt (order_details), valgt transaktion.
         public ObservableCollection<TransactionDetailItem> SelectedTransactionDetails { get; set; }
 
 
@@ -54,38 +54,7 @@ namespace ReolMarkedWPF.ViewModels
             {
                 _selectedtransaction = value;
                 OnPropertyChanged();
-
-                // Når en transaktion vælges, udføres dette automatisk:
-                if (value != null)
-                {
-                    // Sætter tekstbokse til at automatisk være det, som SelectedTransaction objektet er
-                    this.TransactionDate = value.TransactionDate;
-
-                    // Rydder den gamle liste for at vise nye detaljer
-                    SelectedTransactionDetails.Clear();
-
-                    // Finder alle varelinjer der matcher den valgte transaktions ID
-                    var transactionProducts = TpVm.AllOrderDetails
-                                                  .Where(tp => tp.TransactionID == value.TransactionID);
-
-                    foreach (var tp in transactionProducts)
-                    {
-                        // Finder det tilhørende produktnavn
-                        var product = Products.FirstOrDefault(p => p.ProductID == tp.ProductID);
-                        var detailItem = new TransactionDetailItem
-                        {
-                            ProductName = product?.ProductName ?? "Produkt ikke fundet",
-                            Amount = tp.Amount,
-                            UnitPrice = tp.UnitPrice
-                        };
-                        SelectedTransactionDetails.Add(detailItem);
-                    }
-                }
-                else
-                {
-                    // Hvis ingen transaktion er valgt (f.eks. ved sletning), ryddes detalje-listen.
-                    SelectedTransactionDetails.Clear();
-                }
+                SelectedTransactionOrderDetails(value);
             }
         }
         // Vælger en Reol (Til en combobox evt) - Opdatere automatisk listen med ShelfProducts til at kun have produkter,
@@ -199,7 +168,7 @@ namespace ReolMarkedWPF.ViewModels
             // Tilføjer transkationen til listen
             Transactions.Add(transaction);
 
-            // Bruger nu listen "OrderDetails" (Som holder alle TransaktionProdukter) for at sætte ID på alle tingene der er sat ind i indkøbslisten
+            // Bruger nu listen "OrderDetails" (Som holder alle TransaktionProdukter i kurven) for at sætte ID på alle tingene der er sat ind i indkøbslisten
             foreach (var product in TpVm.OrderDetails)
             {
                 product.TransactionID = newId;
@@ -278,7 +247,7 @@ namespace ReolMarkedWPF.ViewModels
 
                 // Tjekker om produktet allerede er i kurven
                 var existingItem = TpVm.OrderDetails
-                                        .FirstOrDefault(oD => oD.ProductID == productToAdd.ProductID);
+                                        .FirstOrDefault(o => o.ProductID == productToAdd.ProductID);
 
                 if (existingItem != null)
                 {
@@ -345,6 +314,40 @@ namespace ReolMarkedWPF.ViewModels
             else
             {
                 ShelfProducts.Clear();
+            }
+        }
+
+        // Metode til at tilføje alle transaktionsprodukter, til den valgte transaktion
+        private void SelectedTransactionOrderDetails(Transaction transaction)
+        {
+            if (transaction != null)
+            {
+                // Sæt transaktionsdato
+                this.TransactionDate = transaction.TransactionDate;
+
+                // Ryd gamle detaljer
+                SelectedTransactionDetails.Clear();
+
+                // Find alle tilhørende varelinjer
+                var transactionProducts = TpVm.AllOrderDetails
+                                              .Where(tp => tp.TransactionID == transaction.TransactionID);
+
+                foreach (var tp in transactionProducts)
+                {
+                    var product = Products.FirstOrDefault(p => p.ProductID == tp.ProductID);
+                    var detailItem = new TransactionDetailItem
+                    {
+                        ProductName = product?.ProductName ?? "Produkt ikke fundet",
+                        Amount = tp.Amount,
+                        UnitPrice = tp.UnitPrice
+                    };
+                    SelectedTransactionDetails.Add(detailItem);
+                }
+            }
+            else
+            {
+                // Ingen valgt transaktion => ryd listen
+                SelectedTransactionDetails.Clear();
             }
         }
 

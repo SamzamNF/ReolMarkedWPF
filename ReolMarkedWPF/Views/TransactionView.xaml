@@ -59,11 +59,58 @@
                         <DataGrid Grid.Row="1" 
                                   ItemsSource="{Binding TpVm.OrderDetails}"
                                   SelectedItem="{Binding TpVm.SelectedOrderDetail, Mode=TwoWay}"
-                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                                  AutoGenerateColumns="False" 
+                                  IsReadOnly="True" 
+                                  CanUserAddRows="False"
+                                  RowHeight="40"
+                                  GridLinesVisibility="None">
+
+                            <!-- Gør headers størrere -->
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Height" Value="40"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+
+                            <!-- Kolonner, som holder de forskellige bindings -->
+                            <!-- Brugt ElementStyle for at gøre tekst størrere på alle bindings -->
+                            <!-- Kolonne Produkt ID -->
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="*"/>
-                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice}" Width="*"/>
-                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*"/>
+                                <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!-- Kolonne UnitPrice -->
+                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                
+                                <!-- Kolonne Amount -->
+                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 
@@ -106,14 +153,16 @@
                         </DataGrid>
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                            
                             <Button Content="Rediger dato" 
-                        Command="{Binding EditTrasnactionCommand}"
-                        Width="150" Height="45" Margin="5"
-                        Background="DarkOrange" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                                    Command="{Binding EditTrasnactionCommand}"
+                                    Width="150" Height="45" Margin="5"
+                                    Background="DarkOrange" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                            
                             <Button Content="Slet transaktion" 
-                        Command="{Binding DeleteTransactionCommand}"
-                        Width="180" Height="45" Margin="5"
-                        Background="DarkRed" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                                    Command="{Binding DeleteTransactionCommand}"
+                                    Width="180" Height="45" Margin="5"
+                                    Background="DarkRed" Foreground="White" FontWeight="Bold" FontSize="16"/>
                         </StackPanel>
                     </Grid>
 
@@ -127,12 +176,56 @@
                         <TextBlock Text="Varer i valgt transaktion" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
 
                         <DataGrid Grid.Row="1" 
-                      ItemsSource="{Binding SelectedTransactionDetails}"
-                      AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                                  ItemsSource="{Binding SelectedTransactionDetails}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                                  RowHeight="40"
+                                  GridLinesVisibility="None">
+
+                            <!-- Header-tekst og højde -->
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="FontSize" Value="18"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="Height" Value="40"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Produktnavn" Binding="{Binding ProductName}" Width="2*"/>
-                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*"/>
-                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice, StringFormat='N2'}" Width="*"/>
+                                <!-- Kolonner, som holder de forskellige bindings -->
+                                <!-- Brugt ElementStyle for at gøre tekst størrere på alle bindings -->
+                                <!-- Kolonne: Produktnavn -->
+                                <DataGridTextColumn Header="Produktnavn" Binding="{Binding ProductName}" Width="2*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!-- Kolonne: Antal -->
+                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <!-- Kolonne: Pris pr. stk. -->
+                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice, StringFormat='N2'}" Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="Padding" Value="5"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
