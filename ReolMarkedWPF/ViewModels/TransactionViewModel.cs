@@ -187,7 +187,11 @@ namespace ReolMarkedWPF.ViewModels
                 }
             }
 
+            // Rydder indkøbskurv og nulstiller dropdown-menuer
             TpVm.OrderDetails.Clear();
+            SelectedShelf = null;
+            SelectedProduct = null;
+
             //Gør at den highlighter den oprettede transaktion efter oprettelse
             SelectedTransaction = transaction;
 
@@ -263,6 +267,12 @@ namespace ReolMarkedWPF.ViewModels
                 // Tvinger knappen til at tjekke om den kan bruges
                 AddToOrderDetailsCommand.RaiseCanExecuteChanged();
 
+                // Hvis Amount nu er 0, kaldes metoden, der genindlæser produktlisten og fjerner produktet
+                if (productToAdd.Amount == 0)
+                {
+                    UpdateProductShelfList();
+                }
+
                 // Tjekker om produktet allerede er i kurven
                 var existingItem = TpVm.OrderDetails
                                         .FirstOrDefault(o => o.ProductID == productToAdd.ProductID);
@@ -323,7 +333,7 @@ namespace ReolMarkedWPF.ViewModels
             if (SelectedShelf != null)
             {
                 var filteredProducts = Products
-                                          .Where(p => p.ShelfNumber == SelectedShelf.ShelfNumber)
+                                           .Where(p => p.ShelfNumber == SelectedShelf.ShelfNumber && p.Amount > 0)
                                           .ToList();
 
                 // Clear den nuværende liste af ShelfProdukter
