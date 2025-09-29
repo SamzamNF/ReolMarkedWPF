@@ -3,126 +3,56 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ReolMarkedWPF.Views"
-      xmlns:viewmodels="clr-namespace:ReolMarkedWPF.ViewModels" 
-      d:DataContext="{d:DesignInstance Type=viewmodels:TransactionViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
-      Title="TransactionView">
+      Title="TransactionView"
+      Background="{StaticResource BackgroundColor}">
 
-    <Grid>
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" BorderBrush="DarkOrange" BorderThickness="1">
-            <TextBlock Text="Salg og transaktioner" FontSize="30" FontWeight="Bold" Margin="5"/>
-        </Border>
+        <TextBlock Text="Salg og transaktioner" Style="{StaticResource PageHeader}" Grid.Row="0"/>
 
         <TabControl Grid.Row="1">
             <TabItem Header="Nyt salg">
-                <Grid>
+                <Grid Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="10">
-                        <TextBlock Text="Vælg reol:" FontSize="18" FontWeight="SemiBold" Margin="0,10,0,5"/>
-                        <ComboBox ItemsSource="{Binding Shelves}"
-                                  SelectedItem="{Binding SelectedShelf, Mode=TwoWay}"
-                                  DisplayMemberPath="ShelfNumber"
-                                  Height="35" FontSize="16"/>
+                    <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                        <TextBlock Text="Vælg reol:" FontWeight="SemiBold" Margin="0,10,0,5"/>
+                        <ComboBox ItemsSource="{Binding Shelves}" SelectedItem="{Binding SelectedShelf, Mode=TwoWay}" DisplayMemberPath="ShelfNumber"/>
 
-                        <TextBlock Text="Vælg produkt:" FontSize="18" FontWeight="SemiBold" Margin="0,20,0,5"/>
-                        <ComboBox ItemsSource="{Binding ShelfProducts}"
-                                  SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
-                                  DisplayMemberPath="ProductName"
-                                  Height="35" FontSize="16"/>
+                        <TextBlock Text="Vælg produkt:" FontWeight="SemiBold" Margin="0,20,0,5"/>
+                        <ComboBox ItemsSource="{Binding ShelfProducts}" SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" DisplayMemberPath="ProductName"/>
 
-                        <Button Content="Tilføj til kurv" 
-                                Command="{Binding AddToOrderDetailsCommand}"
-                                Width="180" Height="45" Margin="0,30,0,10"
-                                Background="DarkGreen" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                        <Button Content="Tilføj til kurv" Command="{Binding AddToOrderDetailsCommand}" Style="{StaticResource CtaButton}" Margin="0,30,0,10"/>
                     </StackPanel>
 
-                    <Grid Grid.Column="1" Margin="10">
+                    <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Text="Indkøbskurv" FontSize="24" FontWeight="Bold" Margin="0,0,0,10"/>
-
-                        <DataGrid Grid.Row="1" 
-                                  ItemsSource="{Binding TpVm.OrderDetails}"
-                                  SelectedItem="{Binding TpVm.SelectedOrderDetail, Mode=TwoWay}"
-                                  AutoGenerateColumns="False" 
-                                  IsReadOnly="True" 
-                                  CanUserAddRows="False"
-                                  RowHeight="40"
-                                  GridLinesVisibility="None">
-
-                            <!-- Gør headers størrere -->
-                            <DataGrid.ColumnHeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="18"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                    <Setter Property="Height" Value="40"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                </Style>
-                            </DataGrid.ColumnHeaderStyle>
-
-                            <!-- Kolonner, som holder de forskellige bindings -->
-                            <!-- Brugt ElementStyle for at gøre tekst størrere på alle bindings -->
-                            <!-- Kolonne Produkt ID -->
+                        <TextBlock Text="Indkøbskurv" FontWeight="Bold" FontSize="18" Margin="0,0,0,10"/>
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding TpVm.OrderDetails}" SelectedItem="{Binding TpVm.SelectedOrderDetail, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontSize" Value="16"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-
-                                <!-- Kolonne UnitPrice -->
-                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice}" Width="*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontSize" Value="16"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-
-                                
-                                <!-- Kolonne Amount -->
-                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontSize" Value="16"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="*" />
+                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice}" Width="*" />
+                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
 
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                            <Button Content="Fjern valgte" 
-                                    Command="{Binding RemoveFromOrderDetailsCommand}"
-                                    Width="160" Height="45" Margin="5"
-                                    Background="DarkOrange" Foreground="White" FontWeight="Bold" FontSize="16"/>
-                            <Button Content="Gennemfør salg" 
-                                    Command="{Binding AddTransactionCommand}"
-                                    Width="180" Height="45" Margin="5"
-                                    Background="DarkBlue" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                            <Button Content="Fjern valgte" Command="{Binding RemoveFromOrderDetailsCommand}" Style="{StaticResource EditButton}" Margin="0,0,10,0"/>
+                            <Button Content="Gennemfør salg" Command="{Binding AddTransactionCommand}" Style="{StaticResource CtaButton}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -143,9 +73,9 @@
                         </Grid.RowDefinitions>
 
                         <DataGrid Grid.Row="0" Margin="0,0,0,10"
-                      ItemsSource="{Binding Transactions}"
-                      SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
-                      AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                                  ItemsSource="{Binding Transactions}"
+                                  SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
+                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Transaktion ID" Binding="{Binding TransactionID}" Width="*" />
                                 <DataGridTextColumn Header="Dato" Binding="{Binding TransactionDate, StringFormat='dd-MM-yyyy'}" Width="2*" />
@@ -153,16 +83,8 @@
                         </DataGrid>
 
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                            
-                            <Button Content="Rediger dato" 
-                                    Command="{Binding EditTrasnactionCommand}"
-                                    Width="150" Height="45" Margin="5"
-                                    Background="DarkOrange" Foreground="White" FontWeight="Bold" FontSize="16"/>
-                            
-                            <Button Content="Slet transaktion" 
-                                    Command="{Binding DeleteTransactionCommand}"
-                                    Width="180" Height="45" Margin="5"
-                                    Background="DarkRed" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                            <Button Content="Rediger dato" Command="{Binding EditTrasnactionCommand}" Style="{StaticResource EditButton}" Margin="0,0,10,0"/>
+                            <Button Content="Slet transaktion" Command="{Binding DeleteTransactionCommand}" Style="{StaticResource DeleteButton}"/>
                         </StackPanel>
                     </Grid>
 
@@ -177,55 +99,11 @@
 
                         <DataGrid Grid.Row="1" 
                                   ItemsSource="{Binding SelectedTransactionDetails}"
-                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
-                                  RowHeight="40"
-                                  GridLinesVisibility="None">
-
-                            <!-- Header-tekst og højde -->
-                            <DataGrid.ColumnHeaderStyle>
-                                <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="18"/>
-                                    <Setter Property="FontWeight" Value="Bold"/>
-                                    <Setter Property="Height" Value="40"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                </Style>
-                            </DataGrid.ColumnHeaderStyle>
-
+                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <!-- Kolonner, som holder de forskellige bindings -->
-                                <!-- Brugt ElementStyle for at gøre tekst størrere på alle bindings -->
-                                <!-- Kolonne: Produktnavn -->
-                                <DataGridTextColumn Header="Produktnavn" Binding="{Binding ProductName}" Width="2*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontSize" Value="16"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-
-                                <!-- Kolonne: Antal -->
-                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontSize" Value="16"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
-
-                                <!-- Kolonne: Pris pr. stk. -->
-                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice, StringFormat='N2'}" Width="*">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="FontSize" Value="16"/>
-                                            <Setter Property="VerticalAlignment" Value="Center"/>
-                                            <Setter Property="Padding" Value="5"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Produktnavn" Binding="{Binding ProductName}" Width="2*"/>
+                                <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*"/>
+                                <DataGridTextColumn Header="Pris pr. stk." Binding="{Binding UnitPrice, StringFormat='N2'}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

@@ -3,102 +3,62 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ReolMarkedWPF"
         mc:Ignorable="d"
-        Title="ReolMarked MiddelBy" 
-        MinHeight="450" 
-        MinWidth="800" Foreground="Black" 
+        Title="Middelby ReolMarked" 
+        MinHeight="600" MinWidth="1000"
         WindowStartupLocation="CenterScreen" 
-        WindowState="Maximized" 
-        Cursor="Arrow">
-    <Window.Background>
-        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Green" Offset="1"/>
-            <GradientStop Color="White" Offset="0"/>
-        </LinearGradientBrush>
-    </Window.Background>
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="DarkOliveGreen" Offset="1"/>
-                <GradientStop Color="White" Offset="0.49"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+        WindowState="Maximized">
+    <Window.Resources>
+        <Style x:Key="MenuButton" TargetType="RadioButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource ForegroundColor}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" CornerRadius="4">
+                            <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="{StaticResource AccentColorPrimary}"/>
+                    <Setter Property="Foreground" Value="{StaticResource LightForegroundColor}"/>
+                    <Setter Property="IsHitTestVisible" Value="False"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource BorderColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource BackgroundColor}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="220" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
 
-        <!-- UI Start -->
+        <Border Grid.Column="0" Background="#FFFFFF" BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,1,0">
+            <StackPanel Margin="10">
+                <Image Source="/Assets/Images/middelbylogo.jfif" Stretch="Uniform" Margin="10,10,10,20" Height="100"/>
 
-        <!-- Første kolonne -->
-
-
-        <Image Source="/Assets/Images/middelbylogo.jfif"
-               Grid.Row="0"
-               Grid.Column="0"
-               HorizontalAlignment="Left"
-               Stretch="Uniform"
-               Margin="10"
-               Height="150"/>
-
-        <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10">
-            <Separator Background="DarkRed" Height="2" Margin="0,0,0,10"/>
-
-
-            <RadioButton Content="Lejere"
-                             Height="50"
-                             Foreground="Black"
-                             FontSize="18"
-                             FontWeight="Bold"
-                             Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ShowShelfVendorViewCommand}"/>
-            
-            <RadioButton Content="Reoler"
-                             Height="50"
-                             Foreground="Black"
-                             FontSize="18"
-                             FontWeight="Bold"
-                             Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ShowShelfViewCommand}"/>
-            
-            <RadioButton Content="Lejeaftaler"
-                             Height="50"
-                             Foreground="Black"
-                             FontSize="18"
-                             FontWeight="Bold"
-                             Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ShowRentViewCommand}"/>
-
-            <RadioButton Content="Salg"
-                             Height="50"
-                             Foreground="Black"
-                             FontSize="18"
-                             FontWeight="Bold"
-                             Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ShowTransactionViewCommand}"/>
-
-
-
-        </StackPanel>
-
-        <!-- Anden kolonne -->
-
-        <!-- Frame, hvori programmets undersider residerer -->
+                <RadioButton Content="Lejere" IsChecked="True" Style="{StaticResource MenuButton}" Command="{Binding ShowShelfVendorViewCommand}"/>
+                <RadioButton Content="Reoler" Style="{StaticResource MenuButton}" Command="{Binding ShowShelfViewCommand}"/>
+                <RadioButton Content="Lejeaftaler" Style="{StaticResource MenuButton}" Command="{Binding ShowRentViewCommand}"/>
+                <RadioButton Content="Salg" Style="{StaticResource MenuButton}" Command="{Binding ShowTransactionViewCommand}"/>
+            </StackPanel>
+        </Border>
 
         <Frame x:Name="MainFrame"
-               Grid.Row="1"
                Grid.Column="1"
-               Grid.ColumnSpan="2"
                NavigationUIVisibility="Hidden"
-               Margin="10"
-               Height="Auto"
-               Width="Auto"
-               Content="{Binding CurrentView}" />
+               Content="{Binding CurrentView}" 
+               Margin="10"/>
     </Grid>
 </Window>
