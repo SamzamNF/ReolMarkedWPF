@@ -34,5 +34,12 @@ namespace ReolMarkedWPF.Helpers
         {
             _execute(parameter);
         }
+
+        // Denne metode giver ViewModels mulighed for manuelt at fortælle UI'en,
+        // at den skal gen-evaluere, om knappen skal være aktiv (CanExecute).
+        public void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 }
