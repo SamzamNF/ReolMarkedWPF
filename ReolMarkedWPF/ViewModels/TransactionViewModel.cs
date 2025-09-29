@@ -78,6 +78,8 @@ namespace ReolMarkedWPF.ViewModels
             {
                 _selectedProduct = value;
                 OnPropertyChanged();
+                // Knap opdateres, hver gang et produkt vælges
+                AddToOrderDetailsCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -257,6 +259,9 @@ namespace ReolMarkedWPF.ViewModels
                 // Trækker 1 fra det valgte produkt
                 productToAdd.Amount--;
 
+                // Tvinger knappen til at tjekke om den kan bruges
+                AddToOrderDetailsCommand.RaiseCanExecuteChanged();
+
                 // Tjekker om produktet allerede er i kurven
                 var existingItem = TpVm.OrderDetails
                                         .FirstOrDefault(o => o.ProductID == productToAdd.ProductID);
@@ -389,7 +394,8 @@ namespace ReolMarkedWPF.ViewModels
         private bool CanDeleteTransaction() => SelectedTransaction != null;
         private bool CanEditTransaction() => SelectedTransaction != null &&
                                              TransactionDate != default;
-        private bool CanAddToOrderDetails() => SelectedProduct != null;
+        // Tjek om Amount > 0
+        private bool CanAddToOrderDetails() => SelectedProduct != null && SelectedProduct.Amount > 0;
         private bool CanRemoveFromOrderDetails() => TpVm.SelectedOrderDetail != null;
     }
 }
