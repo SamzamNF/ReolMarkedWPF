@@ -17,8 +17,8 @@ namespace ReolMarkedWPF.ViewModels
         {
             _serviceProvider = serviceProvider;
 
-            // Start på Welcome-siden
-            CurrentView = _serviceProvider.GetRequiredService<Welcome>();
+            // Start på ShelfVendor-siden
+            CurrentView = _serviceProvider.GetRequiredService<ShelfVendorView>();
         }
 
         private object _currentView;
