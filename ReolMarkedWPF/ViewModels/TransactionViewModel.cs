@@ -273,7 +273,7 @@ namespace ReolMarkedWPF.ViewModels
             // Tjekker at det valgte TransaktionProdukt i orderdetail ikke er tomt.
             if (TpVm.SelectedOrderDetail != null)
             {
-                // Finder det matchene produkt i HELE listen af produkter
+                // Finder det matchene produkt i HELE listen af ALLE produkter
                 var matchingProduct = Products
                                          .FirstOrDefault(p => p.ProductID == TpVm.SelectedOrderDetail?.ProductID);
 
