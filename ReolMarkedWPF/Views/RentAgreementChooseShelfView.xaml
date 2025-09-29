@@ -3,219 +3,63 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:ReolMarkedWPF.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="1920" d:DesignWidth="1080"
-      Title="RentAgreementChooseShelfView">
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="RentAgreementChooseShelfView"
+      Background="{StaticResource BackgroundColor}">
 
-    <Grid>
-        <Grid>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <!-- Titel -->
-                <Border BorderBrush="DarkRed" BorderThickness="1" HorizontalAlignment="Stretch">
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Lejeadministration" FontSize="30" FontWeight="Bold" Margin="5,5,5,5" HorizontalAlignment="Stretch"></TextBlock>
-                </Border>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Vælg den ønskede hylde:" FontSize="20" FontWeight="UltraLight" Margin="5,5,5,5"></TextBlock>
-                <Viewbox Stretch="Uniform" Grid.Row="1" Grid.Column="0">
-                    <Canvas Width="1280" Height="720">
-                        <Canvas.Background>
-                            <ImageBrush ImageSource="/Assets/Images/shelfmarketfloor.png" Stretch="Uniform"/>
-                        </Canvas.Background>
+        <TextBlock Grid.Row="0" Text="Opret Lejeaftale: Vælg en reol" Style="{StaticResource PageHeader}"/>
 
-                        <!-- OBS! Placeholdere uden bindings! Se korrekt syntaks længere nede! -->
+        <Border Grid.Row="1" Background="#FFFFFF" CornerRadius="5">
+            <Viewbox Stretch="Uniform">
+                <Canvas Width="1280" Height="720">
 
-                        <!-- Reol 1 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="536" Canvas.Top="294"
-                Background="Green">
-                            <TextBlock Text="1"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
+                    <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5" Width="1280" Height="720"/>
 
-                        <!-- Reol 2 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="693" Canvas.Top="294"
-                Background="Red" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <TextBlock Text="2"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
+                    <Border Background="{StaticResource BorderColor}" Canvas.Left="20" Canvas.Top="20" Width="300" Height="60" CornerRadius="5"/>
+                    <TextBlock Text="KASSE" FontWeight="Bold" FontSize="24" Foreground="{StaticResource MutedForegroundColor}" Canvas.Left="125" Canvas.Top="35"/>
 
-                        <!-- Reol 3 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="503" Canvas.Top="396"
-                Background="Green">
-                            <TextBlock Text="3"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
+                    <Border Background="{StaticResource BackgroundColor}" Canvas.Left="540" Canvas.Top="660" Width="200" Height="60" />
+                    <TextBlock Text="INDGANG" FontWeight="Bold" FontSize="24" Foreground="{StaticResource MutedForegroundColor}" Canvas.Left="580" Canvas.Top="675"/>
 
-                        <!-- Reol 1 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="450" Canvas.Top="450"
-                Background="Green">
-                            <TextBlock Text="1"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 2 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="503" Canvas.Top="500"
-                Background="Red" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <TextBlock Text="6"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 3 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="640" Canvas.Top="294"
-                Background="Green">
-                            <TextBlock Text="4"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 1 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="450" Canvas.Top="500"
-                Background="Green">
-                            <TextBlock Text="1"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 2 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="400" Canvas.Top="450"
-                Background="Red" HorizontalAlignment="Center" VerticalAlignment="Top">
-                            <TextBlock Text="6"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 3 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="400" Canvas.Top="500"
-                Background="Green">
-                            <TextBlock Text="4"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 1 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="748" Canvas.Top="294"
-                Background="Green">
-                            <TextBlock Text="1"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 2 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="592" Canvas.Top="294"
-                Background="Red">
-                            <TextBlock Text="2"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 3 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="450" Canvas.Top="396"
-                Background="Green">
-                            <TextBlock Text="3"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 1 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="483" Canvas.Top="294"
-                Background="Green">
-                            <TextBlock Text="1"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 2 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="503" Canvas.Top="450"
-                Background="Red" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <TextBlock Text="6"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 3 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="400" Canvas.Top="396"
-                Background="Green">
-                            <TextBlock Text="4"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 1 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="783" Canvas.Top="164"
-                Background="Green">
-                            <TextBlock Text="1"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 2 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="673" Canvas.Top="164"
-                Background="Red" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <TextBlock Text="6"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Reol 3 -->
-                        <Button Width="40" Height="40"
-                Canvas.Left="728" Canvas.Top="164"
-                Background="Green">
-                            <TextBlock Text="4"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-                        </Button>
-
-                        <!-- Placeholder slut -->
-
-                        <!-- Syntax til senere Binding når datacontext virker -->
-                        <Button Width="{Binding Width}" Height="{Binding Height}"
-                Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Background" Value="Green"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsOccupied}" Value="True">
-                                            <Setter Property="Background" Value="Red"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-
-                    </Canvas>
-                </Viewbox>
-            </Grid>
-        </Grid>
+                    <ItemsControl ItemsSource="{Binding Shelves}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Width="40" Height="40" Content="{Binding ShelfNumber}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                            <Setter Property="Background" Value="{StaticResource AccentColorPrimary}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsOccupied}" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource DangerColor}"/>
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Canvas>
+            </Viewbox>
+        </Border>
     </Grid>
 </Page>

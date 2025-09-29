@@ -1,18 +1,14 @@
 ﻿<Application x:Class="ReolMarkedWPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ReolMarkedWPF"
-             ShutdownMode="OnMainWindowClose">
+             xmlns:local="clr-namespace:ReolMarkedWPF">
 
     <Application.Resources>
+        <!--Komplet template fil til at definere temaer og styles-->
         <ResourceDictionary>
-
-            <!-- Template til at skifte Radio Buttons med -->
-
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Assets/Theme/MenuButtonTheme.xaml"/>
+                <ResourceDictionary Source="Assets/Theme/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </Application.Resources>
 
