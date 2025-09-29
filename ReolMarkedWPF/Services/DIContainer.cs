@@ -16,12 +16,15 @@ namespace ReolMarkedWPF.Services
         {
             var services = new ServiceCollection();
 
+            // Kode til at hente connection string fra json fil til DB
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
 
+            // Assigner config(connectionen) til vores connectionString
             string? connectionString = config.GetConnectionString("DefaultConnection");
 
+            //Tilføjer den til vores services så den kan bruges med DI
             services.AddSingleton(connectionString);
 
             // Repositories
@@ -51,6 +54,7 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<RentAgreementView>();
             services.AddTransient<RentAgreementChooseShelfView>();
             services.AddTransient<TransactionView>();
+            services.AddTransient<ShelfView>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

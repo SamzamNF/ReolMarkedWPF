@@ -186,6 +186,7 @@ namespace ReolMarkedWPF.ViewModels
             }
 
             TpVm.OrderDetails.Clear();
+            //Gør at den highlighter den oprettede transaktion efter oprettelse
             SelectedTransaction = transaction;
 
             TransactionDate = default;
