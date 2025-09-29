@@ -173,6 +173,8 @@ namespace ReolMarkedWPF.ViewModels
             {
                 product.TransactionID = newId;
                 _transactionProductRepository.AddTransactionProduct(product);
+                // Solgte vare tilføjes den samlede liste i TransactionProductViewModel
+                TpVm.AllOrderDetails.Add(product);
             }
 
             TpVm.OrderDetails.Clear();

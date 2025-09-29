@@ -58,9 +58,9 @@
                 <TextBlock Text="Betalingsinformation:" FontWeight="Bold" Margin="0,0,0,5"/>
                 <TextBox Text="{Binding PaymentInfo, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/>
 
-                <Button Content="Tilføj ny kunde" Command="{Binding AddShelfVendorCommand}" Style="{StaticResource CtaButton}" Margin="0,0,0,10"/>
-                <Button Content="Rediger kunde" Command="{Binding EditShelfVendorCommand}" Background="{StaticResource AccentColorSecondary}" Foreground="{StaticResource LightForegroundColor}" Margin="0,0,0,10"/>
-                <Button Content="Slet kunde" Command="{Binding DeleteShelfVendorCommand}" Background="{StaticResource DangerColor}" Foreground="{StaticResource LightForegroundColor}"/>
+                <Button Content="Tilføj ny lejer" Command="{Binding AddShelfVendorCommand}" Style="{StaticResource CtaButton}" Margin="0,0,0,10"/>
+                <Button Content="Rediger lejer" Command="{Binding EditShelfVendorCommand}" Style="{StaticResource EditButton}" Margin="0,0,0,10"/>
+                <Button Content="Slet lejer" Command="{Binding DeleteShelfVendorCommand}" Style="{StaticResource DeleteButton}"/>
             </StackPanel>
         </Border>
     </Grid>

@@ -42,7 +42,7 @@
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Width="40" Height="40" Content="{Binding ShelfNumber}">
+                                <Button Width="50" Height="50" Content="{Binding ShelfNumber}">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                             <Setter Property="Background" Value="{StaticResource AccentColorPrimary}"/>

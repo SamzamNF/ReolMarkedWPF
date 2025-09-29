@@ -33,6 +33,8 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<ITransactionRepository<Transaction>, SqlTransactionRepository>();
             services.AddTransient<ITransactionProductRepository, SqlTransactionProductRepository>();
 
+
+
             // ViewModels
             services.AddTransient<MainViewModel>();
             services.AddTransient<ShelfVendorViewModel>();
