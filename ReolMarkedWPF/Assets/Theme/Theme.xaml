@@ -18,6 +18,9 @@
     <SolidColorBrush x:Key="DangerColorHover">#D32F2F</SolidColorBrush>
     <SolidColorBrush x:Key="DefaultButtonHover">#BDBDBD</SolidColorBrush>
 
+    <SolidColorBrush x:Key="DisabledBackgroundColor">#E0E0E0</SolidColorBrush>
+    <SolidColorBrush x:Key="DisabledForegroundColor">#BDBDBD</SolidColorBrush>
+
 
     <FontFamily x:Key="BaseFont">Segoe UI</FontFamily>
     <sys:Double x:Key="BaseFontSize">14</sys:Double>
@@ -52,13 +55,12 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="ButtonBorder" 
-                        Background="{TemplateBinding Background}" 
-                        CornerRadius="4"
-                        Padding="{TemplateBinding Padding}">
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="4"
+                            Padding="{TemplateBinding Padding}">
                         <Border.Effect>
                             <DropShadowEffect ShadowDepth="2" BlurRadius="5" Color="#000000" Opacity="0.2"/>
                         </Border.Effect>
-
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <!-- Hover effekt -->
@@ -70,6 +72,11 @@
                                     <DropShadowEffect ShadowDepth="4" BlurRadius="8" Color="#000000" Opacity="0.3"/>
                                 </Setter.Value>
                             </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource DisabledBackgroundColor}" />
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundColor}" />
+                            <Setter TargetName="ButtonBorder" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -93,6 +100,10 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource AccentColorPrimaryHover}"/>
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource DisabledBackgroundColor}" />
+                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundColor}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -104,6 +115,10 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource AccentColorSecondaryHover}"/>
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource DisabledBackgroundColor}" />
+                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundColor}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -114,6 +129,10 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource DangerColorHover}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource DisabledBackgroundColor}" />
+                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
