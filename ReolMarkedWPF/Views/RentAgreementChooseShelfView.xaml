@@ -14,7 +14,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Opret Lejeaftale: Vælg en reol" Style="{StaticResource PageHeader}"/>
+        <TextBlock Grid.Row="0" Text="Opret Lejeaftale:" Style="{StaticResource PageHeader}"/>
 
         <Border Grid.Row="1" Background="#FFFFFF" CornerRadius="5">
             <Viewbox Stretch="Uniform">

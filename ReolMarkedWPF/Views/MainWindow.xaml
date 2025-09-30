@@ -67,7 +67,11 @@
                 <RadioButton Content="Salg" 
                              Style="{StaticResource MenuButton}" 
                              Command="{Binding ShowTransactionViewCommand}"/>
-                
+
+                <RadioButton Content="Regnskab"
+                             Style="{StaticResource MenuButton}"
+                             />
+
             </StackPanel>
         </Border>
 

@@ -124,11 +124,28 @@
                         <DataGrid Grid.Row="0" Margin="0,0,0,10"
                                   ItemsSource="{Binding Transactions}"
                                   SelectedItem="{Binding SelectedTransaction, Mode=TwoWay}"
-                                  AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                                  AutoGenerateColumns="False" 
+                                  ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                                  GridLinesVisibility="Horizontal"
+                                  IsReadOnly="True" 
+                                  CanUserAddRows="False">
                             
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Transaktion ID" Binding="{Binding TransactionID}" Width="*" />
-                                <DataGridTextColumn Header="Dato" Binding="{Binding TransactionDate, StringFormat='dd-MM-yyyy'}" Width="2*" />
+                                <DataGridTextColumn Header="Transaktion ID" 
+                                                    Binding="{Binding TransactionID}" 
+                                                    Width="*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                
+                                <DataGridTextColumn Header="Dato" 
+                                                    Binding="{Binding TransactionDate, StringFormat='dd-MM-yyyy'}" 
+                                                    Width="2*">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <StaticResource ResourceKey="DataGridStyle"/>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
 

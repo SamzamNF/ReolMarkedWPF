@@ -23,12 +23,51 @@
 
             <TextBlock Text="Lejeadministration" Style="{StaticResource PageHeader}" Grid.Row="0"/>
 
-            <DataGrid Grid.Row="1" ItemsSource="{Binding RentAgreements}" SelectedItem="{Binding SelectedRentAgreement, Mode=TwoWay}" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,15">
+            <DataGrid Grid.Row="1" 
+                      ItemsSource="{Binding RentAgreements}" 
+                      SelectedItem="{Binding SelectedRentAgreement, Mode=TwoWay}" 
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True"
+                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                      GridLinesVisibility="Horizontal"
+                      Margin="0,0,0,15"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Aftale ID" Binding="{Binding RentAgreementID}" Width="*" />
-                    <DataGridTextColumn Header="Startdato" Binding="{Binding StartDate}" Width="*" />
-                    <DataGridTextColumn Header="Slutdato" Binding="{Binding EndDate}" Width="*" />
-                    <DataGridTextColumn Header="Lejer ID" Binding="{Binding ShelfVendorID}" Width="*" />
+                    <DataGridTextColumn 
+                        Header="Aftale ID" 
+                        Binding="{Binding RentAgreementID}" 
+                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn 
+                        Header="Startdato" 
+                        Binding="{Binding StartDate}" 
+                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn 
+                        Header="Slutdato"
+                        Binding="{Binding EndDate}" 
+                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn 
+                        Header="Lejer ID" 
+                        Binding="{Binding ShelfVendorID}" 
+                        Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
