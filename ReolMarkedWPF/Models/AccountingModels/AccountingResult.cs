@@ -8,10 +8,10 @@ namespace ReolMarkedWPF.Models.AccountingModels
 {
     public class AccountingResult
     {
-        public int ShelfVendor { get; set; }
+        public int ShelfVendorID { get; set; }
         public string FirstName {  get; set; }
         public string LastName { get; set; }
-        public string PayMentInfo { get; set; }
+        public string PaymentInfo { get; set; }
         public decimal TotalRent { get; set; }
         public decimal TotalSale { get; set; }
         public decimal AfterComission { get; set; }

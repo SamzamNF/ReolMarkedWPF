@@ -14,9 +14,6 @@ namespace ReolMarkedWPF
         {
             base.OnStartup(e);
 
-
-
-
             DIContainer.Setup();
 
             // Dette gøres kun én gang - For MainViewModel & MainWindow, resten foregår i DIcontainer
@@ -33,6 +30,12 @@ namespace ReolMarkedWPF
             // Vis MainWindow
             Current.MainWindow = mainWindow;
             mainWindow.Show();
+
+
+
+
+            // Dette fixer UI bugs som hardware acceleration ødelægger
+            System.Windows.Media.RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
         }
     }
 }

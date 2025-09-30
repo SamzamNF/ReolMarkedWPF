@@ -44,6 +44,14 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
+    <Style TargetType="DatePicker">
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderColor}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="{StaticResource BaseFontSize}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
     <!-- Standard Button-stil med skygge og hover-effekt -->
     <Style TargetType="Button">
         <Setter Property="Background" Value="#E0E0E0" />

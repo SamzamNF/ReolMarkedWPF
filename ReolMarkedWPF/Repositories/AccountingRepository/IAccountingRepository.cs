@@ -10,6 +10,6 @@ namespace ReolMarkedWPF.Repositories.AccountingRepository
 {
     public interface IAccountingRepository
     {
-        public Task<List<AccountingResult>> GetAccountingData(DateTime startDate, DateTime endDate);
+        public Task<List<AccountingResult>> GetAccountingData(DateOnly startDate, DateOnly endDate);
     }
 }

@@ -18,7 +18,7 @@ namespace ReolMarkedWPF.ViewModels
             _serviceProvider = serviceProvider;
 
             // Start på ShelfVendor-siden (Dette kan ændres nemt ved at skifte linjen under)
-            CurrentView = _serviceProvider.GetRequiredService<ShelfVendorView>();
+            CurrentView = _serviceProvider.GetRequiredService<Welcome>();
         }
 
         private object _currentView;
@@ -37,6 +37,7 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand ShowCreateRentViewCommand => new RelayCommand(_ => ShowChooseShelfForRent());
         public RelayCommand ShowTransactionViewCommand => new RelayCommand(_ => ShowTransactionView());
         public RelayCommand ShowShelfViewCommand => new RelayCommand(_ => ShowShelfView());
+        public RelayCommand ShowAccountingViewCommand => new RelayCommand(_ => ShowAccountingView());
 
 
         private void ShowChooseShelfForRent()
@@ -59,6 +60,10 @@ namespace ReolMarkedWPF.ViewModels
         private void ShowShelfView()
         {
             CurrentView = _serviceProvider.GetRequiredService<ShelfView>();
+        }
+        private void ShowAccountingView()
+        {
+            CurrentView = _serviceProvider.GetRequiredService<AccountingView>();
         }
     }
 }

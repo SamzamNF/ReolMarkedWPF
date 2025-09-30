@@ -29,7 +29,7 @@
                         <TextBlock Text="Vælg reol:" 
                                    FontWeight="SemiBold" 
                                    Margin="0,10,0,5"/>
-                        
+
                         <ComboBox ItemsSource="{Binding Shelves}" 
                                   SelectedItem="{Binding SelectedShelf, Mode=TwoWay}" 
                                   DisplayMemberPath="ShelfNumber"/>
@@ -63,7 +63,7 @@
                                   CanUserAddRows="False"
                                   ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
                                   GridLinesVisibility="None">
-                            
+
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Produkt ID"
                                                     Binding="{Binding ProductID}" 
@@ -72,7 +72,7 @@
                                         <StaticResource ResourceKey="DataGridStyle"/>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                
+
                                 <DataGridTextColumn Header="Pris pr. stk." 
                                                     Binding="{Binding UnitPrice}"
                                                     Width="*">
@@ -80,7 +80,7 @@
                                         <StaticResource ResourceKey="DataGridStyle"/>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                
+
                                 <DataGridTextColumn Header="Antal" 
                                                     Binding="{Binding Amount}" 
                                                     Width="*">
@@ -93,10 +93,10 @@
 
                         <!--  Knapper til Salg  -->
                         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                            
+
                             <Button Content="Fjern valgte" 
                                     Command="{Binding RemoveFromOrderDetailsCommand}" Style="{StaticResource EditButton}" Margin="0,0,10,0"/>
-                            
+
                             <Button Content="Gennemfør salg" 
                                     Command="{Binding AddTransactionCommand}" 
                                     Style="{StaticResource CtaButton}"/>
@@ -129,7 +129,7 @@
                                   GridLinesVisibility="Horizontal"
                                   IsReadOnly="True" 
                                   CanUserAddRows="False">
-                            
+
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Transaktion ID" 
                                                     Binding="{Binding TransactionID}" 
@@ -138,7 +138,7 @@
                                         <StaticResource ResourceKey="DataGridStyle"/>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                
+
                                 <DataGridTextColumn Header="Dato" 
                                                     Binding="{Binding TransactionDate, StringFormat='dd-MM-yyyy'}" 
                                                     Width="2*">
@@ -151,27 +151,27 @@
 
                         <!-- Knapper til transaktioner -->
                         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                            
+
                             <Button Content="Rediger dato" 
                                     Command="{Binding EditTrasnactionCommand}" 
                                     Style="{StaticResource EditButton}" 
                                     Margin="0,0,10,0"/>
-                            
+
                             <Button Content="Slet transaktion" 
                                     Command="{Binding DeleteTransactionCommand}" 
                                     Style="{StaticResource DeleteButton}"/>
                         </StackPanel>
                     </Grid>
 
-                    <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="LightGray"/>
+                    <GridSplitter Grid.Column="2" Width="5" HorizontalAlignment="Center" Background="LightGray"/>
 
                     <!-- Højre side af vinduets opbygning -->
-                    <Grid Grid.Column="2" Margin="10,0,0,0">
+                    <Grid Grid.Column="3" Margin="10,0,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        
+
                         <TextBlock Text="Varer i valgt transaktion" 
                                    FontSize="18" 
                                    FontWeight="Bold" 
@@ -210,7 +210,7 @@
                                         <StaticResource ResourceKey="DataGridStyle" />
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                            
+
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

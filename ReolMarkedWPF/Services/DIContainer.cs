@@ -2,8 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
+using ReolMarkedWPF.Repositories.AccountingRepository;
 using ReolMarkedWPF.ViewModel;
 using ReolMarkedWPF.ViewModels;
+using ReolMarkedWPF.ViewModels.AccountingViewModels;
 using ReolMarkedWPF.Views;
 
 namespace ReolMarkedWPF.Services
@@ -35,6 +37,7 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<IProductRepository, SqlProductRepository>();
             services.AddTransient<ITransactionRepository<Transaction>, SqlTransactionRepository>();
             services.AddTransient<ITransactionProductRepository, SqlTransactionProductRepository>();
+            services.AddTransient<IAccountingRepository, SQLAccountingRepository>();
 
 
 
@@ -46,6 +49,7 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<ProductViewModel>();
             services.AddTransient<TransactionProductViewModel>();
             services.AddTransient<TransactionViewModel>();
+            services.AddTransient<AccountingViewModel>();
 
             // Views
             services.AddTransient<MainWindow>();
@@ -55,6 +59,7 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<RentAgreementChooseShelfView>();
             services.AddTransient<TransactionView>();
             services.AddTransient<ShelfView>();
+            services.AddTransient<AccountingView>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

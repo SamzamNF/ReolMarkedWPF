@@ -1,0 +1,209 @@
+﻿<Page x:Class="ReolMarkedWPF.Views.AccountingView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ReolMarkedWPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Background="{StaticResource BackgroundColor}"
+      Title="AccountingView">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Regnskab" Style="{StaticResource PageHeader}" Grid.Row="0"/>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Regnskab">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Column="0" Margin="0,0,20,0"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                              GridLinesVisibility="Horizontal"
+                              ItemsSource="{Binding Results}">
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Reollejer ID"
+                                                Binding="{Binding ShelfVendorID}"
+                                                Width="0.5*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Fornavn"
+                                                Binding="{Binding FirstName}"
+                                                Width="0.6*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Efternavn"
+                                                Binding="{Binding LastName}"
+                                                Width="0.6*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Betalingsinfo"
+                                                Binding="{Binding PaymentInfo}"
+                                                Width="1*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Lejebetaling"
+                                                Binding="{Binding TotalRent}"
+                                                Width="0.5*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Total Salg"
+                                                Binding="{Binding TotalSale}"
+                                                Width="0.5*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Total Efter Kommission"
+                                                Binding="{Binding AfterComission}"
+                                                Width="0.8*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Udbetaling"
+                                                Binding="{Binding Payment}"
+                                                Width="0.6*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+
+
+                    </DataGrid>
+
+                    <Border Grid.Column="1" Background="#FFFFFF" CornerRadius="5" Padding="10" Margin="10,0,0,0" Grid.ColumnSpan="2">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Start dato:" 
+                                       FontWeight="Bold" 
+                                       Margin="0,0,0,5"/>
+
+                            <DatePicker SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" 
+                                        DisplayDateStart="2025-08-01"/>
+
+                            <TextBlock Text="Slut dato:" 
+                                       FontWeight="Bold" 
+                                       Margin="0,5,0,5"/>
+
+                            <DatePicker SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" 
+                                        DisplayDateStart="2025-08-01"/>
+
+                            <Button Content="Søg"
+                                    Style="{StaticResource CtaButton}"
+                                    Command="{Binding CallAccountingData}"
+                                    Margin="0,20,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Salg">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Column="0"
+                              Margin="0,0,20,0"
+                              AutoGenerateColumns="False"
+                              IsReadOnly="True"
+                              CanUserAddRows="False"
+                              ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                              GridLinesVisibility="Horizontal">
+                        <!-- ItemsSource -->
+                        <!-- SelectedItem (Tror ikke) -->
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Reollejer ID"
+                                                Binding="{Binding ShelfVendorID}"
+                                                Width="0.5*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Fornavn"
+                                                Binding="{Binding FirstName}"
+                                                Width="0.6*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Efternavn"
+                                                Binding="{Binding LastName}"
+                                                Width="0.6*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Salg"
+                                                Binding="{Binding TotalSale}"
+                                                Width="0.5*" >
+                                <DataGridTextColumn.ElementStyle>
+                                    <StaticResource ResourceKey="DataGridStyle"/>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                    <Border Grid.Column="1" Background="#FFFFFF" CornerRadius="5" Padding="10" Margin="10,0,0,0" Grid.ColumnSpan="2">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Søg reollejer:" 
+                                       FontWeight="Bold" 
+                                       Margin="0,0,0,5"/>
+
+                            <TextBox Text="{Binding ShelfVendorID, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,0,10"/>
+
+                            <Button Content="Søg"
+                                    Style="{StaticResource CtaButton}"
+                                    Margin="0,10,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+                
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Page>
