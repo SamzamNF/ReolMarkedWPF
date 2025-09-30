@@ -366,12 +366,15 @@ namespace ReolMarkedWPF.ViewModels
                 // Ryd gamle detaljer
                 SelectedTransactionDetails.Clear();
 
-                // Find alle tilhørende varelinjer
+                // Find alle tilhørende orderdetails(transaktionprodukter), som passer til den valgte transaktion
                 var transactionProducts = TpVm.AllOrderDetails
                                               .Where(tp => tp.TransactionID == transaction.TransactionID);
 
                 foreach (var tp in transactionProducts)
                 {
+                    // Finder det produkt navn, som matcher TransactionProdukt for at kunne oprette et in-memory opbjekt til datavisning
+                    // Objektet oprettes og sættes til listen af de valgte transactiondetaljer
+                    
                     var product = Products.FirstOrDefault(p => p.ProductID == tp.ProductID);
                     var detailItem = new TransactionDetailItem
                     {
