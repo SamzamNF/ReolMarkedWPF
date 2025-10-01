@@ -94,7 +94,7 @@
                 <Button Content="Tilføj Reol" 
                         Command="{Binding AddShelfCommand}"
                         Style="{StaticResource CtaButton}"
-                        Margin="0,1000,0,10"/>
+                        Margin="0,20,0,10"/>
 
                 <Button Content="Rediger Reol"
                         Command="{Binding EditShelfCommand}"

@@ -121,7 +121,7 @@
                 <!-- Knapper -->
                 <Button Content="Tilføj ny lejer" Command="{Binding AddShelfVendorCommand}" 
                         Style="{StaticResource CtaButton}" 
-                        Margin="0,730,0,10"/>
+                        Margin="0,20,0,10"/>
                 
                 <Button Content="Rediger lejer" 
                         Command="{Binding EditShelfVendorCommand}" 

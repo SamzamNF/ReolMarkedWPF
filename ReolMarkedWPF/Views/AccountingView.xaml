@@ -31,7 +31,8 @@
                               CanUserAddRows="False"
                               ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
                               GridLinesVisibility="Horizontal"
-                              ItemsSource="{Binding Results}">
+                              ItemsSource="{Binding Results}"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Reollejer ID"
@@ -129,6 +130,7 @@
 
                 </Grid>
             </TabItem>
+            
             <TabItem Header="Salg">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -142,7 +144,8 @@
                               IsReadOnly="True"
                               CanUserAddRows="False"
                               ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
-                              GridLinesVisibility="Horizontal">
+                              GridLinesVisibility="Horizontal"
+                              ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <!-- ItemsSource -->
                         <!-- SelectedItem (Tror ikke) -->
 
