@@ -229,18 +229,18 @@ namespace ReolMarkedWPF.ViewModels
             // Tilføjer den til listen
             RentAgreements.Add(rent);
 
-            // Finder den valgte reol og sætter dens id til den oprettede aftales ID
-            // Bruger null conditonal operator, og returner null hvis den ikke finder en SelectedShelf
-            /*var existingShelf = Shelves
-                                    .FirstOrDefault(s => s.ShelfNumber == SelectedShelf?.ShelfNumber);*/
+            // Hvis SelectedShelf er valgt igennem UI og sendt til SelectShelf()
+            // Sætter den valgtes reol rentagreementID, til at være ligmed det som lejeaftalen har fået
             if (SelectedShelf != null)
             {
                 SelectedShelf.RentAgreementID = newRentID;
+                // Opdatere den valgte reol efter dens ny RentAgreementID er sat
                 _shelfRepository.UpdateShelf(SelectedShelf);
             }
 
             // Genindlæser UI, så den nye oprettede aftale blockere den valgte reol
             InitializeShelvesWithLayout();
+
             ShelfVendorID = default;
             StartDateText = null;
             EndDateText = null;
@@ -266,8 +266,6 @@ namespace ReolMarkedWPF.ViewModels
                 {
                     try
                     {
-                        _rentRepository.DeleteRent(rentToDelete);
-
 
                         // Skal frigøre reolen fra sin aftale ved at finde den Reol der matcher med den valgte lejeaftale
                         var shelfToRlease = Shelves
@@ -277,6 +275,10 @@ namespace ReolMarkedWPF.ViewModels
                         {
                             shelfToRlease.RentAgreementID = null;
                             _shelfRepository.UpdateShelf(shelfToRlease);
+
+                            // Vigtigt at opdatere reolen til at være NULL først, ellers kan den ikke slettes da en Reol bruger dens foreign key
+                            _rentRepository.DeleteRent(rentToDelete);
+
                         }
 
                         RentAgreements.Remove(rentToDelete);
@@ -308,7 +310,7 @@ namespace ReolMarkedWPF.ViewModels
                 try
                 {
                     _rentRepository.UpdateRent(rentToUpdate);
-                    //RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
+                    RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
                 }
                 catch (Exception ex)
                 {

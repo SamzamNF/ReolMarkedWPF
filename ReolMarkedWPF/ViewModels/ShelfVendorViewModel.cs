@@ -26,7 +26,16 @@ namespace ReolMarkedWPF.ViewModels
 
 
         // Den offentlige liste af sælgere, som UI'en (f.eks. en ListBox) binder til.
-        public ObservableCollection<ShelfVendor> ShelfVendors { get; set; }
+        private ObservableCollection<ShelfVendor> _shelfVendors;
+        public ObservableCollection<ShelfVendor> ShelfVendors
+        {
+            get => _shelfVendors;
+            private set
+            {
+                _shelfVendors = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Holder styr på den sælger, der er valgt i UI'en.
         public ShelfVendor SelectedShelfVendor
@@ -122,9 +131,8 @@ namespace ReolMarkedWPF.ViewModels
 
                 _repository.UpdateShelfVendor(vendorToUpdate); // Gemmer ændringer i DB.
 
-                // Nødvendigt for at UI'en opdaterer listen visuelt.
-                int index = ShelfVendors.IndexOf(vendorToUpdate);
-                ShelfVendors[index] = vendorToUpdate;
+                // Nødvendigt for at UI'en opdaterer listen visuelt da vi ikke har OnPropertyChanged i Model
+                ShelfVendors = new ObservableCollection<ShelfVendor>(_repository.GetAllShelfVendors());
             }
         }
 

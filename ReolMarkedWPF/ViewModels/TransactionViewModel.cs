@@ -184,6 +184,9 @@ namespace ReolMarkedWPF.ViewModels
                                          .FirstOrDefault(p => p.ProductID == product.ProductID);
                 if (productToUpdate != null)
                 {
+                    // Trækker det købte antal af produktet fra produktets "amount"
+                    productToUpdate.Amount = Math.Max(0, productToUpdate.Amount - product.Amount);
+
                     _productRepository.UpdateProduct(productToUpdate);
                 }
             }

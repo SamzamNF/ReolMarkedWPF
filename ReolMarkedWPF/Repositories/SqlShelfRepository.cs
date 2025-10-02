@@ -49,11 +49,10 @@ namespace ReolMarkedWPF.Repositories
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string sql = "INSERT INTO Shelf (ShelfNumber, ShelfType, Price, RentAgreementID) VALUES (@ShelfNumber, @ShelfType, @Price, @RentAgreementID)";
+                string sql = "INSERT INTO Shelf ( ShelfType, Price, RentAgreementID) VALUES (@ShelfType, @Price, @RentAgreementID)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    command.Parameters.AddWithValue("@ShelfNumber", shelf.ShelfNumber);
                     command.Parameters.AddWithValue("@ShelfType", shelf.ShelfType);
                     command.Parameters.AddWithValue("@Price", shelf.Price);
                     // Håndterer nullable int
