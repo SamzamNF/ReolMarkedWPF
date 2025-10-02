@@ -145,6 +145,12 @@
                         Style="{StaticResource CtaButton}"
                         Margin="0,5,20,0"/>
 
+                <Button Content="Tilbage" 
+                        Command="{Binding MainVM.ShowRentViewCommand}" 
+                        Style="{StaticResource EditButton}"
+                        Margin="0,5,20,0"/>
+
+
             </StackPanel>
         </Border>
     </Grid>

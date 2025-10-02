@@ -121,15 +121,13 @@ namespace ReolMarkedWPF.ViewModel
             if (SelectedShelf == null) return;
 
             // Opdater selected shelf med nye værdier fra input fields
-            SelectedShelf.ShelfNumber = this.ShelfNumber;
             SelectedShelf.ShelfType = this.ShelfType;
             SelectedShelf.Price = this.Price;
-            SelectedShelf.RentAgreementID = this.RentAgreementID;
 
             _shelfRepository.UpdateShelf(SelectedShelf);
 
-            // Refresh UI
-            OnPropertyChanged(nameof(Shelves));
+            // Refresh UI (Fordi vi ikke har OnPropertyChanged i model
+            Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
         }
 
         // Lazy loading: Backing fields - gemmer de faktiske RelayCommand objekter i hukommelsen.
