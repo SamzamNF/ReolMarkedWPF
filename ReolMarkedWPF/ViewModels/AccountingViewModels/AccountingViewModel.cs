@@ -1,10 +1,8 @@
 ﻿using ReolMarkedWPF.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows;
-using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Models.AccountingModels;
 using ReolMarkedWPF.Repositories.AccountingRepository;
-using System.Linq.Expressions;
 
 namespace ReolMarkedWPF.ViewModels.AccountingViewModels
 {
@@ -51,7 +49,7 @@ namespace ReolMarkedWPF.ViewModels.AccountingViewModels
         }
 
 
-        private async Task GetResults()
+        internal async Task GetResults() // Ændret fra private til internal for at kunne testes
         {
             // Clear den tidligere liste
             Results.Clear();

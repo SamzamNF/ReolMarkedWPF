@@ -8,6 +8,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+	<!-- Nedenstående gør at test projektet kan tilgå internal klasser og metoder -->
+    <ItemGroup>
+	    <InternalsVisibleTo Include="ReolMarkedWPF.Tests" />
+    </ItemGroup>
+
   <ItemGroup>
     <None Remove="Assets\Images\middelbylogo.jfif" />
     <None Remove="Assets\Images\shelf.png" />
