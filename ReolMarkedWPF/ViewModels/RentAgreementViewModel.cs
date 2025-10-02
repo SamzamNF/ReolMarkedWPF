@@ -20,9 +20,10 @@ namespace ReolMarkedWPF.ViewModels
 
         // Felter
         private int _shelfVendorID;
-        private DateOnly _startDate;
-        private DateOnly _endDate;
+        private string _startDateText;
+        private string _endDateText;
         private int _rentAgreementID;
+        private int _shelfNumber;
         private ObservableCollection<Shelf> _shelves;
         private ObservableCollection<ShelfVendor> _shelfVendor;
         private ObservableCollection<Rent> _rentAgreements;
@@ -41,6 +42,15 @@ namespace ReolMarkedWPF.ViewModels
                 OnPropertyChanged();
             }
         }
+        public int ShelfNumber
+        {
+            get => _shelfNumber;
+            set
+            {
+                _shelfNumber = value;
+                OnPropertyChanged();
+            }
+        }
         public int ShelfVendorID
         {
             get => _shelfVendorID;
@@ -50,21 +60,22 @@ namespace ReolMarkedWPF.ViewModels
                 OnPropertyChanged();
             }
         }
-        public DateOnly StartDate
+        public string StartDateText
         {
-            get => _startDate;
+            get => _startDateText;
             set
             {
-                _startDate = value;
+                _startDateText = value;
                 OnPropertyChanged();
             }
         }
-        public DateOnly EndDate
+
+        public string EndDateText
         {
-            get => _endDate;
+            get => _endDateText;
             set
             {
-                _endDate = value;
+                _endDateText = value;
                 OnPropertyChanged();
             }
         }
@@ -124,8 +135,8 @@ namespace ReolMarkedWPF.ViewModels
                 OnPropertyChanged();
                 if (value != null)
                 {
-                    StartDate = value.StartDate;
-                    EndDate = value.EndDate;
+                    StartDateText = value.StartDate.ToString("dd/MM/yyyy");
+                    EndDateText = value.EndDate.ToString("dd/MM/yyyy");
                 }
             }
         }
@@ -146,7 +157,7 @@ namespace ReolMarkedWPF.ViewModels
             //Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
             ShelfVendors = new ObservableCollection<ShelfVendor>(_shelfVendorRepository.GetAllShelfVendors());
 
-            // NYT: Kalder metoden, der opretter reol-layoutet.
+            // Kalder metoden, der opretter reol-layoutet.
             InitializeShelvesWithLayout();
 
             // Henter den rigtige MainViewModel fra MainWindow, som er oprettet i App.xaml.cs, ved at hente fra den igangværende application
@@ -185,16 +196,13 @@ namespace ReolMarkedWPF.ViewModels
                     int shelfNumber = (row * shelvesPerRow) + col + 1;
 
                     // Tjek om reolen findes i databasen for at få dens status (optaget/ledig)
-                    shelvesFromDb.TryGetValue(shelfNumber, out var dbShelf);
-
-                    layoutReadyShelves.Add(new Shelf
+                    if (shelvesFromDb.TryGetValue(shelfNumber, out var dbShelf))
                     {
-                        ShelfNumber = shelfNumber,
-                        RentAgreementID = dbShelf?.RentAgreementID, // Brug ID fra DB hvis det findes
-                                                                    // Tildel X- og Y-koordinater baseret på række og kolonne
-                        X = startX + col * (shelfWidth + horizontalGap),
-                        Y = startY + row * (shelfHeight + verticalGap)
-                    });
+                        // Hvis den findes, sæt dens X og Y koordinater på objektet fra databasen og tilføj den til listen
+                        dbShelf.X = startX + col * (shelfWidth + horizontalGap);
+                        dbShelf.Y = startY + row * (shelfHeight + verticalGap);
+                        layoutReadyShelves.Add(dbShelf);
+                    }
                 }
             }
             // Sæt den færdige liste som datakilde for viewet
@@ -203,10 +211,12 @@ namespace ReolMarkedWPF.ViewModels
 
         private void AddRent()
         {
+
+
             var rent = new Rent
             {
-                StartDate = this.StartDate,
-                EndDate = this.EndDate,
+                StartDate = DateOnly.ParseExact(StartDateText, "dd/MM/yyyy"),
+                EndDate = DateOnly.ParseExact(EndDateText, "dd/MM/yyyy"),
                 ShelfVendorID = SelectedShelfVendor.ShelfVendorID,
             };
 
@@ -221,19 +231,19 @@ namespace ReolMarkedWPF.ViewModels
 
             // Finder den valgte reol og sætter dens id til den oprettede aftales ID
             // Bruger null conditonal operator, og returner null hvis den ikke finder en SelectedShelf
-            var existingShelf = Shelves
-                                    .FirstOrDefault(s => s.ShelfNumber == SelectedShelf?.ShelfNumber);
-            if (existingShelf != null)
+            /*var existingShelf = Shelves
+                                    .FirstOrDefault(s => s.ShelfNumber == SelectedShelf?.ShelfNumber);*/
+            if (SelectedShelf != null)
             {
-                existingShelf.RentAgreementID = newRentID;
-                _shelfRepository.UpdateShelf(existingShelf);
+                SelectedShelf.RentAgreementID = newRentID;
+                _shelfRepository.UpdateShelf(SelectedShelf);
             }
 
-
-
+            // Genindlæser UI, så den nye oprettede aftale blockere den valgte reol
+            InitializeShelvesWithLayout();
             ShelfVendorID = default;
-            StartDate = default;
-            EndDate = default;
+            StartDateText = null;
+            EndDateText = null;
         }
 
 
@@ -292,8 +302,8 @@ namespace ReolMarkedWPF.ViewModels
 
             if (rentToUpdate != null)
             {
-                rentToUpdate.StartDate = this.StartDate;
-                rentToUpdate.EndDate = this.EndDate;
+                rentToUpdate.StartDate = DateOnly.ParseExact(StartDateText, "dd/MM/yyyy");
+                rentToUpdate.EndDate = DateOnly.ParseExact(EndDateText, "dd/MM/yyyy");
 
                 try
                 {
@@ -337,23 +347,44 @@ namespace ReolMarkedWPF.ViewModels
             }
         }
 
+        // Metode til at modtage shelfnumber fra view ved brug af "CommandParameter" fra view af, som bliver sendt videre fra knappen "SelectShelfCommand" af
+        private void SelectShelf(object parameter)
+        {
+            if (parameter is int shelfNumber)
+            {
+                // Opdatere tekstboksen med det korrekte nummer, som den får fra parameteren fra knappen.
+                ShelfNumber = shelfNumber;
+                // Sætter SelectedShelf til at være ligmed den valgte reol, ved at bruge den modtagene shelfNumber
+                SelectedShelf = Shelves?
+                                   .FirstOrDefault(s => s.ShelfNumber == shelfNumber);
+            }
+        }
+
         // Knapper
         public RelayCommand AddRentCommand => new RelayCommand(execute => AddRent(), canExecute => CanAddRent());
         public RelayCommand EditRentCommand => new RelayCommand(execute => EditRent(), canExecute => CanEditRent());
         public RelayCommand DeleteRentCommand => new RelayCommand(execute => DeleteRent(), canExecute => CanDeleteRent());
 
+        // Knap til at hente ShelfNumber med
+        public RelayCommand SelectShelfCommand => new RelayCommand(parameter => SelectShelf(parameter));
+
+
         // Conditions
-        private bool CanAddRent() => StartDate != default &&
-                                     EndDate != default &&
-                                     SelectedShelfVendor != null &&
-                                     StartDate < EndDate;
+        private bool CanAddRent() => !string.IsNullOrEmpty(StartDateText) &&
+                                     !string.IsNullOrEmpty(EndDateText) &&
+                                     IsValidDateRange();
 
         private bool CanDeleteRent() => SelectedRentAgreement != null;
 
         private bool CanEditRent() => SelectedRentAgreement != null &&
-                                     StartDate != default &&
-                                     EndDate != default &&
-                                     StartDate < EndDate;
+                                     !string.IsNullOrEmpty(StartDateText) &&
+                                     !string.IsNullOrEmpty(EndDateText) &&
+                                     IsValidDateRange();
 
+        // Condition metode som parser fra string til DateOnly
+        private bool IsValidDateRange() => 
+            DateOnly.TryParseExact(StartDateText, "dd/MM/yyyy", out DateOnly startDate) &&
+            DateOnly.TryParseExact(EndDateText, "dd/MM/yyyy", out DateOnly endDate) &&
+            startDate < endDate;
     }
 }

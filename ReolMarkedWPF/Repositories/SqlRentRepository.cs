@@ -17,8 +17,8 @@ namespace ReolMarkedWPF.Repositories
         public int AddRent(Rent rent)
         {
             string query = "INSERT INTO RENT_AGREEMENT (StartDate, EndDate, ShelfVendorID) " +
-                           "OUTPUT inserted.RentAgreementID" +
-                           "VALUES (@StartDate, @EndDate, @ShelfVendorID)";
+                           "OUTPUT inserted.RentAgreementID " +
+                           "VALUES (@StartDate, @EndDate, @ShelfVendorID) ";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
