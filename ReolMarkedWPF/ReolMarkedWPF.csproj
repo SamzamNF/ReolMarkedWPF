@@ -13,6 +13,7 @@
     <None Remove="Assets\Images\shelf.png" />
     <None Remove="Assets\Images\shelfmarketfloor.png" />
     <None Remove="Assets\Images\ssslogo.png" />
+    <None Remove="Assets\Images\welcomepic.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,9 @@
     </Content>
     <Content Include="Assets\Images\ssslogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Images\welcomepic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

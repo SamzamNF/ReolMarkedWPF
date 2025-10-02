@@ -59,5 +59,46 @@ namespace ReolMarkedWPF.Repositories.AccountingRepository
 
                 return accountingList;
         }
+
+        public async Task<List<AccountingResult>> GetAllSales(int? ShelfVendorID)
+        {
+            var soldDataList = new List<AccountingResult>();
+
+            // Opretter forbindelse med connectionString
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                // Opretter SqlCommand, der bruger stored procedure "uspSalesForShelfVendor"
+                SqlCommand command = new SqlCommand("uspSalesForShelfVendor", connection);
+
+                // Angiver at kommandoen er en stored procedure
+                command.CommandType = CommandType.StoredProcedure;
+
+                // Tilføjer parametre til stored proceduren, for at filtrere
+                command.Parameters.AddWithValue("@ShelfVendorID", ShelfVendorID);
+
+                // Åbner forbindelsen med async for at undgå blokering af UI (lag/ui freeze)
+                await connection.OpenAsync();
+
+                // Bruger using, så DataReader selv lukker når den er færdig
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    // Læser data række for række
+                    while (await reader.ReadAsync())
+                    {
+                        var soldData = new AccountingResult
+                        {
+                            ShelfVendorID = (int)reader["ShelfVendorID"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            TotalSale = (decimal)reader["TotalSale"]
+                        };
+                        soldDataList.Add(soldData);
+                    }
+                }
+
+                return soldDataList;
+
+            }
+        }
     }
 }

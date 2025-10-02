@@ -10,14 +10,20 @@
 
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center">
+            <Image Source="/Assets/Images/welcomepic.png"
+                   Height="400"
+                   Width="400"/>
+            
             <TextBlock Text="Velkommen til Middelby ReolMarked!" 
                        FontSize="34" 
                        FontWeight="Bold" 
                        Foreground="{StaticResource ForegroundColor}" 
-                       Margin="0,0,0,10"/>
+                       Margin="0,-100,0,10"/>
+            
             <TextBlock Text="Vælg en funktion fra menuen til venstre for at komme i gang." 
                        FontSize="18" 
-                       Foreground="{StaticResource MutedForegroundColor}"/>
+                       Foreground="{StaticResource MutedForegroundColor}"
+                       Margin="0,-60,0,0"/>
         </StackPanel>
     </Grid>
 </Page>

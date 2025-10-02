@@ -8,7 +8,8 @@ namespace ReolMarkedWPF.Models.AccountingModels
 {
     public class AccountingResult
     {
-        public int ShelfVendorID { get; set; }
+        // ShelfVendorID nullable
+        public int? ShelfVendorID { get; set; }
         public string FirstName {  get; set; }
         public string LastName { get; set; }
         public string PaymentInfo { get; set; }

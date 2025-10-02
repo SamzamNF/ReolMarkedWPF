@@ -143,7 +143,7 @@ namespace ReolMarkedWPF.ViewModels
             this._shelfVendorRepository = shelfVendorRepository;
 
             RentAgreements = new ObservableCollection<Rent>(_rentRepository.GetAllRents());
-            Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
+            //Shelves = new ObservableCollection<Shelf>(_shelfRepository.GetAllShelves());
             ShelfVendors = new ObservableCollection<ShelfVendor>(_shelfVendorRepository.GetAllShelfVendors());
 
             // NYT: Kalder metoden, der opretter reol-layoutet.
