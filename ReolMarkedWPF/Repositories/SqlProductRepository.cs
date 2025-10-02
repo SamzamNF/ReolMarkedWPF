@@ -52,7 +52,6 @@ namespace ReolMarkedWPF.Repositories
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
-                    // command.Parameters.AddWithValue("@ProductID", product.ProductID); // Fjernet da SQL selv opretter IDENTITY-værdier
                     command.Parameters.AddWithValue("@ShelfNumber", product.ShelfNumber);
                     command.Parameters.AddWithValue("@ProductName", product.ProductName);
                     command.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
