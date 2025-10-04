@@ -2,7 +2,6 @@
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
 using ReolMarkedWPF.ViewModels;
-using System.Collections.Generic;
 
 namespace ReolMarkedWPF.Tests
 {
