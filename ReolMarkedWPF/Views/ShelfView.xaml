@@ -37,14 +37,14 @@
                 <!-- DataGrid opbygning med brug af Assets/Theme -->
                 <DataGrid.Columns>
                     <DataGridTextColumn 
-                        Header="ReolNummer" Binding="{Binding ShelfNumber}" Width="0.4*">
+                        Header="Reolnummer" Binding="{Binding ShelfNumber}" Width="0.4*">
                         <DataGridTextColumn.ElementStyle>
                             <StaticResource ResourceKey="DataGridStyle"/>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
                     <DataGridTextColumn 
-                        Header="ReolType" Binding="{Binding ShelfType}" Width="*">
+                        Header="Reoltype" Binding="{Binding ShelfType}" Width="*">
                         <DataGridTextColumn.ElementStyle>
                             <StaticResource ResourceKey="DataGridStyle"/>
                         </DataGridTextColumn.ElementStyle>
@@ -84,24 +84,24 @@
                 <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,0,0,10"/>
 
-                <TextBlock Text="ReolType" 
+                <TextBlock Text="Reoltype" 
                             FontWeight="Bold" 
                             Margin="0,0,0,5"/>
                 <TextBox Text="{Binding ShelfType, UpdateSourceTrigger=PropertyChanged}"
                            Margin="0,0,0,10"/>
 
                 <!-- Knapper -->
-                <Button Content="Tilføj Reol" 
+                <Button Content="Tilføj reol" 
                         Command="{Binding AddShelfCommand}"
                         Style="{StaticResource CtaButton}"
                         Margin="0,20,0,10"/>
 
-                <Button Content="Rediger Reol"
+                <Button Content="Rediger reol"
                         Command="{Binding EditShelfCommand}"
                         Style="{StaticResource EditButton}"
                         Margin="0,0,0,10"/>
 
-                <Button Content="Slet Reol"
+                <Button Content="Slet reol"
                         Command="{Binding DeleteShelfCommand}"
                         Style="{StaticResource DeleteButton}"/>
             </StackPanel>

@@ -152,7 +152,7 @@
                         <!-- Knapper til transaktioner -->
                         <Border Grid.Row="2" Background="#FFFFFF" CornerRadius="5" Padding="15">
                             <StackPanel>
-                                <TextBlock Text="Rediger valgt Transaktion" 
+                                <TextBlock Text="Rediger valgt transaktion" 
                                            FontWeight="Bold" 
                                            Margin="0,0,0,10"/>
                                 <Grid>

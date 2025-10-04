@@ -75,7 +75,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="Total Salg"
+                            <DataGridTextColumn Header="Total salg"
                                                 Binding="{Binding TotalSale}"
                                                 Width="0.5*" >
                                 <DataGridTextColumn.ElementStyle>
@@ -83,7 +83,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="Total Efter Kommission"
+                            <DataGridTextColumn Header="Total efter kommission"
                                                 Binding="{Binding AfterComission}"
                                                 Width="0.8*" >
                                 <DataGridTextColumn.ElementStyle>
@@ -188,7 +188,7 @@
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
 
-                            <DataGridTextColumn Header="TotalSalg"
+                            <DataGridTextColumn Header="Total salg"
                                                 Binding="{Binding TotalSale}"
                                                 Width="0.5*" >
                                 <DataGridTextColumn.ElementStyle>

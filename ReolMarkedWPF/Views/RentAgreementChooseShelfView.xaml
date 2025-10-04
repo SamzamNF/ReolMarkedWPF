@@ -19,7 +19,7 @@
             <ColumnDefinition Width="0.2*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Opret Lejeaftale:" Style="{StaticResource PageHeader}"/>
+        <TextBlock Grid.Row="0" Text="Opret lejeaftale:" Style="{StaticResource PageHeader}"/>
 
         
 
@@ -33,7 +33,7 @@
                                Canvas.Top="-60"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="{StaticResource DisabledForegroundColor}"
+                               Style="{StaticResource PageHeader}"
                                Padding="10"/>
                     
                     <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="5" Width="1280" Height="720"/>
@@ -96,13 +96,13 @@
                            FontWeight="Bold"
                            Margin="0,105,0,0"/>
                 
-                <TextBlock Text="Vælg reol og indtast data: "
+                <TextBlock Text="Vælg reol og indtast varighed: "
                            TextWrapping="Wrap"
                            Margin="0,1,0,15"
                            Foreground="{StaticResource MutedForegroundColor}"/>
 
                 
-                <TextBlock Text="ReolNummer:"
+                <TextBlock Text="Reolnummer:"
                            FontWeight="Bold"
                            Margin="0,10,0,0"
                            />
@@ -111,7 +111,7 @@
                          Margin="0,5,20,0"
                          IsReadOnly="True"/>
 
-                <TextBlock Text="ReolLejer:"
+                <TextBlock Text="Lejer:"
                            FontWeight="Bold"
                            Margin="0,10,0,0"/>
                 
