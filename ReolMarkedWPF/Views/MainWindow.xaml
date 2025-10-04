@@ -73,6 +73,10 @@
                              Style="{StaticResource MenuButton}"
                              Command="{Binding ShowAccountingViewCommand}"/>
 
+                <RadioButton Content="Produkter" 
+                             Style="{StaticResource MenuButton}" 
+                             Command="{Binding ShowProductViewCommand}"/>
+
             </StackPanel>
         </Border>
 

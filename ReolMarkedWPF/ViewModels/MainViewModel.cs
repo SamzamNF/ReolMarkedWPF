@@ -38,6 +38,8 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand ShowTransactionViewCommand => new RelayCommand(_ => ShowTransactionView());
         public RelayCommand ShowShelfViewCommand => new RelayCommand(_ => ShowShelfView());
         public RelayCommand ShowAccountingViewCommand => new RelayCommand(_ => ShowAccountingView());
+        public RelayCommand ShowProductViewCommand => new RelayCommand(_ => ShowProductView());
+
 
 
         private void ShowChooseShelfForRent()
@@ -64,6 +66,10 @@ namespace ReolMarkedWPF.ViewModels
         private void ShowAccountingView()
         {
             CurrentView = _serviceProvider.GetRequiredService<AccountingView>();
+        }
+        private void ShowProductView()
+        {
+            CurrentView = _serviceProvider.GetRequiredService<ProductView>();
         }
     }
 }

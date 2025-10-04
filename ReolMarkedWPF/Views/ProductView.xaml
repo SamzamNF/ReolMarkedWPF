@@ -1,0 +1,107 @@
+﻿<Page x:Class="ReolMarkedWPF.Views.ProductView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ReolMarkedWPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="1080" d:DesignWidth="1920"
+      Title="ProductView"
+      Background="{StaticResource BackgroundColor}">
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0,0,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Produkter" Style="{StaticResource PageHeader}" Grid.Row="0"/>
+
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding Products}"
+                      SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      SelectionMode="Single"
+                      ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}"
+                      GridLinesVisibility="Horizontal"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Produkt ID" Binding="{Binding ProductID}" Width="Auto">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Reol nr." Binding="{Binding ShelfNumber}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Produktnavn" Binding="{Binding ProductName}" Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Pris" Binding="{Binding UnitPrice, StringFormat='N2'}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="*">
+                        <DataGridTextColumn.ElementStyle>
+                            <StaticResource ResourceKey="DataGridStyle"/>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Border Grid.Column="1" Background="#FFFFFF" CornerRadius="5" Padding="15">
+            <StackPanel VerticalAlignment="Top">
+                <TextBlock Text="Vælg lejer:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ComboBox ItemsSource="{Binding ShelfVendors}"
+                          SelectedItem="{Binding SelectedShelfVendor, Mode=TwoWay}"
+                          DisplayMemberPath="FullNameWithID"
+                          Margin="0,0,0,20"/>
+
+                <GroupBox Header="Produktinformation" IsEnabled="{Binding IsVendorSelected}">
+                    <StackPanel>
+                        <TextBlock Text="Reolnummer:" FontWeight="Bold" Margin="0,10,0,5"/>
+                        <ComboBox ItemsSource="{Binding VendorShelves}"
+                                  SelectedItem="{Binding SelectedShelf, Mode=TwoWay}"
+                                  DisplayMemberPath="ShelfNumber"
+                                  Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Produktnavn:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Pris:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Antal:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/>
+
+                        <Button Content="Tilføj produkt" Command="{Binding AddProductCommand}" 
+                                Style="{StaticResource CtaButton}" 
+                                Margin="0,20,0,10"/>
+
+                        <Button Content="Rediger produkt" Command="{Binding EditProductCommand}" 
+                                Style="{StaticResource EditButton}" 
+                                Margin="0,0,0,10"/>
+
+                        <Button Content="Slet produkt" Command="{Binding DeleteProductCommand}" 
+                                Style="{StaticResource DeleteButton}"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

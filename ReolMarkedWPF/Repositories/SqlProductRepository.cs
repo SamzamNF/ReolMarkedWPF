@@ -40,15 +40,16 @@ namespace ReolMarkedWPF.Repositories
             }
             return products;
         }
-        public void AddProduct(Product product)
+        public int AddProduct(Product product)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-
+                // OUTPUT inserted.ProductID giver UI'et det nye ID
                 string sql = @"
                     INSERT INTO Product (ShelfNumber, ProductName, UnitPrice, Amount) 
-                    VALUES (@ProductID, @ShelfNumber, @ProductName, @UnitPrice, @Amount)";
+                    OUTPUT inserted.ProductID
+                    VALUES (@ShelfNumber, @ProductName, @UnitPrice, @Amount)";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -57,7 +58,9 @@ namespace ReolMarkedWPF.Repositories
                     command.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
                     command.Parameters.AddWithValue("@Amount", product.Amount);
 
-                    command.ExecuteNonQuery();
+                    // ExecuteScalar() sørger for at hente det nye ID
+                    int newId = (int)command.ExecuteScalar();
+                    return newId;
                 }
             }
         }
