@@ -3,8 +3,10 @@ using ReolMarkedWPF.Models.AccountingModels;
 using ReolMarkedWPF.Repositories.AccountingRepository;
 using ReolMarkedWPF.ViewModels.AccountingViewModels;
 
-[TestClass]
-public class AccountingViewModelTests
+namespace ReolMarkedWPF.Tests
+{
+    [TestClass]
+    public class AccountingViewModelTests
 {
     // Felter til mocks og ViewModel
     private Mock<IAccountingRepository> _mockAccountingRepo;
@@ -78,4 +80,5 @@ public class AccountingViewModelTests
         Assert.AreEqual(2, _viewModel.Results.Count);
         Assert.AreEqual(1000, _viewModel.Results[0].TotalSale);
     }
+}
 }
