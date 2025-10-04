@@ -60,6 +60,7 @@ namespace ReolMarkedWPF.Services
             services.AddTransient<TransactionView>();
             services.AddTransient<ShelfView>();
             services.AddTransient<AccountingView>();
+            services.AddTransient<ProductView>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
