@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
+using Csla;
 using ReolMarkedWPF.Helpers;
 using ReolMarkedWPF.Models;
 using ReolMarkedWPF.Repositories;
@@ -23,7 +24,7 @@ namespace ReolMarkedWPF.ViewModels
         private readonly ITransactionProductRepository _transactionProductRepository;
 
         // Felter
-        private DateOnly _transactionDate;
+        private string _transactionDatetext;
         private ObservableCollection<Transaction> _transactions;
         private ObservableCollection<Shelf> _shelves;
         private ObservableCollection<Product> _products;
@@ -37,12 +38,12 @@ namespace ReolMarkedWPF.ViewModels
 
 
         // Properties 
-        public DateOnly TransactionDate
+        public string TransactionDatetext
         {
-            get => _transactionDate;
+            get => _transactionDatetext;
             set
             {
-                _transactionDate = value;
+                _transactionDatetext = value;
                 OnPropertyChanged();
             }
         }
@@ -199,7 +200,7 @@ namespace ReolMarkedWPF.ViewModels
             //Gør at den highlighter den oprettede transaktion efter oprettelse
             SelectedTransaction = transaction;
 
-            TransactionDate = default;
+            TransactionDatetext = null;
         }
 
         // Metode som sletter transaktion fra DB & memory ---- BRUGER CASCADE PÅ TRANSAKTIONPRODUCT OG SLETTER ALT FORBUNDET
@@ -240,11 +241,14 @@ namespace ReolMarkedWPF.ViewModels
 
             if (transactionToEdit != null)
             {
-                transactionToEdit.TransactionDate = this.TransactionDate;
+                // Sætter den nye dato
+                transactionToEdit.TransactionDate = DateOnly.ParseExact(TransactionDatetext, "dd/MM/yyyy");
 
                 try
                 {
                     _transactionRepository.UpdateTransaction(transactionToEdit);
+                    // Opdatere listen, da vi ikke har OnPropertyChanged i modelklassen
+                    Transactions = new ObservableCollection<Transaction>(_transactionRepository.GetAllTransactions());
 
                 }
                 catch (Exception ex)
@@ -364,7 +368,7 @@ namespace ReolMarkedWPF.ViewModels
             if (transaction != null)
             {
                 // Sæt transaktionsdato
-                this.TransactionDate = transaction.TransactionDate;
+                TransactionDatetext = transaction.TransactionDate.ToString("dd/MM/yyyy");
 
                 // Ryd gamle detaljer
                 SelectedTransactionDetails.Clear();
@@ -400,7 +404,7 @@ namespace ReolMarkedWPF.ViewModels
 
         public RelayCommand AddTransactionCommand => new RelayCommand(execute => AddTransaction(), canExecute => CanAddTransaction());
         public RelayCommand DeleteTransactionCommand => new RelayCommand(execute => DeleteTransaction(), canExecute => CanDeleteTransaction());
-        public RelayCommand EditTrasnactionCommand => new RelayCommand(exeute => EditTransaction(), canExecute => CanEditTransaction());
+        public RelayCommand EditTransactionCommand => new RelayCommand(exeute => EditTransaction(), canExecute => CanEditTransaction());
 
         // Knap til at tilføje ting til "orderdetails" (indkøbskurven)
         public RelayCommand AddToOrderDetailsCommand => new RelayCommand(execute => AddProductToTransaction(), canExecute => CanAddToOrderDetails());
@@ -412,7 +416,7 @@ namespace ReolMarkedWPF.ViewModels
         private bool CanAddTransaction() => TpVm.OrderDetails.Count > 0;
         private bool CanDeleteTransaction() => SelectedTransaction != null;
         private bool CanEditTransaction() => SelectedTransaction != null &&
-                                             TransactionDate != default;
+                                             !string.IsNullOrEmpty(TransactionDatetext);
         // Tjek om Amount > 0
         private bool CanAddToOrderDetails() => SelectedProduct != null && SelectedProduct.Amount > 0;
         private bool CanRemoveFromOrderDetails() => TpVm.SelectedOrderDetail != null;

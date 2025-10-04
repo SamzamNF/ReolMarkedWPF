@@ -347,6 +347,8 @@ namespace ReolMarkedWPF.ViewModels
                     _shelfRepository.UpdateShelf(shelf);
                 }
             }
+
+            InitializeShelvesWithLayout();
         }
 
         // Metode til at modtage shelfnumber fra view ved brug af "CommandParameter" fra view af, som bliver sendt videre fra knappen "SelectShelfCommand" af
@@ -366,6 +368,7 @@ namespace ReolMarkedWPF.ViewModels
         public RelayCommand AddRentCommand => new RelayCommand(execute => AddRent(), canExecute => CanAddRent());
         public RelayCommand EditRentCommand => new RelayCommand(execute => EditRent(), canExecute => CanEditRent());
         public RelayCommand DeleteRentCommand => new RelayCommand(execute => DeleteRent(), canExecute => CanDeleteRent());
+        public RelayCommand ClearRentAgreementsCommand => new RelayCommand(execute => ReleaseExpiredRentAgreement());
 
         // Knap til at hente ShelfNumber med
         public RelayCommand SelectShelfCommand => new RelayCommand(parameter => SelectShelf(parameter));

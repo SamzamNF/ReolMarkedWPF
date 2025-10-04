@@ -108,7 +108,8 @@
                            />
 
                 <TextBox Text="{Binding ShelfNumber, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,5,20,0"/>
+                         Margin="0,5,20,0"
+                         IsReadOnly="True"/>
 
                 <TextBlock Text="ReolLejer:"
                            FontWeight="Bold"

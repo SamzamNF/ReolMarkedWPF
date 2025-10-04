@@ -80,6 +80,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0,0,10,0">
                             <TextBlock Text="Startdato:" Margin="0,0,0,5"/>
@@ -89,8 +90,29 @@
                             <TextBlock Text="Slutdato:" Margin="0,0,0,5"/>
                             <TextBox Text="{Binding EndDateText}" />
                         </StackPanel>
-                        <Button Grid.Column="2" Content="Gem" Command="{Binding EditRentCommand}" Background="{StaticResource AccentColorSecondary}" Foreground="{StaticResource LightForegroundColor}" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
-                        <Button Grid.Column="3" Content="Slet" Command="{Binding DeleteRentCommand}" Background="{StaticResource DangerColor}" Foreground="{StaticResource LightForegroundColor}" VerticalAlignment="Bottom"/>
+                        
+                        <Button Grid.Column="2" 
+                                Content="Gem" 
+                                Command="{Binding EditRentCommand}" 
+                                Background="{StaticResource AccentColorSecondary}" 
+                                Foreground="{StaticResource LightForegroundColor}" 
+                                VerticalAlignment="Bottom" 
+                                Margin="0,0,10,0"/>
+                        
+                        <Button Grid.Column="3" 
+                                Content="Slet" 
+                                Command="{Binding DeleteRentCommand}"
+                                Background="{StaticResource DangerColor}" 
+                                Foreground="{StaticResource LightForegroundColor}" 
+                                VerticalAlignment="Bottom"/>
+
+                        <Button Grid.Column="4"
+                                Content="Scan alle aftaler"
+                                Command="{Binding ClearRentAgreementsCommand}"
+                                Background="{StaticResource DangerColor}"
+                                Foreground="{StaticResource LightForegroundColor}"
+                                VerticalAlignment="Bottom"
+                                Margin="5,0,0,0"/>
                     </Grid>
                 </StackPanel>
             </Border>

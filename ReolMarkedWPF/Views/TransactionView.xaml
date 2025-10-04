@@ -150,17 +150,44 @@
                         </DataGrid>
 
                         <!-- Knapper til transaktioner -->
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Border Grid.Row="2" Background="#FFFFFF" CornerRadius="5" Padding="15">
+                            <StackPanel>
+                                <TextBlock Text="Rediger valgt Transaktion" 
+                                           FontWeight="Bold" 
+                                           Margin="0,0,0,10"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.4*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock Text="Dato:" 
+                                                   Margin="0,0,0,5"/>
 
-                            <Button Content="Rediger dato" 
-                                    Command="{Binding EditTrasnactionCommand}" 
-                                    Style="{StaticResource EditButton}" 
-                                    Margin="0,0,10,0"/>
-
-                            <Button Content="Slet transaktion" 
-                                    Command="{Binding DeleteTransactionCommand}" 
-                                    Style="{StaticResource DeleteButton}"/>
-                        </StackPanel>
+                                        <TextBox Text="{Binding TransactionDatetext}" 
+                                                 Width="300"
+                                                 HorizontalAlignment="Left"/>
+                                    </StackPanel>
+                                    
+                                    <Button Grid.Column="1" 
+                                            Content="Gem" 
+                                            Command="{Binding EditTransactionCommand}" 
+                                            Background="{StaticResource AccentColorSecondary}" 
+                                            Foreground="{StaticResource LightForegroundColor}" 
+                                            VerticalAlignment="Bottom" 
+                                            Margin="0,0,10,0"/>
+                                    
+                                    <Button Grid.Column="2" 
+                                            Content="Slet" 
+                                            Command="{Binding DeleteTransactionCommand}" 
+                                            Background="{StaticResource DangerColor}" 
+                                            Foreground="{StaticResource LightForegroundColor}" 
+                                            VerticalAlignment="Bottom"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
                     </Grid>
 
                     <GridSplitter Grid.Column="2" Width="5" HorizontalAlignment="Center" Background="LightGray"/>

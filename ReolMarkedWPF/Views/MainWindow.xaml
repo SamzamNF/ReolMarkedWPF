@@ -64,7 +64,11 @@
                 <RadioButton Content="Lejeaftaler" 
                              Style="{StaticResource MenuButton}" 
                              Command="{Binding ShowRentViewCommand}"/>
-                
+
+                <RadioButton Content="Produkter" 
+                             Style="{StaticResource MenuButton}" 
+                             Command="{Binding ShowProductViewCommand}"/>
+
                 <RadioButton Content="Salg" 
                              Style="{StaticResource MenuButton}" 
                              Command="{Binding ShowTransactionViewCommand}"/>
@@ -73,9 +77,6 @@
                              Style="{StaticResource MenuButton}"
                              Command="{Binding ShowAccountingViewCommand}"/>
 
-                <RadioButton Content="Produkter" 
-                             Style="{StaticResource MenuButton}" 
-                             Command="{Binding ShowProductViewCommand}"/>
 
             </StackPanel>
         </Border>
